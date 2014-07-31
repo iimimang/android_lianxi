@@ -1,0 +1,37 @@
+<resources>
+
+
+    
+
+    <style name="input_edit" >
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:typeface">serif</item>
+      
+        <item name="android:gravity">center_vertical</item>
+
+        <item name="android:padding">8.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">32</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    
+    
+       <style name="index_xia" >
+      
+      <item name="android:background">@color/transparent</item>
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+    
+       
+           <style name="text" >
+      
+     
+        <item name="android:gravity">center_vertical</item>
+         <item name="android:textSize">18.0sp</item>
+
+    </style>
+    
+</resources>

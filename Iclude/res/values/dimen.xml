@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_top">46dip</dimen>
+    <dimen name="main_bottom">50dip</dimen>
+    
+</resources>

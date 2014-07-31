@@ -1,0 +1,10 @@
+
+public class sss {
+
+		
+	public static void main(String[] args ){
+		
+		int a=Math.random()*5;
+		System.out.println(a);
+	}
+}

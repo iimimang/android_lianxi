@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+	android:background="#f5f5f5"
+android:scrollbars="none">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+  
+    
+     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
+		android:background="@drawable/ertwet44"
+		android:gravity="top"
+		android:layout_height="220dp">
+       
+ 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" 
+		android:background="@drawable/wt55"
+		android:layout_width="fill_parent"
+		  android:gravity="center"
+		android:layout_height="50dp">
+	         <ImageView
+        android:id="@+id/imageView111"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+         android:layout_weight="1"
+       android:src="@drawable/asd334" />
+	         <TextView
+           android:id="@+id/textView2"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:textColor="#000"
+           android:layout_weight="4"
+           android:gravity="left|center"
+           android:textSize="16dp" 
+           android:text="旅游咨询" />
+	          <ImageView
+        android:id="@+id/imageView122"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+         android:layout_weight="1"
+       android:src="@drawable/fsdfds" />
+		</LinearLayout>
+		 
+ 		  <ListView android:id="@+id/zixunlists_one"
+	        android:layout_width="fill_parent"
+	        android:layout_marginTop="10dp"
+	        android:layout_height="150dp"/>
+		</LinearLayout>
+    	
+	 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" 
+		android:layout_width="fill_parent"
+		android:background="@drawable/ertwet44"
+		android:layout_marginTop="10dp"
+		android:gravity="top"
+		android:layout_height="150dp">
+       
+ 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" 
+		android:background="@drawable/wt55"
+		android:layout_width="fill_parent"
+		android:gravity="center" 
+		android:layout_height="50dp">
+	         <ImageView
+        android:id="@+id/imageView111"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:src="@drawable/jmmg" />
+	         <TextView
+           android:id="@+id/textView2"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:textColor="#000"
+           android:layout_weight="4"
+           android:gravity="left|center"
+           android:textSize="16dp" 
+           android:text="云南美食" />
+	          <ImageView
+        android:id="@+id/imageView122"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:src="@drawable/fsdfds" />
+		</LinearLayout>
+		 
+ 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	       
+ 		 
+ 		   
+ 		   <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/zixunlists_two"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:columnWidth="90dp"
+    android:gravity="center"
+    
+    android:numColumns="auto_fit"
+    android:stretchMode="spacingWidthUniform"
+    />
+ 		   
+ 		   </LinearLayout>
+ 		   
+		</LinearLayout>
+    
+    
+    
+</LinearLayout>
+
+
+</ScrollView>

@@ -1,0 +1,13 @@
+package com.sunli.sss;
+
+public class study {
+
+	
+	public static void main(String[] args){
+		
+		Woman w=new Woman(5);
+		
+		
+	}
+	
+}

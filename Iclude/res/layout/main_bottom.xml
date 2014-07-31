@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:background="@drawable/list_bottombar_bg"
+  android:layout_width="fill_parent"
+  android:layout_height="@dimen/main_top">
+    
+    
+    
+  <ImageView 
+  android:layout_width="105dip"
+  android:layout_height="wrap_content"
+  android:background="@drawable/list_bottombar_local"
+  android:layout_alignParentLeft="true"/>  
+    
+  <ImageView 
+  android:layout_width="105dip"
+  android:layout_height="wrap_content"
+  android:background="@drawable/list_bottombar_favorite"
+  android:layout_centerHorizontal="true"/>    
+    
+   <ImageView 
+  android:layout_width="105dip"
+  android:layout_height="wrap_content"
+  android:background="@drawable/list_bottombar_online"
+  android:layout_alignParentRight="true"/>  
+</RelativeLayout>

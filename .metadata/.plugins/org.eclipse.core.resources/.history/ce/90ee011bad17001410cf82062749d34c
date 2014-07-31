@@ -1,0 +1,24 @@
+package com.sunli.sss;
+
+
+import java.util.*;
+
+
+public class Jihe {
+
+	 public static void main(String[] args)
+	    {
+	        Map<String, Integer> m1 = new HashMap<String, Integer>();
+	        m1.put("Vamei", 12);
+	        m1.put("Jerry", 5);
+	        m1.put("Tom", 18);
+	        //System.out.println(m1.get("Vamei"));
+	        Map<Integer,String> m2= new HashMap<Integer,String>();
+	        m2.put(12, "htttp;..//");
+	        m2.put(13, "htttp;..//");
+	        Set<Integer> s1 =  m2.keySet();
+	        Collection<String> s2 = new ArrayList<String>();
+	        s2 =  m2.values();
+	        System.out.println(s2);
+	    }
+}
