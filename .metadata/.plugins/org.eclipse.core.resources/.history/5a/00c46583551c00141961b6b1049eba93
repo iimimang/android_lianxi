@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SinaWeibo</string>
+    <string name="main_home">首页</string>
+    <string name="main_news">信息</string>
+    <string name="main_my_info">我的资料</string>
+    <string name="menu_search">搜索</string>
+    <string name="more">更多</string>
+    <string name="app_name">Ex_Ctrl_5</string>
+<string name="shoopingList_TextView_text" >网上购物商品清单</string>
+<string name="yourChocieWoods_text" >您选择购买的商品：</string>
+<string name="woods_Text_MP4">纽曼MP4</string>
+<string name="woods_Text_musicCD">Beyond乐队CD</string>
+<string name="woods_Text_book">Android程序员指南</string>
+</resources>
