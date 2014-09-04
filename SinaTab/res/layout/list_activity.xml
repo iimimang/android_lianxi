@@ -30,7 +30,45 @@
             android:layout_gravity="center_horizontal"
             android:text="下拉框添加删除操作"
              />
-
+         
+         <Button 
+            android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="listview列表"
+             />
+         <Button 
+            android:id="@+id/Gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Gallery相薄"
+             />
+		
+         <Button 
+            android:id="@+id/Filesave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="文件存储"
+             />
+         <Button 
+            android:id="@+id/sqls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="基本数据操作"
+             />
+         
+         <Button 
+            android:id="@+id/adapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="listview_adapter"
+             />
+         
     </LinearLayout>
 
     

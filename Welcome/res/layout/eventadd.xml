@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homepage"
+    android:orientation="vertical" >
+	
+    <LinearLayout
+        android:id="@+id/one1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/title"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/more_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:background="@drawable/back"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/jishititle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="记事"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/eventsave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20px"
+            android:background="@drawable/save"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="50dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/TextView001"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="类型：" />
+
+                <Spinner
+                    android:id="@+id/gongzuoleixing"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/TextView001"
+                    android:background="@drawable/belowcaidan"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/planet_prompt1"
+                    android:textSize="16sp" />
+				 <Button
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/zhongdian" />	
+                <Button
+                    android:id="@+id/zidingyibutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/zidingyibutton" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="时间：" />
+
+                <Button
+                    android:id="@+id/time1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/time"
+                    android:background="@drawable/wenbenkaung"
+                    android:gravity="left|center_vertical"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:padding="5dp" />
+				<Button
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/zhongdian" />	
+                <Button
+                    android:id="@+id/img1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/del_pic"
+                    android:layout_marginLeft="40dp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/TextView001"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="提醒：" />
+				
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/TextView001"
+                    android:background="@drawable/belowcaidan"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:prompt="@string/planet_prompt" />
+                <Button
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/zhongdian" />	
+                <Button
+                    android:id="@+id/img2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/del_pic"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/more02"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/more01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="40dp"
+                    android:textSize="16sp"
+                    android:text="更多" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/morebutton01" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/moreinformation"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="主题：" />
+
+                    <EditText
+                        android:id="@+id/zhuti"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/TextView001"
+                        android:background="@drawable/wenbenkaung"
+                        android:gravity="left|center_vertical"
+                        android:lines="1"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:padding="5dp" />
+                    <Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="记事：" />
+
+                    <EditText
+                        android:id="@+id/jishi"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_toRightOf="@+id/TextView001"
+                        android:gravity="top"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:background="@drawable/background_11"
+                        android:padding="5dp" />
+                    <Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="图片：" />
+					<LinearLayout 
+					    android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_toRightOf="@+id/TextView001"
+                        android:background="@drawable/camera_1"
+                        android:layout_weight="1"
+                        android:gravity="center">
+						    <ImageButton
+	                        android:id="@+id/image001"
+	                        android:layout_width="150dp"
+	                        android:layout_height="150dp"
+	                        android:scaleType="fitXY"
+	                        android:background="@null"/>
+					</LinearLayout>
+					<Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                    
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="语音：" />
+
+                    <Button
+                        android:id="@+id/recoder"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/TextView001"
+                        android:background="@drawable/yuyingbutton"
+                        android:layout_weight="1"
+                        android:text="长按说话" />
+                    <Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="优先：" />
+
+                    <Spinner
+	                    android:id="@+id/youxianji"
+	                    android:layout_width="150dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_toRightOf="@+id/TextView001"
+	                    android:background="@drawable/belowcaidan"
+	                    android:gravity="left|center_vertical"
+	                    android:padding="5dp"
+	                    android:textSize="16sp"
+	                    android:layout_weight="1"
+	                    android:prompt="@string/planet_prompt2"
+	                    android:text="1" />
+                    <Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/TextView001"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="铃音：" />
+
+                    <Spinner
+                        android:id="@+id/spinnerring"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/TextView001"
+                        android:background="@drawable/wenbenkaung"
+                        android:gravity="left|center_vertical"
+                        android:prompt="@string/planet_prompt3"
+                        android:padding="5dp"
+                        android:textSize="16sp"
+                        android:layout_weight="1"
+                        android:text="默认" />
+                    <Button
+	                    android:layout_width="20dp"
+	                    android:layout_height="20dp"
+	                    android:layout_marginLeft="50dp"
+	                    android:background="@drawable/del_pic"
+	                    android:visibility="invisible" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/shouqi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="40dp"
+                        android:textSize="16sp"
+                        android:text="收起" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@drawable/morebutton02" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/one2"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottombackground" 
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/iamgebutton1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon1_1" />
+
+        <Button
+            android:id="@+id/iamgebutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon1_2" />
+
+        <Button
+            android:id="@+id/iamgebutton3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon1_3" />
+
+        <Button
+            android:id="@+id/iamgebutton4"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon1_4" />
+
+        <Button
+            android:id="@+id/iamgebutton5"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon1_5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tanchu_act"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentBottom="true"
+        android:background="#222222"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/image01"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_one222"
+            android:text="从手机相册选择"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/image02"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_one222"
+            android:text="拍    照"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/image03"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_one222"
+            android:text="取      消"
+            android:textSize="20sp" />
+    </LinearLayout>
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:gravity="center"
+    	>
+	    <Button 
+	        android:id="@+id/recoderimage"
+	        android:layout_width="150dp"
+    		android:layout_height="150dp"
+    		android:background="@drawable/recoder001"
+    		android:visibility="invisible"/>
+	</LinearLayout>
+</RelativeLayout>

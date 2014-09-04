@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<declare-styleable name="Gallery">
+<attr name="android:galleryItemBackground" />
+</declare-styleable>
+<!-- 定义layout 外部resource 的xml 文件，用来改变layout 的背景图。-->
+</resources>

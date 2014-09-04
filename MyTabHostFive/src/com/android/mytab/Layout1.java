@@ -56,8 +56,8 @@ public class Layout1 extends Activity {
 	
 	private static final String TAG = "Layout1";
 	private ListView listView;
-	private String result = ""; // ÉùÃ÷Ò»¸ö´ú±íÏÔÊ¾½á¹ûµÄ×Ö·û´®
-	private Handler handler; // ÉùÃ÷Ò»¸öHandler¶ÔÏó
+	private String result = ""; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
+	private Handler handler; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Handlerï¿½ï¿½ï¿½ï¿½
 	private SimpleAdapter adapter;
 	private MyCustomAdapter mAdapter;
 	private ArrayList listData;
@@ -70,11 +70,11 @@ public class Layout1 extends Activity {
         setContentView(R.layout.layout1);
         listView = (ListView)findViewById(R.id.lists);
         listData = new ArrayList();
-        prepareData(); //×¼±¸Êý¾Ý
+        prepareData(); //×¼ï¿½ï¿½ï¿½ï¿½ï¿½
        
     }
 
-    private void prepareData(){  //×¼±¸Êý¾Ý
+    private void prepareData(){  //×¼ï¿½ï¿½ï¿½ï¿½ï¿½
     	handler=new Handler() {  
             @Override  
             public void handleMessage(Message msg) { 
@@ -88,10 +88,10 @@ public class Layout1 extends Activity {
         new Thread(new Runnable() {
 			public void run() {
 				send();
-				Message m = handler.obtainMessage(); // »ñÈ¡Ò»¸öMessage
-				handler.sendMessage(m); // ·¢ËÍÏûÏ¢
+				Message m = handler.obtainMessage(); // ï¿½ï¿½È¡Ò»ï¿½ï¿½Message
+				handler.sendMessage(m); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 			}
-		}).start(); // ¿ªÆôÏß³Ì
+		}).start(); // ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
     }  
 
 
@@ -101,25 +101,25 @@ public class Layout1 extends Activity {
 		mAdapter=new MyCustomAdapter();
 		mAdapter.setValues(list);
 		mAdapter.notifyDataSetChanged();
-		listView.setAdapter(mAdapter); //ÉèÖÃadapter
+		listView.setAdapter(mAdapter); //ï¿½ï¿½ï¿½ï¿½adapter
 		
 	}  
 	public String send() {
 		
-		String target = "http://122.49.1.116/appapi/app_1008_a.php?userid=1008&act=index_jq";	//ÒªÌá½»µÄÄ¿±êµØÖ·
+		String target = "http://122.49.1.103/appapi/app_1008_a.php?userid=1008&act=index_jq";	//Òªï¿½á½»ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ö·
 		
-		HttpClient httpclient = new DefaultHttpClient();//´´½¨HttpClient¶ÔÏó
-		HttpGet httpRequest = new HttpGet(target);	//´´½¨HttpGetÁ¬½Ó¶ÔÏó
+		HttpClient httpclient = new DefaultHttpClient();//ï¿½ï¿½ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½
+		HttpGet httpRequest = new HttpGet(target);	//ï¿½ï¿½ï¿½ï¿½HttpGetï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
 		HttpResponse httpResponse;
 		try {
-			httpResponse = httpclient.execute(httpRequest);	//Ö´ÐÐHttpClientÇëÇó
+			httpResponse = httpclient.execute(httpRequest);	//Ö´ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-				result = EntityUtils.toString(httpResponse.getEntity());	//»ñÈ¡·µ»ØµÄ×Ö·û´®
+				result = EntityUtils.toString(httpResponse.getEntity());	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Øµï¿½ï¿½Ö·ï¿½
  
 				Log.i("INFO22",result); 	 
 				
 			}else{
-				result="ÇëÇóÊ§°Ü£¡";
+				result="ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½";
 			}	
 					
 		} catch (ClientProtocolException e) {
@@ -135,7 +135,7 @@ public class Layout1 extends Activity {
 		return result;
 	}
 	
-    //½âÎö¶à¸öÊý¾ÝµÄJson
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Json
 	
 	private ArrayList parseJsonMulti(String strResult) { 
 
@@ -286,14 +286,14 @@ public class Layout1 extends Activity {
 	}
 	
 	public void exitApp(){
-		new AlertDialog.Builder(this).setTitle("È·¶¨ÍË³ö").setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(this).setTitle("È·ï¿½ï¿½ï¿½Ë³ï¿½").setPositiveButton("È·ï¿½ï¿½", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
 				System.exit(0);
 			}
-		}).setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
+		}).setNegativeButton("È¡ï¿½ï¿½", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/homepage" >
+
+    <LinearLayout
+        
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/title"
+        android:gravity="center" 
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/today_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="6dip"
+            android:background="@drawable/today_selector"
+            android:text="今天"
+            android:visibility="gone" >
+        </Button>
+
+        <Button
+            android:id="@+id/more_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-20px"
+            android:background="@drawable/listthings"
+            android:text="返回"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="日历"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/eventdetail111"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-20px"
+            android:background="@drawable/listthings"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/title_layout" 
+        android:background="@drawable/title">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="70dp" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/left_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_selector"
+            android:paddingTop="7dip" 
+            android:visibility="gone">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/day_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="3dp"
+            android:text="2012年11月13号"
+            android:textColor="#FFFFFF"
+            android:textSize="20dip" >
+            
+        </TextView>
+        <TextView
+            android:id="@+id/day_message1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="23dp"
+            android:text="2012年11月13号"
+            android:textColor="#FFFFFF"
+            android:textSize="16dip" >
+            
+        </TextView>
+		<Button
+            android:id="@+id/eventdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-20px"
+             android:layout_alignParentRight="true"
+            android:background="@drawable/listthings"
+            android:textColor="#FFFFFF" />
+        <ImageView
+            android:id="@+id/right_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/right_selector"
+            android:paddingTop="7dip" 
+            android:visibility="gone">
+        </ImageView>
+
+        
+    </RelativeLayout>
+	<LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+             android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
+        	android:layout_marginTop="60dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周日"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="#000000" />
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周一"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周二"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周三"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周四"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周五"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="周六"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="#000000" />   
+        </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/calendar_main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/title_layout"
+        android:gravity="center" >
+    </RelativeLayout>
+
+</RelativeLayout>

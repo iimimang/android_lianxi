@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homepage"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/one1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/title"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/more_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="返回"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="传语"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="发送"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical" >
+        
+		<RelativeLayout
+		    android:id="@+id/RelativeLayout001"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <Button 
+                android:id="@+id/mychuanyu"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:background="@drawable/wenbenkaung"
+            	android:text="    我发起的" 
+            	android:textSize="16sp"
+            	android:gravity="left|center_vertical"/>
+
+            <Button
+                android:id="@+id/button01"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBaseline="@+id/mychuanyu"
+                android:layout_alignBottom="@+id/mychuanyu"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/red"
+                android:text="99+"
+                android:textColor="#FFFFFF" 
+                android:textSize="12sp"
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"/>
+            <Button
+	            android:layout_width="10dp"
+	            android:layout_height="17dp"
+	            android:background="@drawable/sanjiaojiantou"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginTop="12dp"
+	            android:layout_marginRight="10dp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/RelativeLayout002"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           	android:layout_below="@+id/RelativeLayout001"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            >
+            <Button 
+                android:id="@+id/myaboutchuanyu"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:background="@drawable/wenbenkaung"
+            	android:text="    我关联的" 
+            	android:textSize="16sp"
+            	android:gravity="left|center_vertical"/>
+
+            <Button
+                android:id="@+id/button02"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBaseline="@+id/myaboutchuanyu"
+                android:layout_alignBottom="@+id/myaboutchuanyu"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/red"
+                android:text="99+"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF" 
+                android:layout_marginRight="30dp"
+                android:visibility="invisible"/>
+            <Button
+	            android:layout_width="10dp"
+	            android:layout_height="17dp"
+	            android:background="@drawable/sanjiaojiantou"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginTop="12dp"
+	            android:layout_marginRight="10dp" />
+            
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/RelativeLayout003"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayout002"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            >
+            <Button 
+                android:id="@+id/myattention"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"
+            	android:background="@drawable/wenbenkaung"
+            	android:text="    我关注的" 
+            	android:textSize="16sp"
+            	android:gravity="left|center_vertical"/>
+
+            <Button
+                android:id="@+id/button03"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBaseline="@+id/myattention"
+                android:layout_alignBottom="@+id/myattention"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/red"
+                android:text="99+"
+                android:textSize="12sp"
+                android:layout_marginRight="30dp"
+                android:textColor="#FFFFFF" 
+                android:visibility="invisible"/>
+            <Button
+	            android:layout_width="10dp"
+	            android:layout_height="17dp"
+	            android:background="@drawable/sanjiaojiantou"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginTop="12dp"
+	            android:layout_marginRight="10dp" />
+            
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

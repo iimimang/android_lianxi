@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="4"
+   name=""
+   committed-date="2012-07-09T06:39:54.201583Z"
+   url="svn://172.16.108.152/zhongyue_android/ZhongYue/libs/armeabi"
+   last-author="bh"
+   kind="dir"
+   uuid="6b767a7e-8a98-4580-bb7d-1e5561ef8a0f"
+   repos="svn://172.16.108.152/zhongyue_android"
+   revision="12"/>
+<entry
+   committed-rev="4"
+   name="libBMapApiEngine_v1_3_3.so"
+   text-time="2012-07-11T09:33:47.355294Z"
+   committed-date="2012-07-09T06:39:54.201583Z"
+   checksum="f2fd5f33531f090948e2f8b4743559f3"
+   last-author="bh"
+   kind="file"
+   prop-time="2012-07-11T09:33:47.274290Z"/>
+</wc-entries>

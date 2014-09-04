@@ -19,74 +19,114 @@ public final class R {
         public static final int bottom_tab_padding_up=0x7f050001;
     }
     public static final class drawable {
-        public static final int home_btn_bg=0x7f020000;
-        public static final int home_btn_bg_d=0x7f020001;
-        public static final int home_btn_bg_n=0x7f020002;
-        public static final int home_btn_bg_s=0x7f020003;
-        public static final int icon=0x7f020004;
-        public static final int icon_1_n=0x7f020005;
-        public static final int icon_2_n=0x7f020006;
-        public static final int icon_3_n=0x7f020007;
-        public static final int icon_4_n=0x7f020008;
-        public static final int icon_5_n=0x7f020009;
-        public static final int maintab_toolbar_bg=0x7f02000a;
-        public static final int transparent=0x7f02000b;
+        public static final int ad1=0x7f020000;
+        public static final int banner=0x7f020001;
+        public static final int ccc=0x7f020002;
+        public static final int ddd=0x7f020003;
+        public static final int eee=0x7f020004;
+        public static final int home_btn_bg=0x7f020005;
+        public static final int home_btn_bg_d=0x7f020006;
+        public static final int home_btn_bg_n=0x7f020007;
+        public static final int home_btn_bg_s=0x7f020008;
+        public static final int ic_menu_03=0x7f020009;
+        public static final int ic_menu_05=0x7f02000a;
+        public static final int ic_menu_07=0x7f02000b;
+        public static final int icon=0x7f02000c;
+        public static final int icon_1_n=0x7f02000d;
+        public static final int icon_2_n=0x7f02000e;
+        public static final int icon_3_n=0x7f02000f;
+        public static final int icon_4_n=0x7f020010;
+        public static final int icon_5_n=0x7f020011;
+        public static final int maintab_toolbar_bg=0x7f020012;
+        public static final int ph_1=0x7f020013;
+        public static final int transparent=0x7f020014;
     }
     public static final class id {
-        public static final int CheckBox_MP4=0x7f080001;
-        public static final int CheckBox_book=0x7f080003;
-        public static final int CheckBox_musicCD=0x7f080002;
-        public static final int TextView_Show=0x7f080007;
-        public static final int TextView_shoppingList=0x7f080000;
-        public static final int TextView_yourChoice=0x7f080004;
-        public static final int TextView_yourWoodsList=0x7f080005;
-        public static final int back=0x7f08000a;
-        public static final int button1=0x7f080011;
-        public static final int button2=0x7f080012;
-        public static final int danxuan=0x7f08000b;
-        public static final int editText1=0x7f08000e;
-        public static final int editText2=0x7f080010;
-        public static final int height=0x7f080018;
-        public static final int height_label=0x7f080017;
-        public static final int login=0x7f08001f;
-        public static final int main_tab=0x7f080020;
-        public static final int pass_label=0x7f080019;
-        public static final int password=0x7f08001a;
-        public static final int radio_button0=0x7f080021;
-        public static final int radio_button1=0x7f080022;
-        public static final int radio_button2=0x7f080023;
-        public static final int radio_button3=0x7f080024;
-        public static final int radio_button4=0x7f080025;
-        public static final int sex_label=0x7f08001c;
-        public static final int sex_man=0x7f08001d;
-        public static final int sex_woman=0x7f08001e;
-        public static final int spinner=0x7f08000c;
-        public static final int spinner_City=0x7f080008;
-        public static final int table1=0x7f080026;
-        public static final int table2=0x7f080027;
-        public static final int table3=0x7f080028;
-        public static final int table4=0x7f080029;
-        public static final int tableRow1=0x7f080013;
-        public static final int tableRow2=0x7f080016;
-        public static final int tableRow3=0x7f08001b;
-        public static final int text1=0x7f08002a;
-        public static final int textView1=0x7f08000d;
-        public static final int textView111=0x7f080009;
-        public static final int textView2=0x7f08000f;
-        public static final int username=0x7f080015;
-        public static final int username_label=0x7f080014;
-        public static final int widget28=0x7f080006;
+        public static final int Button_Save=0x7f08000b;
+        public static final int Button_add=0x7f080036;
+        public static final int Button_clean=0x7f080034;
+        public static final int Button_create=0x7f080035;
+        public static final int Button_delete=0x7f080039;
+        public static final int Button_edit=0x7f080037;
+        public static final int Button_openTxt=0x7f080033;
+        public static final int Button_select=0x7f080038;
+        public static final int CheckBox_MP4=0x7f080002;
+        public static final int CheckBox_book=0x7f080004;
+        public static final int CheckBox_musicCD=0x7f080003;
+        public static final int EditText_Txt=0x7f08000a;
+        public static final int Filesave=0x7f080015;
+        public static final int Gallery=0x7f080014;
+        public static final int Gallery_preView=0x7f08000d;
+        public static final int ImageView_photo=0x7f08000e;
+        public static final int TextView_Show=0x7f080008;
+        public static final int TextView_shoppingList=0x7f080001;
+        public static final int TextView_showTxt=0x7f080032;
+        public static final int TextView_yourChoice=0x7f080005;
+        public static final int TextView_yourWoodsList=0x7f080006;
+        public static final int adapter=0x7f080017;
+        public static final int back=0x7f080010;
+        public static final int basebutton=0x7f080042;
+        public static final int button1=0x7f08001c;
+        public static final int button2=0x7f08001d;
+        public static final int danxuan=0x7f080011;
+        public static final int editText1=0x7f080019;
+        public static final int editText2=0x7f08001b;
+        public static final int height=0x7f080023;
+        public static final int height_label=0x7f080022;
+        public static final int img=0x7f08003e;
+        public static final int info=0x7f080041;
+        public static final int linearLayout1=0x7f08003f;
+        public static final int listview=0x7f080013;
+        public static final int login=0x7f08002a;
+        public static final int main_tab=0x7f08002b;
+        public static final int openlayout=0x7f080031;
+        public static final int pass_label=0x7f080024;
+        public static final int password=0x7f080025;
+        public static final int radio_button0=0x7f08002c;
+        public static final int radio_button1=0x7f08002d;
+        public static final int radio_button2=0x7f08002e;
+        public static final int radio_button3=0x7f08002f;
+        public static final int radio_button4=0x7f080030;
+        public static final int sex_label=0x7f080027;
+        public static final int sex_man=0x7f080028;
+        public static final int sex_woman=0x7f080029;
+        public static final int spinner=0x7f080012;
+        public static final int spinner_City=0x7f080009;
+        public static final int sqls=0x7f080016;
+        public static final int table1=0x7f08003a;
+        public static final int table2=0x7f08003b;
+        public static final int table3=0x7f08003c;
+        public static final int table4=0x7f08003d;
+        public static final int tableRow1=0x7f08001e;
+        public static final int tableRow2=0x7f080021;
+        public static final int tableRow3=0x7f080026;
+        public static final int text1=0x7f080043;
+        public static final int textView1=0x7f080018;
+        public static final int textView111=0x7f08000f;
+        public static final int textView2=0x7f08001a;
+        public static final int title=0x7f080040;
+        public static final int username=0x7f080020;
+        public static final int username_label=0x7f08001f;
+        public static final int widget28=0x7f080007;
+        public static final int widget_absolutelayout=0x7f08000c;
+        public static final int xianlu2=0x7f080000;
     }
     public static final class layout {
-        public static final int danxuan=0x7f030000;
-        public static final int layout2=0x7f030001;
-        public static final int list_activity=0x7f030002;
-        public static final int login_relative=0x7f030003;
-        public static final int login_table=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int spinner=0x7f030006;
-        public static final int table_layout=0x7f030007;
-        public static final int xiala_content=0x7f030008;
+        public static final int baseadapterlist=0x7f030000;
+        public static final int danxuan=0x7f030001;
+        public static final int filesave=0x7f030002;
+        public static final int gallery=0x7f030003;
+        public static final int layout2=0x7f030004;
+        public static final int list_activity=0x7f030005;
+        public static final int login_relative=0x7f030006;
+        public static final int login_table=0x7f030007;
+        public static final int main=0x7f030008;
+        public static final int open=0x7f030009;
+        public static final int spinner=0x7f03000a;
+        public static final int sqls=0x7f03000b;
+        public static final int table_layout=0x7f03000c;
+        public static final int vlist2=0x7f03000d;
+        public static final int xiala_content=0x7f03000e;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
@@ -106,4 +146,25 @@ public final class R {
         public static final int myStyle_Text1=0x7f070001;
         public static final int myStyle_Text2=0x7f070002;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a Gallery.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Gallery_android_galleryItemBackground com.flysnow.sina.weibo:android_galleryItemBackground}</code></td><td></td></tr>
+           </table>
+           @see #Gallery_android_galleryItemBackground
+         */
+        public static final int[] Gallery = {
+            0x0101004c
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.flysnow.sina.weibo.R.attr#android_galleryItemBackground}
+          attribute's value can be found in the {@link #Gallery} array.
+          @attr name android:android_galleryItemBackground
+        */
+        public static final int Gallery_android_galleryItemBackground = 0;
+    };
 }

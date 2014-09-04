@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.notbook"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="5" />
+         />
+	<!-- 访问网络的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问精确位置的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+    <!-- 访问WIFI网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 改变WIFI网络状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 读写存储卡的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> 
+	
+    <!-- 读取电话状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
+    <!-- 读取联系人权限 -->   
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>  
+	<!-- 拨打电话权限 -->  
+	<uses-permission android:name="android.permission.CALL_PHONE"/> 
+	<!--在sdcard中创建/删除文件的权限 -->
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/gtd"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <provider
+            android:name="com.notbook.db.SqliteProvider"
+            android:authorities="com.homework.db" />
+        <provider
+            android:name="com.notbook.dbuser.SqliteProvider"
+            android:authorities="com.homework.dbuser" >
+        </provider>
+        <provider
+            android:name="com.notbook.things.SqliteProvider"
+            android:authorities="com.notebook.db" >
+        </provider>
+        <provider
+            android:name="com.notbook.photodb.SqliteProvider"
+            android:authorities="com.notebook.photodb" >
+        </provider>
+         <provider
+            android:name="com.notbook.weatherdb.SqliteProvider"
+            android:authorities="com.notebook.wearherdb" >
+        </provider>
+        <provider
+            android:name="com.notbook.typedb.SqliteProvider"
+            android:authorities="com.notebook.typedb" >
+        </provider>
+        
+         <activity
+            android:name="com.notbook.ui.Welcome"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> 
+        <activity android:name="com.notbook.swithLayout.SwitchLayout" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.notbook.ui.SwitchActivity" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.MainActivity" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.MainActivity0" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.MainActivity1" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.MainActivity2" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.MainActivity4" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        
+        <activity android:name="com.notbook.ui.MainActivity3" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Home" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Celender" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+       	<activity android:name="com.notbook.calendar.CalendarView" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Celenderdetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Weather" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Weatheradd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.ChuanYu" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.More" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/> 
+        <activity android:name="com.notbook.ui.Login" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.notbook.ui.Tuisongxiaoxi" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.notbook.ui.About" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Huanfu" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Personinformation" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Personinformationedit" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Changepwd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Manager" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" android:windowSoftInputMode="stateVisible" android:configChanges="orientation|keyboardHidden"/>
+       	<activity android:name="com.notbook.ui.Manager1" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" android:windowSoftInputMode="stateVisible" android:configChanges="orientation|keyboardHidden"/>
+       	<activity android:name="com.notbook.ui.Manageradd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" android:windowSoftInputMode="stateVisible|adjustResize" android:configChanges="keyboardHidden|orientation"/>
+       	<activity android:name="com.notbook.ui.Eventlist" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Eventadd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"/>
+       	<activity android:name="com.notbook.ui.Eventdetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Friend" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Friend1" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Hudianlist" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.notbook.ui.Chuanyudetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Chuanyuadd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Receiveperson" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Myaboutchuanyulist" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.MyaboutChuanyudetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	
+       	<activity android:name="com.notbook.ui.Industrydetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	
+       	<activity android:name="com.notbook.ui.Myattention" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	
+       	<activity android:name="com.notbook.ui.Myattentionlist" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Sendperson" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	
+       	<activity android:name="com.notbook.ui.Forgetpwd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+       	<activity android:name="com.notbook.ui.Register" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Citylist" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Citylistitem" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.FriendList" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Friendlistdetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.FriendAdd" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait" />
+      	<activity android:name="com.notbook.ui.Friendhaoma" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Friendtongxunluhaoma" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	<activity android:name="com.notbook.ui.Frienddetail" android:theme="@android:style/Theme.Light.NoTitleBar" android:screenOrientation="portrait"/>
+      	
+      	<activity
+            android:name="com.weibo.joechan.ShareIndexAty"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.weibo.sina.ShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/ContentOverlay"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible" >
+        </activity>
+        <activity android:name="com.weibo.tencent.MainActivity" android:theme="@android:style/Theme.Light.NoTitleBar"/>
+        <activity android:name="com.weibo.tencent.WebViewActivity" android:theme="@android:style/Theme.Light.NoTitleBar"/>
+        <activity android:name="com.weibo.tencent.WeiBoActivity" android:theme="@android:style/Theme.Light.NoTitleBar"/>
+        <activity android:name="com.weibo.sina.AuthorizeActivity" android:theme="@android:style/Theme.Light.NoTitleBar"/>
+      	<activity android:name=".sina.ShareActivity" android:theme="@android:style/Theme.Light.NoTitleBar"/>
+      	
+      	<service 
+		    android:name="com.notebook.update.UpdateService"
+		    android:process=".message" >
+		</service>
+        <receiver android:name="com.notbook.clock.AlarmReceiver" android:process=":remote" /> 
+        <service android:name="com.notbook.clock.AlarmService" android:process=":remote">
+            <intent-filter>
+                <action android:name="chief_musicService"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+      	<service android:name="com.notebook.service.ChatService" >
+        </service>
+		<service android:name="com.notbook.clock.MemorandAlarmService" >
+            <intent-filter>
+                <action android:name="com.notbook.clock.MemorandAlarmService" />
+            </intent-filter>
+        </service>
+        <receiver android:name="com.notebook.service.BootReceiver" >
+            <intent-filter>
+
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+        
+        
+    </application>
+	<supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+</manifest>

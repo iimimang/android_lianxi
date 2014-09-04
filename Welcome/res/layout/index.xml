@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homepage"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/one1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/title"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/more_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:background="@drawable/back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="分享"
+            android:layout_marginLeft="25dp"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-20px"
+            android:background="@drawable/share"
+            />
+    </LinearLayout>
+	
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+        <TextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        />
+        <ListView 
+	        android:id="@+id/sharelist"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:cacheColorHint="#00000000"
+	        android:divider="@null"
+	        android:listSelector="@drawable/touming"
+	        >
+	    </ListView>
+
+        
+        
+
+    </LinearLayout>
+	<LinearLayout
+	    android:id="@+id/one2"
+		        android:layout_width="fill_parent"
+		        android:layout_height="50dp"
+		        android:layout_alignParentBottom="true"
+		        android:background="@drawable/title"
+		        android:visibility="gone">
+    			<Button 
+				    android:id="@+id/iamgebutton1"
+				    android:layout_width="wrap_content"
+		        	android:layout_height="50dp"
+		        	android:layout_weight="1"
+		        	android:background="@drawable/icon1_1"/>
+    			<Button 
+				    android:id="@+id/iamgebutton2"
+				    android:layout_width="wrap_content"
+		        	android:layout_height="50dp"
+		        	android:layout_weight="1"
+		        	android:background="@drawable/icon1_2"/>
+    			<Button 
+				    android:id="@+id/iamgebutton3"
+				    android:layout_width="wrap_content"
+		        	android:layout_height="50dp"
+		        	android:layout_weight="1"
+		        	android:background="@drawable/icon1_3"/>
+    			<Button 
+				    android:id="@+id/iamgebutton4"
+				    android:layout_width="wrap_content"
+		        	android:layout_height="50dp"
+		        	android:layout_weight="1"
+		        	android:background="@drawable/icon1_4"/>
+    			<Button 
+				    android:id="@+id/iamgebutton5"
+				    android:layout_width="wrap_content"
+		        	android:layout_height="50dp"
+		        	android:layout_weight="1"
+		        	android:background="@drawable/icon1_5"/>
+    </LinearLayout>
+</RelativeLayout>
