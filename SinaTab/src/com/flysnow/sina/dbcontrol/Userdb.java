@@ -1,13 +1,21 @@
 package com.flysnow.sina.dbcontrol;
 
+
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-public class Userdb  extends AndroidTestCase{
+public class Userdb  {
 	
 	
+	private DBHelper dbHelper = null;
+	public Userdb(Context context) {
+		// TODO Auto-generated constructor stub
+		dbHelper = new DBHelper(context);
+	}
+
 	/**
 	 * 创建表
 	 * 
@@ -15,7 +23,6 @@ public class Userdb  extends AndroidTestCase{
 	 */
 	public void createTable()  throws Exception {
 		
-		DBHelper dbHelper = new DBHelper(this.getContext());
 		
 		dbHelper.open();
 		Log.i("aaaa","777777777777777777\n");
@@ -36,13 +43,13 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void insert() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 
 		ContentValues values = new ContentValues(); // 相当于map
 
-		values.put("username", "test");
-		values.put("password", "123456");
+		values.put("username", "test111111");
+		values.put("password", "12345611111111");
 
 		dbHelper.insert("user", values);
 
@@ -55,7 +62,7 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void update() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 		ContentValues initialValues = new ContentValues();
 		initialValues.put("username", "changename"); // 更新的字段和值
@@ -71,7 +78,7 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void delete() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 
 		dbHelper.delete("user", "id =?'", new String[] { "1" });
@@ -85,7 +92,7 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void addColumn() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 
 		String updateSql = "alter table user add company text";
@@ -100,7 +107,7 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void selectList() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 		
 		Cursor returnCursor = dbHelper.findList(false, "user", new String[] { "id", "username", "password" }, "username?", new String[] { "test" }, null, null, "id desc", null);
@@ -122,7 +129,7 @@ public class Userdb  extends AndroidTestCase{
 	 * @throws Exception
 	 */
 	public void selectInfo() throws Exception {
-		DBHelper dbHelper = new DBHelper(this.getContext());
+		
 		dbHelper.open();
 		Cursor returnCursor = dbHelper.findOne(false,"user", new String[] { "id", "username", "password" }, "id = '1'", null, null, null, "id desc",null);
 		if (returnCursor != null) {

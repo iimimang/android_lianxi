@@ -36,16 +36,17 @@ public final class R {
         public static final int header_1=0x7f020005;
         public static final int header_3=0x7f020006;
         public static final int ic_launcher=0x7f020007;
-        public static final int right_me=0x7f020008;
-        public static final int swiper03=0x7f020009;
+        public static final int logo_me_02=0x7f020008;
+        public static final int right_me=0x7f020009;
+        public static final int swiper03=0x7f02000a;
     }
     public static final class id {
-        public static final int basebutton=0x7f08002a;
+        public static final int basebutton=0x7f08002c;
         public static final int imageView1=0x7f080003;
         public static final int imageView2=0x7f08000e;
         public static final int imageView2ewq=0x7f080013;
         public static final int img=0x7f080023;
-        public static final int info=0x7f080029;
+        public static final int info=0x7f08002b;
         public static final int jiage=0x7f080025;
         public static final int line1=0x7f080007;
         public static final int line2=0x7f080008;
@@ -65,9 +66,11 @@ public final class R {
         public static final int list3=0x7f080021;
         public static final int listimg1=0x7f08001e;
         public static final int listimg2=0x7f08001f;
-        public static final int menu_settings=0x7f08002b;
+        public static final int loadmore_text=0x7f08002a;
+        public static final int menu_settings=0x7f08002d;
         public static final int nanxingwanju=0x7f08000d;
         public static final int old_jiage=0x7f080026;
+        public static final int progressBar2=0x7f080029;
         public static final int sale_btn=0x7f080028;
         public static final int textView1=0x7f080001;
         public static final int textView11=0x7f080005;
@@ -89,7 +92,8 @@ public final class R {
         public static final int activity_main=0x7f030000;
         public static final int baseadapterlist=0x7f030001;
         public static final int items=0x7f030002;
-        public static final int vlist2=0x7f030003;
+        public static final int load=0x7f030003;
+        public static final int vlist2=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

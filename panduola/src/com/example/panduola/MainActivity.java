@@ -9,9 +9,12 @@ import java.util.TreeSet;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -54,7 +57,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	
 			default:
 				break;
-		}
+		} 
 		
 	}
 	
@@ -149,7 +152,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	            	 viewHolder=(ViewHolder) convertView.getTag();
 	            }
 	            
-	            Log.i("aaaa",listdata.get(position).toString()+"13131313");
+	           // Log.i("aaaa",listdata.get(position).toString()+"13131313");
 	            viewHolder.img.setBackgroundResource((Integer)listdata.get(position).get("img"));
 	            viewHolder.title.setText((String)listdata.get(position).get("title"));
 	            viewHolder.jiage.setText((String)listdata.get(position).get("jiage"));
@@ -181,6 +184,39 @@ public class MainActivity extends Activity implements OnClickListener{
 	 
 
 	
+	 @Override
+		public boolean onKeyDown(int keyCode, KeyEvent event) {
+			
+			//Log.i("TAG","----"+keyCode);
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_BACK:
+				
+				//webView.goBack();
+				exitApp();
+				return false;
+			default:
+				break;
+			}
+			
+			return super.onKeyDown(keyCode, event);
+		}
+		
+		public void exitApp(){
+			new AlertDialog.Builder(this).setTitle("确定要退出么？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+					System.exit(0);
+				}
+			}).setNegativeButton("不确定", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			}).create().show();
+		}
 	
 	
 

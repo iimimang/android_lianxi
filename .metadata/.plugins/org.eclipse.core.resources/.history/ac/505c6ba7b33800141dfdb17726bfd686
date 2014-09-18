@@ -1,0 +1,10 @@
+package com.example.json;
+
+public class List_json {
+
+	
+	final static  String LISTGOOD ="http://www.sss.com/app.php";
+	
+	
+	
+}

@@ -1,87 +1,248 @@
 package com.example.panduola;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import com.example.json.List_json;
+
+
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
 
 /**
  * 
  * @author shangzhenxiang
  *
  */
-public class Textlist extends Activity {
+public class Textlist extends Activity implements OnClickListener  , OnScrollListener {
 
-    private ListView mListView;
+    private static final String LISTGOOD = null;
+	private ListView mListView;
+    private View moreView;
+    private List<HashMap<String, Object>> Listdata;
+    private BaseListAdapter mAdapter;
+    
+    private String result;
+    private int lastItem;
+    private int count=0;
+    private int page=1;
+    private boolean  sj=true;
+	private Handler handler;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baseadapterlist);
         mListView = (ListView) findViewById(R.id.xianlu2);
-        mListView.setAdapter(new BaseListAdapter(this));
+        moreView = getLayoutInflater().inflate(R.layout.load, null);
+        mListView.addFooterView(moreView);
+        
+        Listdata =  new ArrayList<HashMap<String,Object>>();
+        loadMoreData();
+        ImageView fanhui=(ImageView)findViewById(R.id.listimg1);
+        fanhui.setOnClickListener(this);
     }
     
-    private List<HashMap<String, Object>> getData() {
+    
+    private void loadMoreData() {
+		// TODO Auto-generated method stub
+    	
+     	handler=new Handler() {  
+            @Override  
+            public void handleMessage(Message msg) { 
+            	if (Listdata != null) {
+            	//getData();
+            	adadper();
+            	}
+                super.handleMessage(msg);  
+            }  
+        };  
+        new Thread(new Runnable() {
+			public void run() {
+				send();
+				Message m = handler.obtainMessage(); 
+				handler.sendMessage(m); 
+			}
+		}).start(); 
+    	
+	}
+ 
+    
+	public void send() {
+		   
+		
+		String target = List_json.LISTGOOD+"?page="+page;
+		List_json  makejson= new List_json();
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpGet httpRequest = new HttpGet(target);	
+		HttpResponse httpResponse;
+		try {
+			httpResponse = httpclient.execute(httpRequest);	
+			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				
+				result = EntityUtils.toString(httpResponse.getEntity());	
+				
+				Listdata.addAll(makejson.parseJsonMulti(result));
+				Log.i("aaaa",page+"-------"+Listdata.toString());
+				page++;
+				
+				if(result.equals("0")){
+					sj=false;	
+				}
+			}else{
+				result="";
+				 
+			}	
+					
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			
+			Log.i("aaaa","请求失败-------"+e.getMessage());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.i("aaaa","请求失败2-------"+e.getMessage());
+		}
+		
+		count = Listdata.size();
+	
+	}
+	private void adadper() {
+		// TODO Auto-generated method stub
+		
+		 mAdapter=new BaseListAdapter(this);
+		 mAdapter.setValues(Listdata);
+		 mListView.setAdapter(mAdapter); 
+	     mListView.setOnScrollListener(this); 
+	}
+	
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		
+		Log.i("aaaa", "firstVisibleItem="+firstVisibleItem+"\nvisibleItemCount="+
+				visibleItemCount+"\ntotalItemCount"+totalItemCount);
+		
+		lastItem = firstVisibleItem + visibleItemCount - 1;  
+		
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) { 
+			
+		Log.i("cccc", "SCROLL_STATE_IDLE="+this.SCROLL_STATE_IDLE);
+		Log.i("cccc", "scrollState="+scrollState);
+		Log.i("cccc", "count="+count);
+		if(lastItem == count  && scrollState ==  this.SCROLL_STATE_IDLE){ 
+		
+			moreView.setVisibility(view.VISIBLE);
+		    mHandler.sendEmptyMessage(0);			
+		 } 
+	}
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 0:
+			   	
+			   	 loadMoreData();  //
+			   	
+			    mAdapter.notifyDataSetChanged(); 
+			    moreView.setVisibility(View.GONE); 
+				break;
+            case 1: 
+				
+            	Log.i("TAGaa1", "eeeeeeeeeeeeeee=");
+				break;
+			default:
+				Log.i("TAGaa2", "qqqqqqqqqqqqqqq=");
+				break;
+			}
+		};
+	};
+
+	@Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch(id) {
+        case R.id.listimg1:
+        	Intent internt1=new Intent();
+			internt1.setClass(Textlist.this,MainActivity.class );
+			startActivity(internt1);
+            break;
+        }
+    }
+
+    private void  getData() {
         List<HashMap<String, Object>> maps = new ArrayList<HashMap<String,Object>>();
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("title", "日本进口2H2D延时喷剂 男性助勃");
-		map.put("img", R.drawable.ddd);
-		map.put("jiage", "198.0");
-		map.put("old_jiage", "237");
-		map.put("xiaoliang", "1025");
-		maps.add(map);
-		
+		for(int i = 0;i<5;i++){
 		map=new HashMap<String, Object>();
 		map.put("title", "百乐大力神杯 7频震动 男用阴交自慰器");
 		map.put("img", R.drawable.ccc);
 		map.put("jiage", "78.0");
 		map.put("old_jiage", "165");
 		map.put("xiaoliang", "100");
-		maps.add(map);
+		Listdata.add(map);
+		}
 		
-		map=new HashMap<String, Object>();
-		map.put("title", "早泄克星 黑寡妇煞星 达克罗宁软膏");
-		map.put("img", R.drawable.eee);
-		map.put("jiage", "208.0");
-		map.put("old_jiage", "447");
-		map.put("xiaoliang", "145");
-		maps.add(map);
-		
-        return maps;
-        
-        
+		count = Listdata.size();
+		Log.i("bbbb", "count="+count);  
+		Log.i("bbbb", "Listdata="+Listdata); 
     }
     
     private class BaseListAdapter extends BaseAdapter implements OnClickListener {
 
         private Context mContext;
         private LayoutInflater inflater;
+		private List<HashMap<String, Object>> mData;
         
         public BaseListAdapter(Context mContext) {
             this.mContext = mContext;
             inflater = LayoutInflater.from(mContext);
         }
         
-        @Override
+        public void setValues(List<HashMap<String, Object>> listdata) {
+			// TODO Auto-generated method stub
+			
+        	this.mData = listdata;
+		}
+
+		@Override
         public int getCount() {
-            return getData().size();
+            return this.mData.size();
         }
 
         @Override
@@ -107,12 +268,12 @@ public class Textlist extends Activity {
                 viewHolder.sale_btn = (Button) convertView.findViewById(R.id.sale_btn);
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (ViewHolder) convertView.getTag();
+                viewHolder = (ViewHolder) convertView.getTag(); 
             }
             
             System.out.println("viewHolder = " + viewHolder);
-            viewHolder.img.setBackgroundResource((Integer) getData().get(position).get("img"));
-            viewHolder.title.setText((CharSequence) getData().get(position).get("title"));
+            viewHolder.img.setBackgroundResource((Integer) this.mData.get(position).get("img"));
+            viewHolder.title.setText((CharSequence) this.mData.get(position).get("title"));
            
             viewHolder.sale_btn.setOnClickListener(this);
             

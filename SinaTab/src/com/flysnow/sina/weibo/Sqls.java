@@ -58,7 +58,7 @@ public class Sqls extends Activity implements Button.OnClickListener {
 			
 		case R.id.Button_add:
 			
-			Userdb sqllites=new Userdb();
+			Userdb sqllites=new Userdb(this);
 			try {
 				sqllites.insert();
 			} catch (Exception e) {

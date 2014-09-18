@@ -1,0 +1,47 @@
+package com.example.json;
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+public class List_json {
+
+	
+	final static  String LISTGOOD ="http://www.sss.com/app.php";
+	
+	
+	 public ArrayList parseJsonMulti(String strResult) { 
+		 
+		 ArrayList list=new ArrayList();
+	    	  
+	      try { 
+	    	   
+	    	  JSONArray jsonObjs = new JSONArray(strResult);
+	          //  JSONArray jsonObjs = new JSONObject(strResult).getJSONArray("singers"); 
+	          
+	            String s = "";        
+	            for(int i = 0; i < jsonObjs.length() ; i++){ 
+
+	                JSONObject jsonObj = ((JSONObject)jsonObjs.opt(i)) ; 
+
+	                int id = jsonObj.getInt("id"); 
+	                
+	                String title = jsonObj.getString("title");   
+	                String description = jsonObj.getString("description");
+	                String inputtime = jsonObj.getString("inputtime");
+	               	
+	            }
+	           
+	           
+
+	        } catch (JSONException e) { 
+
+	           e.printStackTrace(); 
+
+	        } 
+	      return list;
+	    } 
+}
