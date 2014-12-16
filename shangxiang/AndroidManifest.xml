@@ -1,0 +1,36 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wyj.tabmenu"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="15" />
+
+    <application
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".TabMenu"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.wyj.tabmenu.wish" >
+        </activity>
+         <activity android:name="com.wyj.tabmenu.FindGroupTab" >
+        </activity>
+        <activity android:name="com.wyj.tabmenu.Find" >
+        </activity>
+        <activity android:name="com.wyj.tabmenu.Foli" >
+        </activity>
+        <activity android:name="com.wyj.tabmenu.My" >
+        </activity>
+        <activity android:name="com.wyj.tabmenu.Find_item" >
+        </activity>
+    </application>
+
+</manifest>
