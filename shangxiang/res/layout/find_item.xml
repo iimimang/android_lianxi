@@ -46,7 +46,7 @@
     
     
     
-    <LinearLayout 
+  <LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
@@ -76,27 +76,50 @@
         android:layout_marginLeft="5dp"
         android:orientation="vertical" >
 
+	     <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+             >
+     
         <TextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
     		android:text="寂静的风"
             android:textColor="#000"
             android:textSize="12dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
+       
+         <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/username"
+                android:gravity="center_vertical"
                 android:text="刚刚在五台山求愿祈福"
                 android:textColor="#989a99"
                 android:textSize="12dp" />
 
-        </LinearLayout>
+   
+        	<Button 
+	            android:id="@+id/tongyuan"
+	            android:layout_width="wrap_content"
+	            android:layout_height="32dp"
+	            android:layout_centerVertical="true"
+	            android:layout_alignParentRight="true"
+   				android:layout_alignParentTop="true"
+   				android:layout_marginRight="5dp"
+	            android:background="@drawable/shape"
+	            android:textColor="#ffffff"
+	            android:gravity="center"
+	            android:textSize="14dp"
+	            android:text="同愿祈福"
+             />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +176,7 @@
 
 <View android:layout_height="1px" android:background="#dfe1e0" android:layout_width="fill_parent"></View>
 
-  
+
      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -161,9 +184,10 @@
 
         <ListView
             android:id="@+id/find_list_item"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/white"
+            />
     </LinearLayout>
   
   

@@ -9,6 +9,6 @@ public class Foli extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.about_page);
+		setContentView(R.layout.foli);
 	}
 }
