@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
@@ -22,6 +23,8 @@ public class TabMenu extends TabActivity
 	public static final String TAB_SEARCH = "我的"; 
 
 	public RadioGroup radioGroup;
+	private Intent intent;
+	private Bundle budle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -34,7 +37,17 @@ public class TabMenu extends TabActivity
 		init();
 		// 底部菜单点击事件
 		clickevent();
+//		intent= this.getIntent();  //接受的数据
+//		budle =intent.getExtras();
+//		int tab_key =budle.getInt("tab_key");
+//		if(tab_key==2){
+//			mth.setCurrentTabByTag(TAB_ABOUT);
+//		}
+		
+		RadioButton radioButton = (RadioButton)findViewById(R.id.radio_button2);
+		radioButton.setSelected(true);
 	}
+	
 
 	/**
 	 * 每一个底部按钮点击事件，切换相应的界面
@@ -90,11 +103,15 @@ public class TabMenu extends TabActivity
 		mth.addTab(ts3);
 
 		TabSpec ts4 = mth.newTabSpec(TAB_SEARCH).setIndicator(TAB_SEARCH);
-		ts4.setContent(new Intent(TabMenu.this, My.class));
+		ts4.setContent(new Intent(TabMenu.this, MemberGroupTab.class));
 		mth.addTab(ts4);
 		
+	
 		
+		//mth.setCurrentTabByTag(TAB_ABOUT);
+	
 		
+		 
 	}
 	
 	

@@ -55,7 +55,7 @@ public class FindGroupTab extends ActivityGroup
         Intent intent = new Intent(this, Find.class);  
         // 把Activity转换成一个Window，然后转换成View  
         Window w = group.getLocalActivityManager().startActivity(  
-                "Find", intent);  
+ "Find", intent);  
         View view = w.getDecorView();  
         //设置要跳转的Activity显示为本ActivityGroup的内容  
         group.setContentView(view);  

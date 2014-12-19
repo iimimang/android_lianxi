@@ -6,9 +6,12 @@ import java.util.List;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +52,22 @@ public class Find_item extends Activity implements OnClickListener
         FindGroupTab.group.setContentView(view); 
 		
 	}
+	
+    @Override  
+    public void onBackPressed() {     
+    	
+    	 //要跳转的Activity  
+        Intent intent = new Intent(Find_item.this, Find.class);  
+         // 把Activity转换成一个Window，然后转换成View  
+        Window w = FindGroupTab.group.getLocalActivityManager()  
+                .startActivity("Find",intent);  
+        View view = w.getDecorView();  
+        //设置要跳转的Activity显示为本ActivityGroup的内容  
+        FindGroupTab.group.setContentView(view); 
+    }  
+    
+	
+
 	
 
     private List<HashMap<String, Object>>  getData() {

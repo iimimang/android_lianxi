@@ -23,11 +23,17 @@
         </activity>
          <activity android:name="com.wyj.tabmenu.FindGroupTab" >
         </activity>
+        <activity android:name="com.wyj.tabmenu.MemberGroupTab" >
+        </activity>
         <activity android:name="com.wyj.tabmenu.Find" >
         </activity>
         <activity android:name="com.wyj.tabmenu.Foli" >
         </activity>
         <activity android:name="com.wyj.tabmenu.My" >
+        </activity>
+         <activity android:name="com.wyj.tabmenu.Login" >
+        </activity>
+         <activity android:name="com.wyj.tabmenu.Reg" >
         </activity>
         <activity android:name="com.wyj.tabmenu.Find_item" >
         </activity>

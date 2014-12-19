@@ -3,7 +3,7 @@ package com.wyj.tabmenu;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
+
 import android.view.KeyEvent;
 
 public class MainActivity extends Activity

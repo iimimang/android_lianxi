@@ -9,24 +9,18 @@ import com.wyj.calendar.KCalendar;
 
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wyj.calendar.KCalendar.OnCalendarClickListener;
 import com.wyj.calendar.KCalendar.OnCalendarDateChangedListener;
 
-public class Foli extends Activity
+public class Foli extends MainActivity
 {
 	
 	String date = null;// 设置默认选中的日期  格式为 “2014-04-05” 标准DATE格式   

@@ -72,6 +72,26 @@ public class Find extends Activity
 		//Log.i("bbbb", "Listdata="+Listdata); 
     }
     
+    @Override  
+    public void onBackPressed() {     
+    	
+    	new AlertDialog.Builder(Find.this.getParent()).setTitle("确定要退出么？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+				System.exit(0);
+			}
+		}).setNegativeButton("不确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		}).create().show();
+    }  
+    
+    
     private class BaseListAdapter extends BaseAdapter implements OnClickListener {
 
         private Context mContext;
@@ -148,12 +168,7 @@ public class Find extends Activity
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-//			Intent intent=new Intent();
-//            intent.setClass(Find.this, Find_item.class);
-//            Bundle bu=new Bundle(); // 这个组件 存值
-//            bu.putString("username", v.toString());
-//            intent.putExtras(bu);  //放到 intent 里面  然后 传出去
-//            startActivity(intent);
+
             
             //要跳转的Activity  
             Intent intent = new Intent(Find.this, Find_item.class);  

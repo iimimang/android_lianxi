@@ -61,8 +61,8 @@
             android:layout_marginLeft="20dp"
             android:src="@drawable/me" />
      
-    <TextView
-        android:id="@+id/textView1"
+    <TextView 
+        android:id="@+id/member_center_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 		android:layout_centerVertical="true"
@@ -70,7 +70,7 @@
         android:layout_toRightOf="@+id/avatar"
         android:textColor="#373737"
         android:textSize="18dp"
-        android:text="张三" />
+        android:text="立即登录" />
 
     <ImageView
             android:id="@+id/userinfo"
