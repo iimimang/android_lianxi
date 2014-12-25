@@ -1,11 +1,13 @@
 package com.wyj.tabmenu;
 
 
+import android.app.Activity;
 import android.app.ActivityGroup;
 import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Window;
@@ -18,9 +20,28 @@ public class MemberGroupTab extends ActivityGroup
   
     @Override  
     protected void onCreate(Bundle savedInstanceState) {  
-        super.onCreate(savedInstanceState);  
+        super.onCreate(savedInstanceState);   
         group = this;  
     }  
+  
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+    {
+    	
+        if (resultCode > 0) 
+        {
+            switch(requestCode)
+            {
+	            case 1: // global variable to indicate camera result
+	            My activity = (My) getLocalActivityManager().getCurrentActivity();
+	            activity.onActivityResult(resultCode, resultCode, data);
+	            Log.i("aaaa","------父级-回来了-----------"+requestCode);
+	           // activity.onActivityResult(requestCode, resultCode, data);
+	           
+	            break;
+            }
+        }  
+    } 
+    
   
     @Override  
     public void onBackPressed() {         
@@ -39,7 +60,9 @@ public class MemberGroupTab extends ActivityGroup
         View view = w.getDecorView();  
         //设置要跳转的Activity显示为本ActivityGroup的内容  
         group.setContentView(view);  
-    } 
+    }
+
+
 		
     
 }

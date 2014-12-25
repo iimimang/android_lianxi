@@ -1,13 +1,15 @@
 package com.wyj.tabmenu;
 
 
+import com.wyj.app.MyApplication;
 import com.wyj.app.RegularUtil;
 import com.wyj.member_db.Member_model;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -91,7 +93,7 @@ public class Login extends Activity implements OnClickListener
 //			
 //			return super.onKeyDown(keyCode, event);
 //		}
-	 
+	  
 	private void login_submit() {
 		// TODO Auto-generated method stub
 		
@@ -128,6 +130,8 @@ public class Login extends Activity implements OnClickListener
 			login_intent.putExtras(bu);
 			//设置返回数据
 			Login.this.setResult(1, login_intent);
+			MyApplication.getInstances().setName(reg_username);//设置用户名
+			Log.i("aaaa","------Login.java"+reg_username);
             //关闭Activity
 			Login.this.finish();
 					

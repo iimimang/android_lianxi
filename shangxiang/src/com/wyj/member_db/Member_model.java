@@ -4,6 +4,7 @@ package com.wyj.member_db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class Member_model {
 
@@ -31,12 +32,17 @@ public class Member_model {
 	public boolean checkMember(String reg_username, String reg_passwd) {
 		MemberDefine memberinfo =null;
 		memberinfo= findByUsername(reg_username);
-		if(!memberinfo.getPasswd().equals(reg_passwd)){
-			
-			return false;
+		//Log.i("aaaa","------错误是什么-"+memberinfo.getUsername());
+		if(memberinfo.getUsername()!=null){
+			if(!memberinfo.getPasswd().equals(reg_passwd)){
+				
+				return false;
+			}else{
+				
+				return true;
+			}
 		}else{
-			
-			return true;
+			return false;
 		}
 		
 	}

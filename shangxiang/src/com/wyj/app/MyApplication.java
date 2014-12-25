@@ -11,7 +11,8 @@ import android.app.Application;
 public class MyApplication extends Application {
 	private static MyApplication instance;
 	private List<Activity> activityList = new LinkedList<Activity>();
-
+    private static String username="";
+  
 	public static MyApplication getInstances() {
 		if (null == instance) {
 			instance = new MyApplication();
@@ -39,6 +40,13 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+	}
+	
+	public String getUserName() {
+        	return username;
+	}
+	public void setName(String username) {
+	        this.username = username;
 	}
 
 	public String getSystemDataATime() {

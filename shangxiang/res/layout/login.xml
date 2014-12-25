@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="10dp"
     >
     	<ImageView
             android:id="@+id/logo"
@@ -125,6 +125,91 @@
 	            android:layout_marginRight="10dp"
 	            android:text="登录"
              />
+
+</LinearLayout>
+
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="20dp" 
+    android:gravity="center_vertical"
+    android:layout_marginTop="10dp">
+		 <View 
+			    android:layout_height="1dp"
+			    android:background="#DADCDB"
+			    android:layout_weight="1"
+			    android:layout_width="50dp">
+			</View>
+			<TextView
+   
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#000000"
+		        android:gravity="center"
+		        android:layout_weight="1"
+		        android:textSize="12dp"
+		        android:text="使用合作帐号登录" />	
+			<View 
+			    android:layout_height="1dp"
+			    android:background="#DADCDB"
+			    android:layout_weight="1"
+			    android:layout_width="50dp">
+			</View>
+
+</LinearLayout>
+
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal"
+   >
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="10dp">
+		 	<ImageView
+            android:id="@+id/weixin_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_15" />
+			<TextView
+   				android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#000000"
+		        android:gravity="center"
+		        android:layout_weight="1"
+		        android:textSize="12dp"
+		        android:text="微信" />	
+			
+</LinearLayout>
+			<View 
+			    android:layout_height="wrap_content"
+			    android:background="#F3F1F2"
+			    android:layout_width="30dp">
+			</View>
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="10dp">
+		 	<ImageView
+            android:id="@+id/weibo_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_17" />
+			<TextView
+   				android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#000000"
+		        android:gravity="center"
+		        android:layout_weight="1"
+		        android:textSize="12dp"
+		        android:text="新浪微博" />	
+			
+</LinearLayout>
 
 </LinearLayout>
 
