@@ -2,7 +2,8 @@
     package="com.wyj.tabmenu"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	
+    
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="15" />
@@ -27,7 +28,8 @@
         </activity>
         <activity android:name="com.wyj.tabmenu.MemberGroupTab" >
         </activity>
-        <activity android:name="com.wyj.tabmenu.Find" >
+        <activity android:name="com.wyj.tabmenu.Find" 
+            >
         </activity>
         <activity android:name="com.wyj.tabmenu.Foli" >
         </activity>

@@ -3,6 +3,7 @@ package com.wyj.app;
 import java.util.List;
 import java.util.Map;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.wyj.http.HttpClientHelper;
 
 import android.app.ProgressDialog;
@@ -27,8 +28,8 @@ public class AsynTaskHelper {
 	
 	public void more_dataDownload(String url, Map<String, Object> map,
 			OnDataDownloadListener downloadListener, Context context,
-			String methodString) {
-		new GetMoreDataTask(downloadListener).execute(url);
+			String methodString,PullToRefreshListView mPullRefreshListView) {
+		new GetMoreDataTask(downloadListener,mPullRefreshListView).execute(url);
 	}
 	
 	//默认的加载类-------------------------------------------------------------------------------------------
@@ -99,7 +100,7 @@ public class AsynTaskHelper {
 			// Simulates a background job.
 			try {
 				
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			
 			} catch (InterruptedException e) {
 				
@@ -129,10 +130,11 @@ public class AsynTaskHelper {
     private class GetMoreDataTask extends AsyncTask<String, Void, String> {
         
     	private OnDataDownloadListener downloadListener;
-		
-		public GetMoreDataTask(OnDataDownloadListener downloadListener3) {
+    	private PullToRefreshListView mPullRefreshListView;
+		public GetMoreDataTask(OnDataDownloadListener downloadListener3,PullToRefreshListView mPullRefreshListView2) {
 			// TODO Auto-generated constructor stub
 			this.downloadListener = downloadListener3;
+			this.mPullRefreshListView = mPullRefreshListView2;
 		}
 
 		@Override 
@@ -140,7 +142,7 @@ public class AsynTaskHelper {
 			// Simulates a background job.
 			try {
 				
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			
 			} catch (InterruptedException e) {
 				
@@ -162,6 +164,7 @@ public class AsynTaskHelper {
 
 			// 通过回调接口来传递数据
 			downloadListener.onDataDownload(result);
+			this.mPullRefreshListView.onRefreshComplete();
 			super.onPostExecute(result);
 		}
 	}

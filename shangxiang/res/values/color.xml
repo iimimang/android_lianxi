@@ -5,4 +5,5 @@
     <color name="color_text_selected">#E38A08</color>  
     <color name="color_text_normal">#ffffff</color>  
     <color name="white">#ffffff</color>   
+    <color name="spinner_style">#F2EDCD</color>   
 </resources>

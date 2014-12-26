@@ -2,25 +2,29 @@ package com.wyj.tabmenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 
+import com.wyj.adapter.TemplateAdapter;
 import com.wyj.app.AsynTaskHelper;
 import com.wyj.app.AsynTaskHelper.OnDataDownloadListener;
 
-import com.wyj.app.JsonHelper;
+
 import com.wyj.app.JsonToListHelper;
-import com.wyj.http.HttpClientHelper;
-import com.wyj.http.HttpURLConnHelper;
+
 import com.wyj.http.WebApiUrl;
 
 
@@ -32,23 +36,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.os.AsyncTask;
+
 import android.os.Bundle;
 
-import android.support.v4.view.ViewPager.LayoutParams;
+
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+
 import android.view.Window;
-import android.widget.AbsListView;
+
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -56,16 +59,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TabHost;
+
 import android.widget.TextView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.TabHost.TabSpec;
+
 import android.widget.Toast;
 
 public class Find extends Activity 
 {
 	
-		private static final String[] countriesStr ={"全部道场","五台山清凉寺","九华山净土寺","普陀山法门寺"};
+		
+		private List<Map<String, Object>> countriesStr = new ArrayList<Map<String, Object>>();
 		private Spinner mySpinner;
 		private ArrayAdapter<String> adapter;
 		private int tid=0; //道场id的标识
@@ -78,9 +81,9 @@ public class Find extends Activity
 		private List<Map<String, Object>> Listdata; // 加载到适配器中的数据源
 	    private BaseListAdapter mAdapter;
 	    private int page=1;
-	    private int pagesize=10;
+	    private int pagesize=30;
 	    private boolean isBottom = false;// 判断是否滚动到数据最后一条
-	    private int lastItem;
+	    private int lastItemId;
 		private int count;
 		private PullToRefreshListView mPullRefreshListView;
 		
@@ -103,17 +106,34 @@ public class Find extends Activity
 	private void get_daochang_list(Map<String, Object> map, String url, final Context context) {
 		
 		mySpinner = (Spinner) findViewById(R.id.daochang_select);
-		adapter =new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice,countriesStr);
-		mySpinner.setAdapter(adapter);
-		
 		AsynTaskHelper  asyntask = new AsynTaskHelper();
 		asyntask.dataDownload(url, map, new OnDataDownloadListener() {
 			public void onDataDownload(String result) {
 				if (result != null) {
 				//	Listdata.clear();
 				List<Map<String, Object>> items;
+				
 				items = JsonToListHelper.gettemplelist_json(result);
-				Log.i("cccc", "道场的------------------"+items); 
+				
+				//初始化------------------------------------
+				Map<String,Object> defaultmap = new HashMap<String, Object>();
+				defaultmap.put("templeid",0);
+				defaultmap.put("templename","全部道场");
+				
+				countriesStr.add(defaultmap);
+				countriesStr.addAll(items);
+				
+				//初始化下拉选项------------------------------------
+				List<String> countriesStrlist = new ArrayList<String>();
+				countriesStrlist.add( "全部道场");
+				for(int i=0;i<items.size();i++){
+					
+					Map<String,Object> map = items.get(i);
+					countriesStrlist.add( map.get("templename").toString());
+					//Log.i("aaaa","------选择了什么内容"+countriesStrlist.toString());
+				}
+				
+				default_template_list(countriesStrlist);//初始化适配数据
 				
 				}else {
 					Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
@@ -121,7 +141,13 @@ public class Find extends Activity
 				 
 			}
 		}, context,"GET");	
-		
+					    
+// 建立数据源  
+//		  List<templates>  templates=new ArrayList<templates>();  
+//		  templates.add(new templates("张三","张三", 1));  
+//		  templates.add(new templates("李四", "李四",2));
+//		 TemplateAdapter TemplateAdapter=new TemplateAdapter(getBaseContext(), templates);  
+		      	
 		mySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -129,6 +155,19 @@ public class Find extends Activity
 					//获取item内容
 					String data = arg0.getItemAtPosition(arg2).toString();
 					
+					for(int i=0;i<countriesStr.size();i++){
+						
+						//countriesStr[i]=items.get(i).toString();
+						Map<String,Object> map = countriesStr.get(i);
+						if(map.get("templename").toString().equals(data)){
+							
+							tid=(Integer) map.get("templeid");
+							Log.i("aaaa","------templeid更改为--------------"+tid);
+							default_order_list();
+						}		
+					}
+					//templates templates=arg0.getItemAtPosition(arg2);
+					 //Log.i("aaaa","------选择了什么内容"+data.toString());					
 				}
 
 				public void onNothingSelected(AdapterView<?> arg0) {
@@ -136,56 +175,103 @@ public class Find extends Activity
 				}
 		    	
 			});
+		
+		
+		
+	}
+	
+	private void default_template_list( List<String> countriesStr){		//默认加载 和更换道场加载
+		
+		adapter = new ArrayAdapter<String>(this,R.layout.template_spinner, countriesStr);
+	    /* myspinner_dropdown为自定义下拉菜单模式定义在res/layout目录下 */
+		adapter.setDropDownViewResource(R.layout.template_spinner_items);
+		//绑定Adapter  
+	    mySpinner.setAdapter(adapter);
+	}
+	
+	
+	
+	private void default_order_list(){		//默认加载 和更换道场加载
+		
+		if(isBottom){
+			isBottom = false;	
+		}
+		
+		Listdata.clear();
+		// Log.i("bbbb","------变前"+Listdata.toString());
+		// Log.i("bbbb","------变后tid"+tid);
+		listAdapter(null, WebApiUrl.GET_ORDERLIST+"?p="+page+"&&pz="+pagesize+"&&tid="+tid,getParent());	//默认加载第一页		
 	}
     
     private void select_order_list() {       
 		// TODO Auto-generated method stub
     	mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.find_list);
-		
-    	//下拉更新时间
-    	mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-				String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
-						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
-
-				// Update the LastUpdatedLabel
-				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-				// Do work to refresh the list here.
-				//new GetDataTask().execute(WebApiUrl.GET_ORDERLIST+"?p=5&&pz=1");
-				pull_listAdapter(null, WebApiUrl.GET_ORDERLIST+"?p=5&&pz=1",getParent());
-			
-			}
-		});
-    		
-    	mListView = mPullRefreshListView.getRefreshableView();
-    	
     	//设置底部加载的字幕
-    	mPullRefreshListView.setMode(Mode.BOTH);  
+    	 
+    	mPullRefreshListView.setMode(Mode.BOTH); //支持上拉和下拉操作
     	mPullRefreshListView.getLoadingLayoutProxy(false, true).setPullLabel("加载中");  
     	mPullRefreshListView.getLoadingLayoutProxy(false, true).setRefreshingLabel("正在加载");  
     	mPullRefreshListView.getLoadingLayoutProxy(false, true).setReleaseLabel("上拉加载");  
-		
-    	//mListView = (ListView) findViewById(R.id.find_list);
-		 
-		listAdapter(null, WebApiUrl.GET_ORDERLIST+"?p="+page+"&&pz="+pagesize,getParent());	//默认加载第一页
+    	
+    	
+    	//下拉更新时间
+    	mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+
+    		 public void onPullDownToRefresh(  
+                     PullToRefreshBase<ListView> refreshView) {  
+				// Do work to refresh the list here.
+				//new GetDataTask().execute(WebApiUrl.GET_ORDERLIST+"?p=5&&pz=1");
+				pull_listAdapter(null, WebApiUrl.GET_ORDERLIST+"?p=1&&pz=100&&tid=7",getParent());
+                 
+             }  
+               
+             public void onPullUpToRefresh(  
+                     PullToRefreshBase<ListView> refreshView) {  
+               
+            	 if(!isBottom){	
+					 	page++;
+					 	morelistAdapter(null, WebApiUrl.GET_ORDERLIST+"?p="+page+"&&pz="+pagesize+"&&tid="+tid,getParent()); 
+		 		    }else{
+		 		    	Log.i("bbbb","------bug出现的时候-----");
+		 		    	Toast.makeText(getParent(), "没有了", Toast.LENGTH_SHORT).show();
+		 		    	mPullRefreshListView.onRefreshComplete();
+		 		    //	mPullRefreshListView.removeViewInLayout(refreshView);
+//		 		    	ILoadingLayout endLabels = mPullRefreshListView.getLoadingLayoutProxy(  
+//		 		                false, true); 
+		 		   }
+            	
+             }
+		});
+    	 
+    	
+    	//mPullRefreshListView.setOnItemClickListener(null);
+    	mListView = mPullRefreshListView.getRefreshableView();
+    	
+      	//mListView = (ListView) findViewById(R.id.find_list);
 		mAdapter=new BaseListAdapter(getBaseContext(),Listdata);
 		mListView.setAdapter(mAdapter);
 		
-		
-		mPullRefreshListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+		mPullRefreshListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onLastItemVisible() {
-		    	
-				 if(!isBottom){	
-					 	page++;
-					 	morelistAdapter(null, WebApiUrl.GET_ORDERLIST+"?p="+page+"&&pz="+pagesize,getParent()); 
-		 		    }else{
-		 		    	Toast.makeText(getParent(), "没有了", Toast.LENGTH_SHORT).show();
-		 		    }
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				//String data = arg0.getItemAtPosition(arg2).toString();
+	//			Log.i("bbbb","------aaaaaaaaaaa----"+arg1.getTag(arg2).toString());
+//				Log.i("bbbb","------aaaaaaaaaaa----"+arg1);
+//				Log.i("bbbb","------aaaaaaaaaaa----"+arg2); 
+//				Log.i("bbbb","------aaaaaaaaaaa----"+arg3);
 			}
-		});				
+		});
+//		mPullRefreshListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+//
+//			@Override
+//			public void onLastItemVisible() {
+//		    	
+//				
+//			}
+//		});				
     }
     
 
@@ -197,16 +283,21 @@ public class Find extends Activity
 
 			public void onDataDownload(String result) {
 				if (result != null) {
-				//	Listdata.clear();
+			
 				List<Map<String, Object>> items;
 				items = JsonToListHelper.orderlist_json(result);
+				
+								
 				Listdata.addAll(items);
 				count = Listdata.size();
 				mAdapter.notifyDataSetChanged();
-				//moreView.setVisibility(View.GONE); 
 				
 				if(items.toString().equals("[]")){
 					isBottom=true;
+				}else{
+					lastItemId=(Integer) items.get(0).get("orderid");
+					
+
 				}
 					
 				}else {
@@ -216,7 +307,7 @@ public class Find extends Activity
 			}
 		}, context,"GET");		
 	}
-	
+	//上拉加载操作-------
 	private void morelistAdapter(Map<String, Object> map, String url, final Context context) {
 		AsynTaskHelper  asyntask = new AsynTaskHelper();
 		asyntask.more_dataDownload(url, map, new OnDataDownloadListener() {
@@ -232,6 +323,8 @@ public class Find extends Activity
 				mAdapter.notifyDataSetChanged();
 				
 				if(items.toString().equals("[]")){
+					Toast.makeText(getParent(), "没有了", Toast.LENGTH_SHORT).show();
+					mPullRefreshListView.onRefreshComplete();
 					isBottom=true;
 				}
 					
@@ -240,10 +333,10 @@ public class Find extends Activity
 				}
 				 
 			}
-		}, context,"GET");		
+		}, context,"GET", mPullRefreshListView);		
 	}
 	
-	//上拉更新操作-------
+	//下拉更新操作-------
 	private void pull_listAdapter(Map<String, Object> map, String url, final Context context) {
 		AsynTaskHelper  asyntask = new AsynTaskHelper();
 		asyntask.pull_dataDownload(url, map, new OnDataDownloadListener() {
@@ -254,9 +347,14 @@ public class Find extends Activity
 				//	Listdata.clear();
 				List<Map<String, Object>> items;
 				items = JsonToListHelper.orderlist_json(result);
+				
+				//Log.i("bbbb","------上拉如果没有数据的时候-----"+items.toString());
 				if(items.toString().equals("[]")){
+					mPullRefreshListView.onRefreshComplete();
 					Toast.makeText(context, "没有最新的啦", Toast.LENGTH_SHORT).show();
 				}else{
+					
+					lastItemId=(Integer) items.get(0).get("orderid");
 					Listdata.addAll(0,items);
 					mAdapter.notifyDataSetChanged();
 					mPullRefreshListView.onRefreshComplete();
