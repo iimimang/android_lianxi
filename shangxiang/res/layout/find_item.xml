@@ -16,7 +16,7 @@
         android:layout_height="50dp"
 		android:gravity="center_horizontal" > 
           <ImageView
-            android:id="@+id/back"
+            android:id="@+id/order_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/order_people_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5px"
@@ -82,7 +82,7 @@
              >
      
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/order_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -93,7 +93,7 @@
 
        
          <TextView
-                android:id="@+id/address"
+                android:id="@+id/order_templename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -128,7 +128,7 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/order_wishtext"
             	android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -144,7 +144,7 @@
             android:layout_marginTop="8dp"
    			android:orientation="horizontal" >
             <TextView
-                android:id="@+id/jiachi"
+                android:id="@+id/order_blessingser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="太乙真人，居然三人等2532人加持"

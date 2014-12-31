@@ -9,5 +9,6 @@ public class WebApiUrl  {
 	
 	public static final String GET_TEMPLELIST = IP + PORT + "/api/app/gettemplelist.php";
 	public static final String GET_ORDERLIST = IP + PORT + "/api/app/getorderlist.php";
+	public static final String GET_ORDER_DETAIL = IP + PORT + "/api/app/getorderinfo.php";
 	
 }

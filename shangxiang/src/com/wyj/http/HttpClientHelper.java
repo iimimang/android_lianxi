@@ -205,7 +205,7 @@ public class HttpClientHelper {
 			conn = (HttpURLConnection) url.openConnection();
 	
 		conn.setRequestMethod("GET");
-		conn.setConnectTimeout(5000);
+		conn.setConnectTimeout(3000);
 		// 得到响应码
 		int responseCode = conn.getResponseCode();
 		if (responseCode == 200) {
