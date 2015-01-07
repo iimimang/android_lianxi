@@ -8,7 +8,6 @@ import java.util.List;
 import com.wyj.calendar.KCalendar;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 
 import com.wyj.calendar.KCalendar.OnCalendarClickListener;
 import com.wyj.calendar.KCalendar.OnCalendarDateChangedListener;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 public class Foli extends MainActivity
 {
@@ -67,6 +66,7 @@ public class Foli extends MainActivity
 			//监听所选中的日期
 			calendar.setOnCalendarClickListener(new OnCalendarClickListener() {
 
+				@Override
 				public void onCalendarClick(int row, int col, String dateFormat) {
 					int month = Integer.parseInt(dateFormat.substring(
 							dateFormat.indexOf("-") + 1,
@@ -91,6 +91,7 @@ public class Foli extends MainActivity
 
 			//监听当前月份
 			calendar.setOnCalendarDateChangedListener(new OnCalendarDateChangedListener() {
+				@Override
 				public void onCalendarDateChanged(int year, int month) {
 					popupwindow_calendar_month
 							.setText(year + "年" + month + "月");
@@ -102,6 +103,7 @@ public class Foli extends MainActivity
 			popupwindow_calendar_last_month
 					.setOnClickListener(new OnClickListener() {
 
+						@Override
 						public void onClick(View v) {
 							calendar.lastMonth();
 						}
@@ -113,6 +115,7 @@ public class Foli extends MainActivity
 			popupwindow_calendar_next_month
 					.setOnClickListener(new OnClickListener() {
 
+						@Override
 						public void onClick(View v) {
 							calendar.nextMonth();
 						}

@@ -162,5 +162,24 @@ public class JsonToListHelper {
 		}
 		return list;
 	}
+	
+	public static Map<String, Object> jsontoCode(String jsonString){
+		List<Map<String, String>> list =new ArrayList<Map<String,String>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			JSONObject jsonObject = new JSONObject(jsonString);
+			
+			map.put("code", jsonObject.getString("code"));
+			map.put("msg", jsonObject.getString("msg"));
+//			Log.i("JsonToListHelper", "=="+code);
+//			if (code.equals("succeed")) {
+//				return true;
+//			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
 
 }

@@ -1,39 +1,13 @@
 package com.wyj.Activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
 import com.wyj.framework.BaseGroup;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 
-import android.app.Activity;
 import android.app.ActivityGroup;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.TabHost.TabSpec;
 
 public class FindGroupTab extends BaseGroup  
 {

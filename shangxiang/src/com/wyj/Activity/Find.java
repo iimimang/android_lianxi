@@ -11,11 +11,7 @@ import java.util.Map;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 
 
@@ -26,7 +22,7 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 
 import com.wyj.http.WebApiUrl;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 import com.wyj.utils.Tools;
 
 
@@ -55,7 +51,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -98,10 +93,7 @@ public class Find extends Activity
 		setContentView(contenView);
 		
 		
-		int detail_tid=getIntent().getIntExtra("tid", 0);
-//		 Intent intent= this.getIntent();  //详情页面返回的数据
-//		 Bundle budle =intent.getExtras();
-		
+		int detail_tid=getIntent().getIntExtra("tid", 0);	
 		
 		 if(detail_tid!=0){
 			 tid=detail_tid; //详情页面返回寺庙的传值
@@ -118,6 +110,7 @@ public class Find extends Activity
 		mySpinner = (Spinner) findViewById(R.id.daochang_select);
 		AsynTaskHelper  asyntask = new AsynTaskHelper();
 		asyntask.dataDownload(url, map, new OnDataDownloadListener() {
+			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
 				//	Listdata.clear();
@@ -160,6 +153,7 @@ public class Find extends Activity
 		      	
 		mySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+				@Override
 				public void onItemSelected(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
 					//获取item内容
@@ -177,17 +171,15 @@ public class Find extends Activity
 						}		
 					}
 					//templates templates=arg0.getItemAtPosition(arg2);
-					 //Log.i("aaaa","------选择了什么内容"+data.toString());					
+								
 				}
 
+				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
 					
 				}
 		    	
-			});
-		
-		
-		
+			});		
 	}
 	
 	private void default_template_list( List<String> countriesStr){		//默认加载 和更换道场加载
@@ -210,7 +202,7 @@ public class Find extends Activity
 		page=1;
 		Listdata.clear();
 		// Log.i("bbbb","------变前"+Listdata.toString());
-		// Log.i("bbbb","------变后tid"+tid);
+		
 		listAdapter(null, WebApiUrl.GET_ORDERLIST+"?p="+page+"&&pz="+pagesize+"&&tid="+tid,getParent());	//默认加载第一页		
 	}
     
@@ -228,7 +220,8 @@ public class Find extends Activity
     	//下拉更新时间
     	mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
-    		 public void onPullDownToRefresh(  
+    		 @Override
+			public void onPullDownToRefresh(  
                      PullToRefreshBase<ListView> refreshView) {  
 				// Do work to refresh the list here.
 				//new GetDataTask().execute(WebApiUrl.GET_ORDERLIST+"?p=5&&pz=1");
@@ -236,7 +229,8 @@ public class Find extends Activity
                  
              }  
                
-             public void onPullUpToRefresh(  
+             @Override
+			public void onPullUpToRefresh(  
                      PullToRefreshBase<ListView> refreshView) {  
                
             	 if(!isBottom){	
@@ -247,17 +241,13 @@ public class Find extends Activity
 		 		    	
 		 		    	Toast.makeText(getParent(), "没有了", Toast.LENGTH_SHORT).show();
 		 		    	mPullRefreshListView.onRefreshComplete();
-		 		    	//mPullRefreshListView.setMode(Mode.DISABLED); //支持上拉和下拉操作
-		 		    //	mPullRefreshListView.removeViewInLayout(refreshView);
-//		 		    	ILoadingLayout endLabels = mPullRefreshListView.getLoadingLayoutProxy(  
-//		 		                false, true); 
+		 		   
 		 		   }
             	
              }
 		});
     	 
     	
-    	//mPullRefreshListView.setOnItemClickListener(null);
     	mListView = mPullRefreshListView.getRefreshableView();
     	
       	//mListView = (ListView) findViewById(R.id.find_list);
@@ -284,15 +274,7 @@ public class Find extends Activity
 	            Log.i("bbbb","------传了没传啊----"+orderid);
 	            FindGroupTab.getInstance().switchActivity("Find_item",intent,-1,-1);
 			}
-		});
-//		mPullRefreshListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
-//
-//			@Override
-//			public void onLastItemVisible() {
-//		    	
-//				
-//			}
-//		});				
+		});			
     }
     
 
@@ -302,6 +284,7 @@ public class Find extends Activity
 		asyntask.dataDownload(url, map, new OnDataDownloadListener() {
 		
 
+			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
 			
@@ -333,6 +316,7 @@ public class Find extends Activity
 		asyntask.more_dataDownload(url, map, new OnDataDownloadListener() {
 		
 
+			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
 				//	Listdata.clear();
@@ -362,6 +346,7 @@ public class Find extends Activity
 		asyntask.pull_dataDownload(url, map, new OnDataDownloadListener() {
 		
 
+			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
 				//	Listdata.clear();

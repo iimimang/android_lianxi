@@ -1,6 +1,5 @@
 package com.wyj.dataprocessing;
 
-import java.util.List;
 import java.util.Map;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -9,7 +8,6 @@ import com.wyj.http.HttpClientHelper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AsynTaskHelper {
 	// private static final String TAG = "AsynTaskHelper";
@@ -63,7 +61,6 @@ public class AsynTaskHelper {
 				data = HttpClientHelper.httpUrl(params[0]);
 				
 			} else {
-
 				//data = HttpClientHelper.doPostSubmit(params[0], map);
 			}
 			if (data != null) {

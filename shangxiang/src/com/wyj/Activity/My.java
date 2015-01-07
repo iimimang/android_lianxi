@@ -2,7 +2,7 @@ package com.wyj.Activity;
 
 
 import com.wyj.dataprocessing.MyApplication;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 
 import android.app.Activity;
@@ -52,10 +52,13 @@ public class My extends Activity implements OnClickListener
 
 	}
 	
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.login_action:
-			getParent().startActivityForResult(new Intent(My.this, Login.class), 1);
+			if(MyApplication.getInstances().getUserName()==""){
+				getParent().startActivityForResult(new Intent(My.this, Login.class), 1);
+			}
 			break;		
 		}
 	}

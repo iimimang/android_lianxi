@@ -3,16 +3,14 @@ package com.wyj.adapter;
 import java.util.List;
 
 import com.wyj.define.templates;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TemplateAdapter  extends BaseAdapter {
@@ -38,13 +36,11 @@ public class TemplateAdapter  extends BaseAdapter {
 	    public long getItemId(int position) {  
 	        return position;  
 	    }
-
+  
 	/** 
      * 下面是重要代码 
      */  
     @Override  
-  
-    
     public View getView(int position, View convertView, ViewGroup parent) {
 //        ViewHolder viewHolder = null;
 //        if(convertView == null) {
@@ -69,8 +65,7 @@ public class TemplateAdapter  extends BaseAdapter {
     		 templename.setText(mList.get(position).getTemplename()); 
     		// Log.i("aaaa","-------TextView"+templename.toString());
     		// Log.i("aaaa","-------getTempleid"+mList.get(position).getTempleid());
-    		 
-         }  
+    	}  
       
         return convertView;
     }
@@ -79,8 +74,6 @@ public class TemplateAdapter  extends BaseAdapter {
    	 	
 		 TextView templename;
 		 TextView templeid;
-		 
-
    }
 
 }

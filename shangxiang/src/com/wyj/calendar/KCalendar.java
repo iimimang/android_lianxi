@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -134,7 +134,7 @@ public class KCalendar extends ViewFlipper implements
 		LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(-1, 0,
 				0.5f);
 		Resources res = getResources();
-		tb = res.getDimension(R.dimen.historyscore_tb);
+		tb = res.getDimension(R.dimen.historyscore_tb); 
 		layout.setMargins(0, 0, 0, (int) (tb * 1.2));
 		title.setLayoutParams(layout);
 		oneCalendar.addView(title);
@@ -160,13 +160,13 @@ public class KCalendar extends ViewFlipper implements
 			LinearLayout row = new LinearLayout(getContext());
 			row.setOrientation(LinearLayout.HORIZONTAL);
 			row.setLayoutParams(new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, 0, 1));
+					android.view.ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
 			content.addView(row);
 			// 绘制日历上的列
 			for (int j = 0; j < COLS_TOTAL; j++) {
 				RelativeLayout col = new RelativeLayout(getContext());
 				col.setLayoutParams(new LinearLayout.LayoutParams(0,
-						LayoutParams.MATCH_PARENT, 1));
+						android.view.ViewGroup.LayoutParams.MATCH_PARENT, 1));
 				//col.setBackgroundResource(R.drawable.calendar_day_bg);
 				row.addView(col);
 				// 给每一个日子加上监听
@@ -725,6 +725,7 @@ public class KCalendar extends ViewFlipper implements
 	 * Override methods
 	 * 
 	 **********************************************/
+	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		if (gd != null) {
 			if (gd.onTouchEvent(ev))
@@ -733,26 +734,32 @@ public class KCalendar extends ViewFlipper implements
 		return super.dispatchTouchEvent(ev);
 	}
 
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return this.gd.onTouchEvent(event);
 	}
 
+	@Override
 	public boolean onDown(MotionEvent e) {
 		return false;
 	}
 
+	@Override
 	public void onShowPress(MotionEvent e) {
 	}
 
+	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		return false;
 	}
 
+	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		return false;
 	}
 
+	@Override
 	public void onLongPress(MotionEvent e) {
 	}
 

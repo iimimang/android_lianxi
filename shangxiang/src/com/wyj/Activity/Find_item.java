@@ -10,24 +10,20 @@ import com.wyj.dataprocessing.BitmapManager;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 import com.wyj.http.WebApiUrl;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 import com.wyj.utils.Tools;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -65,6 +61,7 @@ public class Find_item extends Activity implements OnClickListener
 		// TODO Auto-generated method stub
 		AsynTaskHelper  asyntask = new AsynTaskHelper();
 		asyntask.dataDownload(order_detail_api_url, map, new OnDataDownloadListener() {
+			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
 					
@@ -106,6 +103,7 @@ public class Find_item extends Activity implements OnClickListener
 
 	
 
+	@Override
 	public void onClick(View v) {
 		
 		switch (v.getId()) {

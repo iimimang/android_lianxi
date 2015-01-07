@@ -1,13 +1,12 @@
 package com.wyj.Activity;
 
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,14 +38,6 @@ public class TabMenu extends TabActivity
 		init();
 		// 底部菜单点击事件
 		clickevent();
-//		intent= this.getIntent();  //接受的数据
-//		budle =intent.getExtras();
-//		int tab_key =budle.getInt("tab_key");
-//		if(tab_key==2){
-//			mth.setCurrentTabByTag(TAB_ABOUT);
-//		}
-		 
-	
 	}
 	
 
@@ -92,7 +83,7 @@ public class TabMenu extends TabActivity
 		// // 实例化TabHost
 		mth = this.getTabHost();
 		TabSpec ts1 = mth.newTabSpec(TAB_HOME).setIndicator(TAB_HOME);
-		ts1.setContent(new Intent(TabMenu.this, wish.class));
+		ts1.setContent(new Intent(TabMenu.this, WishGroupTab.class));
 		mth.addTab(ts1);// 往TabHost中第一个底部菜单添加界面
 
 		TabSpec ts2 = mth.newTabSpec(TAB_NEWS).setIndicator(TAB_NEWS);
@@ -129,8 +120,6 @@ public class TabMenu extends TabActivity
 		}).create().show();
 	}
 	
-	
-	
-		
+			
 		
 }

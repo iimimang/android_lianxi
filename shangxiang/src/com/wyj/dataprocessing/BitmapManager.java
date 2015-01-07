@@ -284,6 +284,7 @@ public class BitmapManager {
 		
 		/* Create handler in UI thread. */
 		final Handler handler = new Handler() {
+			@Override
 			public void handleMessage(Message msg) {
 				String tag = imageViews.get(imageView);
 				if (tag != null && tag.equals(url)) {
@@ -295,6 +296,7 @@ public class BitmapManager {
 		};
 
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				Message message = Message.obtain();
 				message.obj = downloadBitmap(url, file);

@@ -1,17 +1,25 @@
 package com.wyj.Activity;
 
 
-import com.wyj.dataprocessing.MyApplication;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.wyj.dataprocessing.AccessNetwork;
+import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.RegularUtil;
-import com.wyj.member_db.Member_model;
-import com.wyj.tabmenu.R;
+import com.wyj.http.WebApiUrl;
+import com.wyj.Activity.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -27,6 +35,9 @@ public class Reg extends Activity implements OnClickListener
 	Button reg_submit;
 	TextView  username;
 	TextView  passwd;
+	private Boolean regflag=false;	
+	private ProgressDialog pDialog = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -51,6 +62,7 @@ public class Reg extends Activity implements OnClickListener
 		reg_submit.setOnClickListener(this);
 	}
 
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.back_login:
@@ -70,6 +82,8 @@ public class Reg extends Activity implements OnClickListener
 
 		String reg_username = username.getText().toString();
 		String reg_passwd = passwd.getText().toString();
+		
+		
 		if (!RegularUtil.checkPhone(this, reg_username)) {
 			
 			//设置焦点信息;  
@@ -86,14 +100,54 @@ public class Reg extends Activity implements OnClickListener
 			passwd.requestFocusFromTouch();  
 			
 		}else {
-			String time = MyApplication.getInstances().getSystemDataATime();
-			Member_model Member_models= new Member_model(this); 
-			Member_models.Member_insert(reg_username, reg_passwd, time);
-			RegularUtil.alert_msg(this, "注册成功");
-			finish();			
+//			String time = MyApplication.getInstances().getSystemDataATime();
+//			Member_model Member_models= new Member_model(this); 
+//			Member_models.Member_insert(reg_username, reg_passwd, time);
+			checkapi(reg_username, reg_passwd);        //接口请求
 		}
+		
+		
 	}
 	
+	
+	private void checkapi(String reg_username, String reg_passwd) {
+		// TODO Auto-generated method stub
+		//接口验证注册
+//		Map<String,Object> params = new HashMap<String, Object>();
+//		params.put("mobile", reg_username);
+//		params.put("password", reg_passwd);
+//		String check_reg = HttpClientHelper.doPostSubmitMe(WebApiUrl.REGSITER,params);
+		
+		  //利用Handler更新UI  
+        final Handler h = new Handler(){  
+            @Override  
+            public void handleMessage(Message msg) {  
+                if(msg.what==0x123){  
+                	
+                	pDialog.dismiss();
+                	String backmsg=msg.obj.toString();
+                	Map<String, Object> resmsg = new HashMap<String, Object>();
+                	resmsg =JsonToListHelper.jsontoCode(backmsg); 
+                	if(resmsg.get("code").equals("succeed")){
+                		RegularUtil.alert_msg(Reg.this, "注册成功"); 
+             			finish();
+                	}else{
+                		
+                		RegularUtil.alert_msg(Reg.this, "注册失败，"+resmsg.get("msg")); 
+                	} 
+                	
+                	Log.i("aaaa","------线程返回注册验证信息"+resmsg.get("code"));
+                 }  
+            }   
+        }; 
+        String params="mobile="+reg_username+"&password="+reg_passwd;
+        pDialog = new ProgressDialog(Reg.this);
+		pDialog.setMessage("请求中。。。");
+		pDialog.show();
+        new Thread(new AccessNetwork("POST", WebApiUrl.REGSITER, params, h)).start();  
+     
+	}
+ 
 	
 	
 	

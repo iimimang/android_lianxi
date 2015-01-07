@@ -1,7 +1,6 @@
 package com.wyj.Activity;
 
 
-import android.app.Activity;
 import android.app.ActivityGroup;
 import android.content.Intent;
 
@@ -24,7 +23,8 @@ public class MemberGroupTab extends ActivityGroup
         group = this;  
     }  
   
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
     {
     	
         if (resultCode > 0) 

@@ -1,17 +1,13 @@
 package com.wyj.framework;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.wyj.Activity.TabMenu;
-import com.wyj.tabmenu.R;
+import com.wyj.Activity.R;
 
 
 import android.app.Activity;
 import android.app.ActivityGroup;
 import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -42,8 +38,8 @@ public class BaseGroup extends ActivityGroup {
 		View v = window.getDecorView();
 		DisplayMetrics dm = new DisplayMetrics(); 
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
+		LayoutParams param = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.FILL_PARENT);
 		v.setLayoutParams(param);
 		if (inAnimation != -1) {
 			try {

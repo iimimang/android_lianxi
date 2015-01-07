@@ -21,6 +21,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import android.util.Log;
+
 public class HttpClientHelper {
 	public static HttpClient checkNetwork(String url) {
 		HttpClient httpClient = new DefaultHttpClient();
@@ -195,6 +197,42 @@ public class HttpClientHelper {
 		return null;
 	}
 	
+	
+	
+	public static String doPostSubmitMe(String url, Map<String, Object> params) {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost requestPost = new HttpPost(url);
+
+		List<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
+		try {
+			if (params != null) {
+				for (Map.Entry<String, Object> entry : params.entrySet()) {
+					String key = entry.getKey();
+					String value = entry.getValue().toString();
+					BasicNameValuePair nameValuePair = new BasicNameValuePair(
+							key, value);
+					parameters.add(nameValuePair);
+				}
+			} 
+			 	
+			Log.i("aaaa","------注册有111111111111111111111");	
+			requestPost.setEntity(new UrlEncodedFormEntity(parameters, "utf-8")); 
+			Log.i("aaaa","------注册有响应22222222222");	
+			HttpResponse httpResponse = httpClient.execute(requestPost);
+			
+			
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				// 有响应
+				 Log.i("aaaa","------注册有响应"+httpEntity.toString());		
+				return EntityUtils.toString(httpEntity);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public static String httpUrl(String urlString){
 		

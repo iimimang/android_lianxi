@@ -46,7 +46,7 @@ public class MyApplication extends Application {
         	return username;
 	}
 	public void setName(String username) {
-	        this.username = username;
+	        MyApplication.username = username;
 	}
 
 	public String getSystemDataATime() {
