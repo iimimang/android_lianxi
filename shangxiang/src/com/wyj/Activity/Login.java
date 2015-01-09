@@ -98,10 +98,10 @@ public class Login extends Activity implements OnClickListener
 
 		  // 从 SharedPreferences 中读取上次已保存好 AccessToken 等信息，
         // 第一次启动本应用，AccessToken 不可用
-        mAccessToken = AccessTokenKeeper.readAccessToken(this);
-        if (mAccessToken.isSessionValid()) {
-            updateTokenView(true); 
-        }
+//        mAccessToken = AccessTokenKeeper.readAccessToken(this);
+//        if (mAccessToken.isSessionValid()) {
+//            updateTokenView(true); 
+//        }
         /**
          * 注销按钮：该按钮未做任何封装，直接调用对应 API 接口
          */
@@ -183,9 +183,7 @@ public class Login extends Activity implements OnClickListener
 		} else {
 			
 			logincheckapi( reg_username,  reg_passwd);
-//			RegularUtil.alert_msg(this, "登录成功！");
-
-					
+//			RegularUtil.alert_msg(this, "登录成功！");					
 		}
 		
 	}
@@ -333,9 +331,12 @@ public class Login extends Activity implements OnClickListener
 	    	if (!TextUtils.isEmpty(response)) {
 	    		// 调用User#parse 将JSON串解析成User对象
 	    		User user = User.parse(response);
-	    		 mTokenText.setText(user.screen_name);
+	    		
+	    		sina_login(user.name,user.screen_name,mAccessToken.getToken(),user.avatar_large);
+	    	    mTokenText.setText(user.screen_name);
 	    	}
     	}
+
 
 		@Override
 		public void onWeiboException(WeiboException arg0) {
@@ -344,6 +345,41 @@ public class Login extends Activity implements OnClickListener
 		}
     };
     
+
+	private void sina_login(final String name, String screen_name, String token,
+			String avatar_large) {
+		// TODO Auto-generated method stub
+		
+		  //利用Handler更新UI  
+        final Handler sina = new Handler(){  
+            @Override  
+            public void handleMessage(Message msg) {  
+                if(msg.what==0x123){  
+                	pDialog.dismiss();
+                	String backmsg=msg.obj.toString();
+                	Map<String, Object> resmsg = new HashMap<String, Object>();
+                	 Log.i("aaaa","------第三方登录返回信息"+backmsg);
+                	resmsg =JsonToListHelper.jsontoCode(backmsg); 
+                	if(resmsg.get("code").equals("succeed")){
+                		login_username=name;
+                		RegularUtil.alert_msg(Login.this, "登录成功"); 
+            			login();
+                	}else{
+                		RegularUtil.alert_msg(Login.this, "登录失败，"+resmsg.get("msg")); 
+                	} 
+                	
+                	
+                 }  
+            }
+        }; 
+		String params="name="+name+"&token="+token+"&hf="+avatar_large+"&nname="+screen_name+"&regtype=sina";
+		Log.i("aaaa","------发出的信息"+params);
+		 pDialog = new ProgressDialog(Login.this);
+		 pDialog.setMessage("请求中。。。");
+		 pDialog.show();
+        new Thread(new AccessNetwork("POST", WebApiUrl.THREE_LOGIN, params, sina)).start(); 
+	} 
+     
     /**
      * 登出按钮的监听器，接收登出处理结果。（API 请求结果的监听器）
      */

@@ -2,11 +2,13 @@ package com.wyj.Activity;
 
 import com.wyj.Activity.R;
 
+import com.wyj.Activity.*;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +28,7 @@ public class TabMenu extends TabActivity
 	public RadioGroup radioGroup;
 	private Intent intent;
 	private Bundle budle;
+	public RadioButton button0,button1,button2,button3,button4;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -34,12 +37,22 @@ public class TabMenu extends TabActivity
 		// 去除标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
+		
+		initViews();
 		// 初始化底部菜单
 		init();
 		// 底部菜单点击事件
 		clickevent();
 	}
 	
+	private void initViews(){
+    
+    	button0 = (RadioButton) findViewById(R.id.radio_button0);
+    	button1 = (RadioButton) findViewById(R.id.radio_button1);
+    	button2 = (RadioButton) findViewById(R.id.radio_button2);
+    	button3 = (RadioButton) findViewById(R.id.radio_button3);
+  	
+    }
 
 	/**
 	 * 每一个底部按钮点击事件，切换相应的界面
@@ -98,9 +111,34 @@ public class TabMenu extends TabActivity
 		ts4.setContent(new Intent(TabMenu.this, MemberGroupTab.class));
 		mth.addTab(ts4);
 			
-		RadioButton default_radioButton = (RadioButton)findViewById(R.id.radio_button0);
-		default_radioButton.setChecked(true);	//默认首页
+		//RadioButton default_radioButton = (RadioButton)findViewById(R.id.radio_button0);
+		button0.setChecked(true);	//默认首页
 		//mth.setCurrentTabByTag(TAB_ABOUT);		 
+	}
+	
+	
+	public void setCurrentActivity(int index) {
+		switch (index) {
+		case 1:
+			onCheckedChanged(radioGroup, R.id.radio_button0);
+			break;
+	
+		}
+	}
+	
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+	
+		switch (checkedId) {
+		case R.id.radio_button0:
+			this.mth.setCurrentTabByTag(TAB_HOME);
+			button0.setChecked(true);
+			button1.setChecked(false);
+			button2.setChecked(false);
+			button3.setChecked(false);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public void exitApp(){

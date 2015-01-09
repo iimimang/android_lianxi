@@ -10,12 +10,12 @@
     <dimen name="cell_margin_left">39px</dimen>
     <dimen name="cell_text_size">26px</dimen>
     
-    <dimen name="home_desire_bottom">120.0dip</dimen>
+    <dimen name="home_desire_bottom">143.0dip</dimen>
     <dimen name="home_desire_0">18.0dip</dimen>
-    <dimen name="home_desire_1">49.0dip</dimen>
-    <dimen name="home_desire_2">87.0dip</dimen>
-    <dimen name="home_desire_4">87.0dip</dimen>
-    <dimen name="home_desire_5">49.0dip</dimen>
+    <dimen name="home_desire_1">56.0dip</dimen>
+    <dimen name="home_desire_2">100.0dip</dimen>
+    <dimen name="home_desire_4">102.0dip</dimen>
+    <dimen name="home_desire_5">57.0dip</dimen>
     <dimen name="home_desire_6">18.0dip</dimen>
 
 </resources>

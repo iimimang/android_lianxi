@@ -28,6 +28,8 @@
         </activity>
          <activity android:name="com.wyj.Activity.ListTemple" >
         </activity>
+        <activity android:name="com.wyj.Activity.ShowTemple" >
+        </activity>
          <activity android:name="com.wyj.Activity.FindGroupTab" >
         </activity>
         <activity android:name="com.wyj.Activity.MemberGroupTab" >

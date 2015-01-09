@@ -4,11 +4,12 @@ package com.wyj.Activity;
 import java.util.List;
 import java.util.Map;
 
-
+import com.wyj.Activity.TabMenu;
 import com.wyj.dataprocessing.AsynTaskHelper;
 import com.wyj.dataprocessing.BitmapManager;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
+import com.wyj.define.templates;
 import com.wyj.http.WebApiUrl;
 import com.wyj.Activity.R;
 import com.wyj.utils.Tools;
@@ -19,12 +20,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +49,8 @@ public class Find_item extends Activity implements OnClickListener
 		
 		ImageView back=(ImageView) findViewById(R.id.order_back);
 		back.setOnClickListener(this);
+		Button tongyuanqifu=(Button) findViewById(R.id.tongyuan);
+		tongyuanqifu.setOnClickListener(this);
 		
 		mListView = (ListView) findViewById(R.id.find_list_item);
 		
@@ -114,8 +119,25 @@ public class Find_item extends Activity implements OnClickListener
 
 	        FindGroupTab.getInstance().switchActivity("Find_item",intent,-1,-1);
 			break;		
+		case R.id.tongyuan:
+	    	 //要跳转的Activity  
+	        TabMenu mainactivity=(TabMenu)getParent().getParent(); //查找父级的父级
+	        
+	        if(WishGroupTab.getInstance()==null)
+			{
+	        	Log.i("aaaa","------view为null-----");
+	        	mainactivity.setCurrentActivity(1);
+			}else{
+				Log.i("aaaa","------view不为null-----");
+			    mainactivity.setCurrentActivity(1);
+			    Intent intent2 = new Intent(Find_item.this, ListTemple.class);
+		        intent2.putExtra("tid",tid);
+		        WishGroupTab.getInstance().switchActivity("ListTemple",intent2,-1,-1);
+			}
+	       
+			break;	
 		}
-			
+		
 	}
 	
 	@Override
