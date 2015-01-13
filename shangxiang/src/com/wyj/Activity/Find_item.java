@@ -88,11 +88,13 @@ public class Find_item extends Activity implements OnClickListener
 	
 	protected void Ui_orderinfo(Map<String, Object> orderdetail_orderinfo) {
 		// TODO Auto-generated method stub
+		ImageView order_people_head=(ImageView) findViewById(R.id.order_people_head);
 		TextView order_username=(TextView) findViewById(R.id.order_username);
 		TextView templename=(TextView) findViewById(R.id.order_templename);
 		TextView order_wishtext=(TextView) findViewById(R.id.order_wishtext);
 		TextView order_blessingser=(TextView) findViewById(R.id.order_blessingser);
 		
+		BitmapManager.getInstance().loadBitmap((String) orderdetail_orderinfo.get("headface"), order_people_head, Tools.readBitmap(Find_item.this, R.drawable.foot_07));
 		order_username.setText( (String) orderdetail_orderinfo.get("wishname"));
 		templename.setText( (String) orderdetail_orderinfo.get("templename"));
 		order_wishtext.setText( (String) orderdetail_orderinfo.get("wishtext"));

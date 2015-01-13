@@ -1,10 +1,15 @@
 package com.wyj.dataprocessing;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import com.wyj.utils.GetPostUtil;
+import com.wyj.utils.UploadPostUtil;
 
 public class AccessNetwork  implements Runnable{
 	  private String op ;  
@@ -12,6 +17,11 @@ public class AccessNetwork  implements Runnable{
 	    private String params;  
 	    private Handler h;  
 	    
+	    private String filepath;
+	    private String username;
+	    
+	    private Map<String, String> mapparams;
+	    private Map<String, File> files;
 	      
 	    public AccessNetwork(String op, String url, String params,Handler h) {  
 	        super();    
@@ -20,6 +30,25 @@ public class AccessNetwork  implements Runnable{
 	        this.params = params;  
 	        this.h = h;  
 	    }  
+	    
+	    public AccessNetwork(String op, String url, String filepath,String username,Handler h) {  
+	        super();    
+	        this.op = op;  
+	        this.url = url;  
+	        this.filepath = filepath;  
+	        this.username = username;  
+	        this.h = h;  
+	    }
+	    
+	    public AccessNetwork(String op,String url, Map<String, String> mapparams, 
+	            Map<String, File> files,Handler h) {  
+	        super();    
+	        this.op = op;  
+	        this.url = url;  
+	        this.mapparams = mapparams;  
+	        this.files = files;  
+	        this.h = h;  
+	    }
 	  
 	    @Override  
 	    public void run() {  
@@ -36,6 +65,17 @@ public class AccessNetwork  implements Runnable{
 	            m.obj = GetPostUtil.sendPost(url, params);  
 	            Log.i("aaaa",">>>>>>>>>>>>"+m.obj);  
 	        }  
+	        if(op.equals("UPLOAD")){  
+	            Log.i("aaaa","发送UPLOAD请求");  
+	            //m.obj = UploadPostUtil.uploadFile(url, filepath,username);  
+	            try {
+					m.obj = UploadPostUtil.post(url, mapparams,files);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+	            Log.i("aaaa",">>>>>>>>>>>>"+m.obj);  
+	        }
 	        h.sendMessage(m);  
 	    } 
 }

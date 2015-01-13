@@ -2,8 +2,18 @@ package com.wyj.Activity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.wyj.adapter.ListTempleAdapter;
+import com.wyj.dataprocessing.AccessNetwork;
 import com.wyj.dataprocessing.MyApplication;
+import com.wyj.dataprocessing.RegularUtil;
+import com.wyj.http.WebApiUrl;
 import com.wyj.utils.FilePath;
 import com.wyj.utils.Tools;
 import com.wyj.Activity.R;
@@ -11,6 +21,7 @@ import com.wyj.Activity.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +30,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -42,8 +55,10 @@ public class User extends Activity implements OnClickListener {
 	private static final int RESULT_REQUEST_CODE = 20; // 返回图片数据 处理图片把图片放置当前页面
 	/* 头像名称 */
 	private static final String IMAGE_FILE_NAME = "faceImage.jpg";
+	//private static final String IMAGE_FILE_NAME = "aaa.png";
 	private ImageView faceImage;
 	private ImageView userinfo_back;
+	private ProgressDialog pDialog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +91,9 @@ public class User extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.avatar_edit:
-			avatar_Views();
+			// avatar_Views();
+			upload_image_file(FilePath.ROOT_DIRECTORY
+					+ IMAGE_FILE_NAME,"18612931666");
 			break;
 		case R.id.userinfo_back:
 
@@ -86,21 +103,53 @@ public class User extends Activity implements OnClickListener {
 		}
 	}
 
+	private void upload_image_file(String image_file,String username) {
+		// TODO Auto-generated method stub
+
+		// 利用Handler更新UI
+		final Handler Discover = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.what == 0x123) {
+					pDialog.dismiss();
+					String backmsg = msg.obj.toString();
+					Log.i(TAG, "------返回信息" + backmsg);
+				//	RegularUtil.alert_msg(User.this, "加载失败");
+
+				}
+			}
+		};
+
+		pDialog = new ProgressDialog(this.getParent());
+		pDialog.setMessage("上传服务器中。。。");
+		pDialog.show();
+		
+		Map<String,String> params = new HashMap<String, String>();
+		params.put("username",username);
+		params.put("uploadimage","1");
+		
+		Map<String, File> files= new HashMap<String, File>();
+		files.put("avatar.jpg",new File(image_file));
+		
+		new Thread(new AccessNetwork("UPLOAD", WebApiUrl.CESHIURL, params,files, Discover))
+				.start();
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		//Log.i("aaaa", "------User-回来了-----------" + requestCode);
+		// Log.i("aaaa", "------User-回来了-----------" + requestCode);
 		switch (requestCode) {
 		case IMAGE_REQUEST_CODE:
 			startPhotoZoom(data.getData());
 			break;
 		case CAMERA_REQUEST_CODE:
-			
+
 			if (Tools.hasSdcard()) {
 				Log.i("aaaa", "------返回相机 返回图片数据 去除剪切-----------");
-				File tempFile = new File(
-						FilePath.ROOT_DIRECTORY+ IMAGE_FILE_NAME);
-			
+				File tempFile = new File(FilePath.ROOT_DIRECTORY
+						+ IMAGE_FILE_NAME);
+
 				startPhotoZoom(Uri.fromFile(tempFile));
 			} else {
 				Toast.makeText(User.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG)
@@ -173,17 +222,20 @@ public class User extends Activity implements OnClickListener {
 								Log.i(TAG, "储存卡可用--------------");
 								intentFromCapture.putExtra(
 										MediaStore.EXTRA_OUTPUT,
-										Uri.fromFile(new File(FilePath.ROOT_DIRECTORY,
+										Uri.fromFile(new File(
+												FilePath.ROOT_DIRECTORY,
 												IMAGE_FILE_NAME)));
-								
-								UserGroupTab.getInstance().startActivityForResult(
-										intentFromCapture, CAMERA_REQUEST_CODE);
-							}else{
-								
-								Toast.makeText(User.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG)
-								.show();
+
+								UserGroupTab.getInstance()
+										.startActivityForResult(
+												intentFromCapture,
+												CAMERA_REQUEST_CODE);
+							} else {
+
+								Toast.makeText(User.this, "未找到存储卡，无法存储照片！",
+										Toast.LENGTH_LONG).show();
 							}
-								break;
+							break;
 						case 1:
 							Intent intentFromGallery = new Intent();
 							intentFromGallery.setType("image/*"); // 设置文件类型

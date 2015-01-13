@@ -80,8 +80,8 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 		listItem.nameMaster.setText(item.optString("templename", "")+"("+item.optString("province", "")+")");
 		listItem.nameHall.setText(item.optString("buddhistname", ""));
 		
-	BitmapManager.getInstance().loadBitmap(item.optString("headface", ""), listItem.thumbMaster, Tools.readBitmap(this.context, R.drawable.temp2));
-	BitmapManager.getInstance().loadBitmap(item.optString("path", ""), listItem.thumbHall, Tools.readBitmap(this.context, R.drawable.temp1));
+	BitmapManager.getInstance().loadBitmap(item.optString("tmb_headface", ""), listItem.thumbMaster, Tools.readBitmap(this.context, R.drawable.temp2));
+	BitmapManager.getInstance().loadBitmap(item.optString("pic_tmb_path", ""), listItem.thumbHall, Tools.readBitmap(this.context, R.drawable.temp1));
 
 		listItem.createOrder.setOnClickListener(this);
 		listItem.thumbHall.setOnClickListener(this);

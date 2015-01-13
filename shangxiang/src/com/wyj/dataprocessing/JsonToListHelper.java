@@ -109,7 +109,8 @@ public class JsonToListHelper {
 				map.put("wishtext", jsonObject_data.getString("wishtext"));
 				map.put("truename", jsonObject_data.getString("truename"));
 				map.put("templename", jsonObject_data.getString("templename"));
-				map.put("headface", "http://v1.qzone.cc/avatar/201402/03/12/16/52ef1800d3656616.jpg%21200x200.jpg");
+				//map.put("headface", "http://v1.qzone.cc/avatar/201402/03/12/16/52ef1800d3656616.jpg%21200x200.jpg");
+				map.put("headface", jsonObject_data.getString("headface"));
 				list.add(map);
 			}
 		} catch (Exception e) {
@@ -131,6 +132,7 @@ public class JsonToListHelper {
 			map.put("wishtext", jsonObject_data.getString("wishtext"));
 			map.put("templename", jsonObject_data.getString("templename"));
 			map.put("blessingser", jsonObject_data.getString("blessingser"));
+			map.put("headface", jsonObject_data.getString("headface"));
 			//list.add(map);
 
 		} catch (Exception e) {
@@ -154,7 +156,8 @@ public class JsonToListHelper {
 				map.put("cn_retime", jsonObject_data.getString("cn_retime"));
 				map.put("nickname", jsonObject_data.getString("nickname"));
 				map.put("truename", jsonObject_data.getString("truename"));
-				map.put("headface", "http://b.hiphotos.baidu.com/image/pic/item/b3fb43166d224f4a611cb3150af790529822d12b.jpg");
+				//map.put("headface", "http://b.hiphotos.baidu.com/image/pic/item/b3fb43166d224f4a611cb3150af790529822d12b.jpg");
+				map.put("headface", jsonObject_data.getString("headface"));
 				list.add(map);
 			}
 		} catch (Exception e) {
