@@ -7,6 +7,7 @@ import com.wyj.Activity.R;
 import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ViewFlipper;
 
 public class WishGroupTab extends BaseGroup  
@@ -28,7 +29,7 @@ public class WishGroupTab extends BaseGroup
   
 	private void initViews(){
 		containerFlipper = (ViewFlipper) findViewById(R.id.group_content);
-
+		 Log.i("bbbb","containerFlipper----------222"+containerFlipper); 
 		Intent intent = new Intent(this,Wish.class);
 		switchActivity("Wish",intent,-1,-1);	
  

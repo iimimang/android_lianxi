@@ -57,7 +57,13 @@ public class My extends Activity implements OnClickListener
 		switch (v.getId()) {
 		case R.id.login_action:
 			if(MyApplication.getInstances().getUserName()==""){
-				getParent().startActivityForResult(new Intent(My.this, Login.class), 1);
+				//getParent().startActivityForResult(new Intent(My.this, Login.class), 1);
+				
+				Intent intent = new Intent(My.this, User.class);
+			       UserGroupTab.getInstance().switchActivity("User",intent,-1,-1);
+			}else{
+				  Intent intent = new Intent(My.this, User.class);
+			       UserGroupTab.getInstance().switchActivity("User",intent,-1,-1);
 			}
 			break;		
 		}

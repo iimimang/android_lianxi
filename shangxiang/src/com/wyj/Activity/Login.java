@@ -273,7 +273,7 @@ public class Login extends Activity implements OnClickListener
                 
                 // 保存 Token 到 SharedPreferences
                 AccessTokenKeeper.writeAccessToken(Login.this, mAccessToken);
-                Toast.makeText(Login.this,  "授权成功", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(Login.this,  "授权成功", Toast.LENGTH_SHORT).show();
             } else {
                 // 以下几种情况，您会收到 Code：
                 // 1. 当您未在平台上注册的应用程序的包名与签名时；
@@ -332,7 +332,7 @@ public class Login extends Activity implements OnClickListener
 	    		// 调用User#parse 将JSON串解析成User对象
 	    		User user = User.parse(response);
 	    		
-	    		sina_login(user.name,user.screen_name,mAccessToken.getToken(),user.avatar_large);
+	    		sina_login(user.id,user.screen_name,mAccessToken.getToken(),user.avatar_large);
 	    	    mTokenText.setText(user.screen_name);
 	    	}
     	}
@@ -357,23 +357,25 @@ public class Login extends Activity implements OnClickListener
                 if(msg.what==0x123){  
                 	pDialog.dismiss();
                 	String backmsg=msg.obj.toString();
-                	Map<String, Object> resmsg = new HashMap<String, Object>();
-                	 Log.i("aaaa","------第三方登录返回信息"+backmsg);
-                	resmsg =JsonToListHelper.jsontoCode(backmsg); 
-                	if(resmsg.get("code").equals("succeed")){
-                		login_username=name;
-                		RegularUtil.alert_msg(Login.this, "登录成功"); 
-            			login();
+                	if(backmsg!=""){
+                		Map<String, Object> resmsg = new HashMap<String, Object>();
+	                   	 Log.i("aaaa","------第三方登录返回信息"+backmsg);
+	                   	resmsg =JsonToListHelper.jsontoCode(backmsg); 
+	                   	if(resmsg.get("code").equals("succeed")){
+	                   		login_username="sina"+name;
+	                   		RegularUtil.alert_msg(Login.this, "登录成功"); 
+	               			login();
+	                   	}else{
+	                   		RegularUtil.alert_msg(Login.this, "登录失败，"+resmsg.get("msg")); 
+	                   	} 
                 	}else{
-                		RegularUtil.alert_msg(Login.this, "登录失败，"+resmsg.get("msg")); 
-                	} 
-                	
-                	
+                		RegularUtil.alert_msg(Login.this, "登录失败"); 
+                	} 	
                  }  
             }
         }; 
 		String params="name="+name+"&token="+token+"&hf="+avatar_large+"&nname="+screen_name+"&regtype=sina";
-		Log.i("aaaa","------发出的信息"+params);
+		Log.i("aaaa","------发出的信息"+params); 
 		 pDialog = new ProgressDialog(Login.this);
 		 pDialog.setMessage("请求中。。。");
 		 pDialog.show();

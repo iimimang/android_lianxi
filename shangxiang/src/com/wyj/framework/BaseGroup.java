@@ -28,7 +28,7 @@ public class BaseGroup extends ActivityGroup {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+	
 	}
 	
 	public void switchActivity(String id, Intent intent, int inAnimation,
@@ -36,13 +36,17 @@ public class BaseGroup extends ActivityGroup {
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		Window window = getLocalActivityManager().startActivity(id, intent);
 		View v = window.getDecorView();
+		
 		DisplayMetrics dm = new DisplayMetrics(); 
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		LayoutParams param = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
 		v.setLayoutParams(param);
+		 
+		//Log.i("aaaa","-cccc2---"+containerFlipper);
 		if (inAnimation != -1) {
 			try {
+				
 				containerFlipper.setInAnimation(AnimationUtils.loadAnimation(
 						this, inAnimation));
 				containerFlipper.setOutAnimation(AnimationUtils.loadAnimation(
@@ -51,8 +55,10 @@ public class BaseGroup extends ActivityGroup {
 				e.printStackTrace();
 			}
 		} else {
+			Log.i("aaaa","-cccc---"+id);
 			containerFlipper.setInAnimation(null);
 			containerFlipper.setOutAnimation(null);
+			
 		}
 		// printViewFlipper(); 
 		 Log.i("bbbb","-idactivity---"+id);

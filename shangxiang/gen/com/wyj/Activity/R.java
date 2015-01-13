@@ -346,7 +346,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int address=0x7f090177;
+        public static final int address_input=0x7f0901b7;
+        public static final int address_text=0x7f0901b6;
         public static final int avatar=0x7f090193;
+        public static final int avatar_edit=0x7f0901b0;
+        public static final int avatar_face=0x7f0901b1;
         public static final int back=0x7f090191;
         public static final int back_login=0x7f09019e;
         public static final int background_logo=0x7f09000d;
@@ -543,7 +547,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_radio=0x7f09018c;
         public static final int manualOnly=0x7f090004;
         public static final int member_center_username=0x7f090194;
-        public static final int menu_settings=0x7f0901af;
+        public static final int menu_settings=0x7f0901ba;
         public static final int modify_info_failure_layout=0x7f090116;
         public static final int modify_info_form_layout=0x7f09010e;
         public static final int modify_info_layout=0x7f090109;
@@ -674,6 +678,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int settings_title_back_button=0x7f09013e;
         public static final int settings_title_layout=0x7f09013c;
         public static final int settings_title_text=0x7f09013d;
+        public static final int sex_input=0x7f0901b9;
+        public static final int sex_text=0x7f0901b8;
         public static final int show_discover_avatar_button=0x7f0900a0;
         public static final int show_discover_blessed_text=0x7f0900a4;
         public static final int show_discover_blessit_button=0x7f0900a5;
@@ -752,6 +758,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int toast_tip=0x7f090154;
         public static final int token_text_view=0x7f090188;
         public static final int tongyuan=0x7f090163;
+        public static final int truename_input=0x7f0901b5;
+        public static final int truename_text=0x7f0901b4;
         public static final int tv_wb=0x7f09018b;
         public static final int user_agreement_layout=0x7f090147;
         public static final int user_agreement_main_layout=0x7f09014b;
@@ -772,7 +780,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int user_title_layout=0x7f0900da;
         public static final int user_title_text=0x7f0900db;
         public static final int userinfo=0x7f090195;
+        public static final int userinfo_back=0x7f0901af;
         public static final int username=0x7f090162;
+        public static final int username_input=0x7f0901b3;
+        public static final int username_text=0x7f0901b2;
         public static final int version_number=0x7f09000e;
         public static final int viewGroup=0x7f090173;
         public static final int webview=0x7f09000a;
@@ -802,6 +813,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab_wish=0x7f030014;
         public static final int template_spinner=0x7f030015;
         public static final int template_spinner_items=0x7f030016;
+        public static final int user=0x7f030017;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

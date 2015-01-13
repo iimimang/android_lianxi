@@ -34,11 +34,15 @@
         </activity>
         <activity android:name="com.wyj.Activity.MemberGroupTab" >
         </activity>
+         <activity android:name="com.wyj.Activity.UserGroupTab" >
+        </activity>
         <activity android:name="com.wyj.Activity.Find" >
         </activity>
         <activity android:name="com.wyj.Activity.Foli" >
         </activity>
         <activity android:name="com.wyj.Activity.My" >
+        </activity>
+        <activity android:name="com.wyj.Activity.User" >
         </activity>
          <activity android:name="com.wyj.Activity.Login" >
         </activity>

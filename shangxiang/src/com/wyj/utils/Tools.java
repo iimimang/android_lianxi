@@ -5,6 +5,7 @@ import java.io.InputStream;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 public class Tools {
 
@@ -18,5 +19,18 @@ public class Tools {
 	     
 	     return   BitmapFactory.decodeStream(is, null, opt);
 	     
+	}
+	
+	/**
+	 * 检查是否存在SDCard
+	 * @return
+	 */
+	public static boolean hasSdcard(){
+		String state = Environment.getExternalStorageState();
+		if(state.equals(Environment.MEDIA_MOUNTED)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

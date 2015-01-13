@@ -108,7 +108,7 @@ public class TabMenu extends TabActivity
 		mth.addTab(ts3);
 
 		TabSpec ts4 = mth.newTabSpec(TAB_SEARCH).setIndicator(TAB_SEARCH);
-		ts4.setContent(new Intent(TabMenu.this, MemberGroupTab.class));
+		ts4.setContent(new Intent(TabMenu.this, UserGroupTab.class));
 		mth.addTab(ts4);
 			
 		//RadioButton default_radioButton = (RadioButton)findViewById(R.id.radio_button0);
