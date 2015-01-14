@@ -22,6 +22,26 @@ public class RegularUtil  {
 	        return true;
 	    }
 	 
+	 public static boolean checkTrueName(Activity context, String Truename) {
+	        if (TextUtils.isEmpty(Truename)  ) {
+	        	toast=Toast.makeText(context, "真实姓名不能为空！", Toast.LENGTH_SHORT);
+	        	toast.setGravity(Gravity.CENTER, 0, 0);
+	        	toast.show();
+	            return false;
+	        }
+	        return true;
+	    }
+	 
+	 public static boolean checkAddress(Activity context, String Address) {
+	        if (TextUtils.isEmpty(Address)  ) {
+	        	toast=Toast.makeText(context, "地址不能为空！", Toast.LENGTH_SHORT);
+	        	toast.setGravity(Gravity.CENTER, 0, 0);
+	        	toast.show();
+	            return false;
+	        }
+	        return true;
+	    }
+	 
 	 public static boolean checkPhone(Activity context, String phone) {
 		 if (!phoneFormat(phone)) {
 			   

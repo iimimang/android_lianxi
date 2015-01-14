@@ -22,6 +22,7 @@ import com.sina.weibo.sdk.widget.LoginButton;
 import com.sina.weibo.sdk.widget.LoginoutButton;
 
 import com.wyj.dataprocessing.AccessNetwork;
+import com.wyj.dataprocessing.JsonHelper;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
@@ -230,13 +231,64 @@ public class Login extends Activity implements OnClickListener
 		login_intent.putExtras(bu);
 		//设置返回数据
 		Login.this.setResult(1, login_intent);
-		MyApplication.getInstances().setName(login_username);//设置用户名
 		
-        //关闭Activity
-		Login.this.finish();
+		session_member();
+	
 	} 
 	
-	   /**
+	 private void session_member() {		//登录获取账户信息
+		// TODO Auto-generated method stub
+		   MyApplication.getInstances().setName(login_username);//设置用户名
+		   
+		    final Handler h = new Handler(){  
+	            @Override  
+	            public void handleMessage(Message msg) {  
+	                if(msg.what==0x123){  
+	                	
+	                	pDialog.dismiss();
+	                	String backmsg=msg.obj.toString();
+	                	Map<String, Object> resmsg = new HashMap<String, Object>();
+	                	Map<String, Object> jsontosingle = new HashMap<String, Object>();
+	                	
+	                	String[] keyNames={"memberid","membername","headface","nickname","truename","sex","area","tmb_headface"};
+	                	jsontosingle =JsonHelper.jsonStringToMap(backmsg,keyNames,"memberinfo"); 
+	                	
+	                	
+	                	int memberid=Integer.valueOf(String.valueOf(jsontosingle.get("memberid"))).intValue();
+	                	int sex=Integer.valueOf(String.valueOf(jsontosingle.get("sex"))).intValue();
+	                	MyApplication.getInstances().setMemberid(memberid);//设置用户ID
+	                	MyApplication.getInstances().setSex(sex);//设置用户ID
+	                	MyApplication.getInstances().setHeadface((String) jsontosingle.get("headface"));//设置用户名
+	                	MyApplication.getInstances().setArea((String) jsontosingle.get("area"));//设置用户名
+	                	MyApplication.getInstances().setTruename((String) jsontosingle.get("truename"));//设置用户名
+	                	
+	                	
+	                	 //Log.i(TAG,"------用户信息"+jsontosingle.get("memberid"));
+	                	
+	                	resmsg =JsonToListHelper.jsontoCode(backmsg); 
+	                	
+	                	if(resmsg.get("code").equals("succeed")){
+	                		
+	                		RegularUtil.alert_msg(Login.this, "登录成功"); 
+	                		//关闭Activity
+	                		Login.this.finish();
+	                	}else{
+	                		
+	                		RegularUtil.alert_msg(Login.this, "登录失败，"+resmsg.get("msg")); 
+	                	} 
+	                	
+	                	
+	                 }  
+	            }   
+	        }; 
+	        String params="mobile="+login_username;
+	        pDialog = new ProgressDialog(Login.this);
+			pDialog.setMessage("登录中。。。");
+			pDialog.show();
+	        new Thread(new AccessNetwork("GET", WebApiUrl.GET_USERINFO, params, h)).start();  		   
+	}
+
+	/**
      * 当 SSO 授权 Activity 退出时，该函数被调用。
      * 
      * @see {@link Activity#onActivityResult}

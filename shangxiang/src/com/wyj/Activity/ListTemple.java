@@ -30,7 +30,7 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
-import com.wyj.utils.Utils;
+
 
 public class ListTemple  extends Activity implements OnClickListener  {
 	
@@ -95,18 +95,7 @@ public class ListTemple  extends Activity implements OnClickListener  {
          new Thread(new AccessNetwork("GET", WebApiUrl.Getwishtemplelist, "", Discover)).start(); 
 	} 
 	
-	private void loadDiscover2() {
-		if (Utils.CheckNetwork()) {
-			showLoading();
-		} else {
-			Utils.ShowToast(ListTemple.this, R.string.dialog_network_check_content);
-		}
-	}
-
-	private void showLoading() {
-		Utils.animView(this.layoutLoading, !this.showLoading);
-		this.showLoading = !this.showLoading;
-	}
+	
 	
 	@Override
 	public void onClick(View v) {

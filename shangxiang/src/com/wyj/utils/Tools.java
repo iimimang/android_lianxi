@@ -1,5 +1,6 @@
 package com.wyj.utils;
 
+import java.io.File;
 import java.io.InputStream;
 
 import android.content.Context;
@@ -33,4 +34,18 @@ public class Tools {
 			return false;
 		}
 	}
+	
+	public static boolean fileIsExists(String filepath){
+        try{
+                File f=new File(filepath);
+                if(!f.exists()){
+                        return false;
+                }
+                
+        }catch (Exception e) {
+                // TODO: handle exception
+                return false;
+        }
+        return true;
+}
 }

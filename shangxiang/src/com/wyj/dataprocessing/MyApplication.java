@@ -11,7 +11,15 @@ import android.app.Application;
 public class MyApplication extends Application {
 	private static MyApplication instance;
 	private List<Activity> activityList = new LinkedList<Activity>();
-    private static String username="";
+    
+	private static String username="";
+    private static int memberid;
+    private static String  headface="";
+    private static String tmb_headface="";
+    private static String  truename="";
+    private static int sex;
+    private static String  area="";
+    
   
 	public static MyApplication getInstances() {
 		if (null == instance) {
@@ -47,6 +55,54 @@ public class MyApplication extends Application {
 	}
 	public void setName(String username) {
 	        MyApplication.username = username;
+	}
+
+	public  int getMemberid() {
+		return memberid;
+	}
+
+	public  void setMemberid(int memberid) {
+		MyApplication.memberid = memberid;
+	}
+
+	public  String getHeadface() {
+		return headface;
+	}
+
+	public  void setHeadface(String headface) {
+		MyApplication.headface = headface;
+	}
+
+	public  String getTmb_headface() {
+		return tmb_headface;
+	}
+
+	public  void setTmb_headface(String tmb_headface) {
+		MyApplication.tmb_headface = tmb_headface;
+	}
+
+	public  String getTruename() {
+		return truename;
+	}
+
+	public  void setTruename(String truename) {
+		MyApplication.truename = truename;
+	}
+
+	public  int getSex() {
+		return sex;
+	}
+
+	public  void setSex(int sex) {
+		MyApplication.sex = sex;
+	}
+
+	public  String getArea() {
+		return area;
+	}
+
+	public  void setArea(String area) {
+		MyApplication.area = area;
 	}
 
 	public String getSystemDataATime() {

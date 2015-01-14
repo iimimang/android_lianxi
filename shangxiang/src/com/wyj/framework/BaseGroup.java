@@ -76,19 +76,19 @@ public class BaseGroup extends ActivityGroup {
 		 
 		if (stack.size() > 1) {
 			//stack.
-			if(stack.top().equals("Find") || stack.top().equals("My"))
-			{
-				Log.i("bbbb","find退出----------"); 
-				//((TabMenu)getParent()).exitApp();
-			}else
-			{
+//			if(stack.top().equals("Find") || stack.top().equals("My"))
+//			{
+//				Log.i("bbbb","find退出----------"); 
+//				//((TabMenu)getParent()).exitApp();
+//			}else
+//			{
 				Log.i("bbbb","删除页面----------"+stack.size()); 
 				containerFlipper.showPrevious();
 				containerFlipper.removeViewAt(stack.size() - 1);
 //				View view_old=containerFlipper.getChildAt(stack.size() - 1);
 //				containerFlipper.removeView(view_old);
 				stack.pop();
-			}
+//			}
 		} else {
 			
 			Log.i("bbbb","<1----------"); 

@@ -184,5 +184,22 @@ public class JsonToListHelper {
 		}
 		return map;
 	}
+	
+	public static Map<String, Object> jsontosingle(String jsonString,String key){
+		List<Map<String, String>> list =new ArrayList<Map<String,String>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			JSONObject jsonObject = new JSONObject(jsonString);
+			
+			JSONObject infoObject = new JSONObject(jsonObject.getString(key));
+			 
+			
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
 
 }

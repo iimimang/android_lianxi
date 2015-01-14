@@ -203,8 +203,8 @@ int drawable temp4 0x7f020074
 int drawable titlebar_lightgray_bg 0x7f020075
 int drawable topbar 0x7f020076
 int id address 0x7f090177
-int id address_input 0x7f0901b7
-int id address_text 0x7f0901b6
+int id address_input 0x7f0901b9
+int id address_text 0x7f0901b8
 int id avatar 0x7f090193
 int id avatar_edit 0x7f0901b0
 int id avatar_face 0x7f0901b1
@@ -404,7 +404,7 @@ int id logout_button 0x7f090189
 int id main_radio 0x7f09018c
 int id manualOnly 0x7f090004
 int id member_center_username 0x7f090194
-int id menu_settings 0x7f0901ba
+int id menu_settings 0x7f0901c5
 int id modify_info_failure_layout 0x7f090116
 int id modify_info_form_layout 0x7f09010e
 int id modify_info_layout 0x7f090109
@@ -535,8 +535,8 @@ int id settings_menu_show_push_checkbox 0x7f090140
 int id settings_title_back_button 0x7f09013e
 int id settings_title_layout 0x7f09013c
 int id settings_title_text 0x7f09013d
-int id sex_input 0x7f0901b9
-int id sex_text 0x7f0901b8
+int id sex_input 0x7f0901bb
+int id sex_text 0x7f0901ba
 int id show_discover_avatar_button 0x7f0900a0
 int id show_discover_blessed_text 0x7f0900a4
 int id show_discover_blessit_button 0x7f0900a5
@@ -615,8 +615,8 @@ int id toast_content 0x7f090155
 int id toast_tip 0x7f090154
 int id token_text_view 0x7f090188
 int id tongyuan 0x7f090163
-int id truename_input 0x7f0901b5
-int id truename_text 0x7f0901b4
+int id truename_input 0x7f0901b6
+int id truename_text 0x7f0901b5
 int id tv_wb 0x7f09018b
 int id user_agreement_layout 0x7f090147
 int id user_agreement_main_layout 0x7f09014b
@@ -624,6 +624,13 @@ int id user_agreement_title_back_button 0x7f09014a
 int id user_agreement_title_layout 0x7f090148
 int id user_agreement_title_text 0x7f090149
 int id user_avatar 0x7f090011
+int id user_info_address_input 0x7f0901c3
+int id user_info_address_text 0x7f0901c2
+int id user_info_sex_input 0x7f0901c1
+int id user_info_sex_text 0x7f0901c0
+int id user_info_submit 0x7f0901c4
+int id user_info_truename_input 0x7f0901bf
+int id user_info_truename_text 0x7f0901be
 int id user_layout 0x7f0900d9
 int id user_main_layout 0x7f0900dd
 int id user_menu_avatar_button 0x7f0900de
@@ -638,9 +645,13 @@ int id user_title_layout 0x7f0900da
 int id user_title_text 0x7f0900db
 int id userinfo 0x7f090195
 int id userinfo_back 0x7f0901af
+int id userinfo_edit_back 0x7f0901bd
+int id userinfo_edits1 0x7f0901b2
+int id userinfo_edits2 0x7f0901b7
+int id userinfo_layout_head 0x7f0901bc
 int id username 0x7f090162
-int id username_input 0x7f0901b3
-int id username_text 0x7f0901b2
+int id username_input 0x7f0901b4
+int id username_text 0x7f0901b3
 int id version_number 0x7f09000e
 int id viewGroup 0x7f090173
 int id webview 0x7f09000a
@@ -669,6 +680,7 @@ int layout tab_wish 0x7f030014
 int layout template_spinner 0x7f030015
 int layout template_spinner_items 0x7f030016
 int layout user 0x7f030017
+int layout userinfo_edit 0x7f030018
 int menu main 0x7f0a0000
 int string about_title_text 0x7f0600d2
 int string app_name 0x7f060009
@@ -930,6 +942,7 @@ int string user_title_text 0x7f06009d
 int string verfycode_hint 0x7f06001f
 int style AppBaseTheme 0x7f070000
 int style AppTheme 0x7f070001
+int style SinhaTheme 0x7f07000b
 int style com_sina_weibo_sdk_loginview_default_style 0x7f070002
 int style com_sina_weibo_sdk_loginview_silver_style 0x7f070003
 int style main_tab_bottom 0x7f070006

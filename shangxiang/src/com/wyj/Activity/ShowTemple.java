@@ -35,7 +35,7 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
-import com.wyj.utils.Utils;
+
 
 public class ShowTemple  extends Activity implements OnClickListener  , OnCheckedChangeListener {
 	

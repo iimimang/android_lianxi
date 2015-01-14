@@ -1,6 +1,8 @@
 package com.wyj.Activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 
 import com.wyj.adapter.ListTempleAdapter;
 import com.wyj.dataprocessing.AccessNetwork;
+import com.wyj.dataprocessing.BitmapManager;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
@@ -25,6 +28,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -34,16 +38,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class User extends Activity implements OnClickListener {
 	RelativeLayout avatar_edit;
+	LinearLayout userinfo_edits1;
+	LinearLayout userinfo_edits2;
 	TextView username_input;
 	TextView truename_input;
 	TextView address_input;
@@ -71,19 +79,47 @@ public class User extends Activity implements OnClickListener {
 	}
 
 	private void findViewById() {
-
+		
+		userinfo_edits1 =(LinearLayout) findViewById(R.id.userinfo_edits1);
+		userinfo_edits2 =(LinearLayout) findViewById(R.id.userinfo_edits2);
+		
 		avatar_edit = (RelativeLayout) findViewById(R.id.avatar_edit);
+		userinfo_back = (ImageView) findViewById(R.id.userinfo_back);
+		
+		
 		faceImage = (ImageView) findViewById(R.id.avatar_face);
 		username_input = (TextView) findViewById(R.id.username_input);
 		truename_input = (TextView) findViewById(R.id.truename_input);
 		address_input = (TextView) findViewById(R.id.address_input);
 		sex_input = (TextView) findViewById(R.id.sex_input);
-		userinfo_back = (ImageView) findViewById(R.id.userinfo_back);
+		
+		username_input.setText(MyApplication.getInstances().getUserName()); 
+		if(MyApplication.getInstances().getSex()==1){
+			sex_input.setText("男");
+		}else if(MyApplication.getInstances().getSex()==2){
+			sex_input.setText("女");
+		}else{
+			sex_input.setText("未填写");
+		}
+		truename_input.setText((MyApplication.getInstances().getTruename()!="")?(MyApplication.getInstances().getTruename()):"未填写"); 
+		address_input.setText((MyApplication.getInstances().getArea()!="")?(MyApplication.getInstances().getArea()):"未填写"); 
+		
+		if(Tools.fileIsExists(FilePath.ROOT_DIRECTORY	 
+				+ IMAGE_FILE_NAME)){
+			Bitmap bitmap=BitmapFactory.decodeFile(FilePath.ROOT_DIRECTORY	 
+					+ IMAGE_FILE_NAME);
+			faceImage.setImageBitmap(bitmap);
+		}else{
+			BitmapManager.getInstance().loadBitmap(MyApplication.getInstances().getHeadface(), faceImage, Tools.readBitmap(User.this, R.drawable.foot_07));	
+		}
+			
 	}
 
 	private void setListener() {
 		avatar_edit.setOnClickListener(this);
 		userinfo_back.setOnClickListener(this);
+		userinfo_edits1.setOnClickListener(this);
+		userinfo_edits2.setOnClickListener(this);
 
 	}
 
@@ -91,9 +127,18 @@ public class User extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.avatar_edit:
-			// avatar_Views();
-			upload_image_file(FilePath.ROOT_DIRECTORY
-					+ IMAGE_FILE_NAME,"18612931666");
+			avatar_Views();
+
+			break;
+		case R.id.userinfo_edits1:
+			Intent intent2 = new Intent(User.this, UserInfo.class);
+			UserGroupTab.getInstance().switchActivity("UserInfo", intent2, -1, -1);
+
+			break;
+		case R.id.userinfo_edits2:
+			Intent intent1 = new Intent(User.this, UserInfo.class);
+			UserGroupTab.getInstance().switchActivity("UserInfo", intent1, -1, -1);
+
 			break;
 		case R.id.userinfo_back:
 
@@ -141,10 +186,10 @@ public class User extends Activity implements OnClickListener {
 		// Log.i("aaaa", "------User-回来了-----------" + requestCode);
 		switch (requestCode) {
 		case IMAGE_REQUEST_CODE:
-			startPhotoZoom(data.getData());
+			startPhotoZoom(data.getData()); 
 			break;
 		case CAMERA_REQUEST_CODE:
-
+ 
 			if (Tools.hasSdcard()) {
 				Log.i("aaaa", "------返回相机 返回图片数据 去除剪切-----------");
 				File tempFile = new File(FilePath.ROOT_DIRECTORY
@@ -177,6 +222,10 @@ public class User extends Activity implements OnClickListener {
 		intent.setDataAndType(uri, "image/*");
 		// 设置裁剪
 		intent.putExtra("crop", "true");
+		
+		intent.putExtra("output", Uri.fromFile(new File(FilePath.ROOT_DIRECTORY
+				+ IMAGE_FILE_NAME)));  // 专入目标文件     
+		intent.putExtra("outputFormat", "JPEG"); //输入文件格式   
 		// aspectX aspectY 是宽高的比例
 		intent.putExtra("aspectX", 1);
 		intent.putExtra("aspectY", 1);
@@ -194,10 +243,14 @@ public class User extends Activity implements OnClickListener {
 	 */
 	private void getImageToView(Intent data) {
 		Bundle extras = data.getExtras();
+		
+
 		if (extras != null) {
 			Bitmap photo = extras.getParcelable("data");
 			Drawable drawable = new BitmapDrawable(photo);
 			faceImage.setImageDrawable(drawable);
+			upload_image_file(FilePath.ROOT_DIRECTORY	 
+			+ IMAGE_FILE_NAME,MyApplication.getInstances().getUserName());  
 		}
 	}
 
@@ -259,5 +312,15 @@ public class User extends Activity implements OnClickListener {
 				}).create();
 		alertDialog.show();
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
 
 }

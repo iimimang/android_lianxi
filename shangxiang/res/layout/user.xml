@@ -56,8 +56,8 @@
 
         <ImageView
             android:id="@+id/avatar_face"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
             android:src="@drawable/foot_07" />
@@ -92,6 +92,7 @@
     </View>
 
     <LinearLayout
+        android:id="@+id/userinfo_edits1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -120,7 +121,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/username_text"
-                android:text="18513146388"
+                android:text="未填写"
                 android:textColor="#373737"
                 android:textSize="18dp" />
 
@@ -161,7 +162,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/truename_text"
-                android:text="孙立"
+                android:text="未填写"
                 android:textColor="#373737"
                 android:textSize="18dp" />
 
@@ -176,6 +177,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/userinfo_edits2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -204,7 +206,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/address_text"
-                android:text="北京"
+                android:text="未填写"
                 android:textColor="#373737"
                 android:textSize="18dp" />
 
@@ -245,7 +247,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/sex_text"
-                android:text="男"
+                android:text="未填写"
                 android:textColor="#373737"
                 android:textSize="18dp" />
 
