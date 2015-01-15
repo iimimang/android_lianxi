@@ -21,5 +21,9 @@ public class WebApiUrl  {
 	//public static final String CESHIURL = "http://192.168.1.30/sms/module.php?m=sms&c=index&a=ceshi";
 	
 	
+	
+	public static String[] keyNames={"memberid","membername","headface","nickname","truename","sex","area","tmb_headface"};//读取用户信息接口
+	
+	
 		
 }

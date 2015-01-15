@@ -16,7 +16,7 @@ public class AccessNetwork  implements Runnable{
 	    private String url;  
 	    private String params;  
 	    private Handler h;  
-	    
+	    private int requestcode;
 	    private String filepath;
 	    private String username;
 	    
@@ -30,6 +30,14 @@ public class AccessNetwork  implements Runnable{
 	        this.params = params;  
 	        this.h = h;  
 	    }  
+	    public AccessNetwork(String op, String url, String params,Handler h,int code) {  
+	        super();    
+	        this.op = op;  
+	        this.url = url;  
+	        this.params = params;  
+	        this.requestcode = code;  
+	        this.h = h;  
+	    } 
 	    
 	    public AccessNetwork(String op, String url, String filepath,String username,Handler h) {  
 	        super();    
@@ -53,20 +61,23 @@ public class AccessNetwork  implements Runnable{
 	    @Override  
 	    public void run() {  
 	        Message m = new Message();  
-	        m.what = 0x123;   
-	        
-	        if(op.equals("GET")){  
-	            Log.i("iiiiiii","发送GET请求");  
+	        m.what = 0x123;  
+	     	if(op.equals("GET")){ 
+	     		 
+	            Log.i("send","发送GET请求");  
 	            m.obj = GetPostUtil.sendGet(url, params);  
-	            Log.i("iiiiiii",">>>>>>>>>>>>"+m.obj);  
+	            Log.i("send",">>>>>>>>>>>>"+m.obj);  
 	        } 
+	     
 	        if(op.equals("POST")){  
-	            Log.i("aaaa","发送POST请求");  
+	        	
+	            Log.i("send","发送POST请求");  
 	            m.obj = GetPostUtil.sendPost(url, params);  
-	            Log.i("aaaa",">>>>>>>>>>>>"+m.obj);  
+	            Log.i("send",">>>>>>>>>>>>"+m.obj);  
 	        }  
 	        if(op.equals("UPLOAD")){  
-	            Log.i("aaaa","发送UPLOAD请求");  
+	        	
+	            Log.i("send","发送UPLOAD请求");  
 	            //m.obj = UploadPostUtil.uploadFile(url, filepath,username);  
 	            try {
 					m.obj = UploadPostUtil.post(url, mapparams,files);
@@ -74,7 +85,7 @@ public class AccessNetwork  implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-	            Log.i("aaaa",">>>>>>>>>>>>"+m.obj);  
+	            Log.i("send",">>>>>>>>>>>>"+m.obj);  
 	        }
 	        h.sendMessage(m);  
 	    } 

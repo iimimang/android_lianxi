@@ -22,7 +22,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:adjustViewBounds="true"
                 android:src="@drawable/login_03" />
 
             <TextView

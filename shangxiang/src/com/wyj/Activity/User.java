@@ -62,7 +62,7 @@ public class User extends Activity implements OnClickListener {
 	private static final int CAMERA_REQUEST_CODE = 30; // 拍照
 	private static final int RESULT_REQUEST_CODE = 20; // 返回图片数据 处理图片把图片放置当前页面
 	/* 头像名称 */
-	private static final String IMAGE_FILE_NAME = "faceImage.jpg";
+	private static final String IMAGE_FILE_NAME = MyApplication.getInstances().getUserName()+"_faceImage.jpg";
 	//private static final String IMAGE_FILE_NAME = "aaa.png";
 	private ImageView faceImage;
 	private ImageView userinfo_back;

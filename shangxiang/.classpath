@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="E:/AndroidWorkSpace/WeiboSDK/libs/android-support-v4.jar"/>
 	<classpathentry kind="lib" path="E:/AndroidWorkSpace/Android-PullToRefresh-master/sample/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/libammsdk.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

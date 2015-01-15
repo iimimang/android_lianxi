@@ -5,6 +5,10 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.wyj.weixin.WeiXinConstants;
+
 import android.app.Activity;
 import android.app.Application;
 
@@ -19,7 +23,8 @@ public class MyApplication extends Application {
     private static String  truename="";
     private static int sex;
     private static String  area="";
-    
+    public static IWXAPI WXapi;
+  
   
 	public static MyApplication getInstances() {
 		if (null == instance) {
@@ -47,7 +52,8 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+		
+		
 	}
 	
 	public String getUserName() {

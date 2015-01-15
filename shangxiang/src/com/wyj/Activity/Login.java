@@ -20,6 +20,15 @@ import com.sina.weibo.sdk.openapi.UsersAPI;
 import com.sina.weibo.sdk.openapi.models.User;
 import com.sina.weibo.sdk.widget.LoginButton;
 import com.sina.weibo.sdk.widget.LoginoutButton;
+import com.tencent.mm.sdk.constants.ConstantsAPI;
+import com.tencent.mm.sdk.modelbase.BaseReq;
+import com.tencent.mm.sdk.modelbase.BaseResp;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import com.wyj.dataprocessing.AccessNetwork;
 import com.wyj.dataprocessing.JsonHelper;
@@ -30,6 +39,7 @@ import com.wyj.http.AccessTokenKeeper;
 import com.wyj.http.Constants;
 import com.wyj.http.WebApiUrl;
 import com.wyj.member_db.Member_model;
+import com.wyj.weixin.WeiXinConstants;
 import com.wyj.Activity.R;
 
 import android.app.Activity;
@@ -50,11 +60,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class Login extends Activity implements OnClickListener
+public class Login extends Activity implements OnClickListener ,IWXAPIEventHandler
 {
 	
 	ImageView logo;
 	ImageView weibo_login;
+	ImageView weixin_logo;
 	Button reg;
 	Button login_submit;
 	TextView  username;
@@ -75,6 +86,9 @@ public class Login extends Activity implements OnClickListener
     private SsoHandler mSsoHandler;
     
     private LoginButton mLoginBtnDefault;
+    
+ // IWXAPI 是第三方app和微信通信的openapi接口
+    private IWXAPI api;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -115,6 +129,8 @@ public class Login extends Activity implements OnClickListener
             }
         });
         
+        api = WXAPIFactory.createWXAPI(this, WeiXinConstants.APP_ID, true); 
+        api.registerApp(WeiXinConstants.APP_ID);
 	} 
 	
 	private void findViewById() {
@@ -123,7 +139,7 @@ public class Login extends Activity implements OnClickListener
 		login_submit=(Button) findViewById(R.id.login_button);
 		username = (TextView) findViewById(R.id.login_username); 
 		passwd = (TextView) findViewById(R.id.login_passwd);
-		//weibo_login =(ImageView) findViewById(R.id.weibo_logo);
+		weixin_logo =(ImageView) findViewById(R.id.weixin_logo);
 		mTokenText = (TextView) findViewById(R.id.token_text_view);
 	 
 	}
@@ -133,7 +149,7 @@ public class Login extends Activity implements OnClickListener
 		logo.setOnClickListener(this);
 		reg.setOnClickListener(this);
 		login_submit.setOnClickListener(this);
-		//weibo_login.setOnClickListener(this);
+		weixin_logo.setOnClickListener(this);
 	}
 	
 	@Override
@@ -153,11 +169,16 @@ public class Login extends Activity implements OnClickListener
 		case R.id.login_button:
 			login_submit();
 			break;
+		case R.id.weixin_logo:
+			weixin_login_submit();
+			break;
 	
 		}
 		
 
 	}
+
+
 
 
 	private void login_submit() {
@@ -236,7 +257,10 @@ public class Login extends Activity implements OnClickListener
 	
 	} 
 	
+
+	
 	 private void session_member() {		//登录获取账户信息
+		 
 		// TODO Auto-generated method stub
 		   MyApplication.getInstances().setName(login_username);//设置用户名
 		   
@@ -250,8 +274,8 @@ public class Login extends Activity implements OnClickListener
 	                	Map<String, Object> resmsg = new HashMap<String, Object>();
 	                	Map<String, Object> jsontosingle = new HashMap<String, Object>();
 	                	
-	                	String[] keyNames={"memberid","membername","headface","nickname","truename","sex","area","tmb_headface"};
-	                	jsontosingle =JsonHelper.jsonStringToMap(backmsg,keyNames,"memberinfo"); 
+	                	
+	                	jsontosingle =JsonHelper.jsonStringToMap(backmsg,WebApiUrl.keyNames,"memberinfo"); 
 	                	
 	                	
 	                	int memberid=Integer.valueOf(String.valueOf(jsontosingle.get("memberid"))).intValue();
@@ -263,7 +287,7 @@ public class Login extends Activity implements OnClickListener
 	                	MyApplication.getInstances().setTruename((String) jsontosingle.get("truename"));//设置用户名
 	                	
 	                	
-	                	 //Log.i(TAG,"------用户信息"+jsontosingle.get("memberid"));
+	                	Log.i("aaaa","------用户信息"+jsontosingle.toString());
 	                	
 	                	resmsg =JsonToListHelper.jsontoCode(backmsg); 
 	                	
@@ -288,6 +312,8 @@ public class Login extends Activity implements OnClickListener
 	        new Thread(new AccessNetwork("GET", WebApiUrl.GET_USERINFO, params, h)).start();  		   
 	}
 
+	 
+	//新浪微博登录开始--------------------------------------------------------------------------------------------------------
 	/**
      * 当 SSO 授权 Activity 退出时，该函数被调用。
      * 
@@ -305,7 +331,7 @@ public class Login extends Activity implements OnClickListener
         
         mLoginBtnDefault.onActivityResult(requestCode, resultCode, data);
     }
-	
+	 
     /**
      * 微博认证授权回调类。
      * 1. SSO 授权时，需要在 {@link #onActivityResult} 中调用 {@link SsoHandler#authorizeCallBack} 后，
@@ -411,25 +437,49 @@ public class Login extends Activity implements OnClickListener
                 	String backmsg=msg.obj.toString();
                 	if(backmsg!=""){
                 		Map<String, Object> resmsg = new HashMap<String, Object>();
-	                   	 Log.i("aaaa","------第三方登录返回信息"+backmsg);
+                		Map<String, Object> userinfo = new HashMap<String, Object>();
+
+                		Map<String, Object> jsontosingle = new HashMap<String, Object>();
+	                    jsontosingle =JsonHelper.jsonStringToMap(backmsg,WebApiUrl.keyNames,"memberinfo"); 
+	                    Log.i("aaaa","------第三方登录返回信息"+jsontosingle.toString());   
 	                   	resmsg =JsonToListHelper.jsontoCode(backmsg); 
 	                   	if(resmsg.get("code").equals("succeed")){
-	                   		login_username="sina"+name;
+	                   		 
+	                   		int memberid=Integer.valueOf(String.valueOf(jsontosingle.get("memberid"))).intValue();
+		                	int sex=Integer.valueOf(String.valueOf(jsontosingle.get("sex"))).intValue();
+		                	MyApplication.getInstances().setMemberid(memberid);//设置用户ID
+		                	MyApplication.getInstances().setSex(sex);//设置用户ID
+		                	MyApplication.getInstances().setHeadface((String) jsontosingle.get("headface"));//设置用户名
+		                	MyApplication.getInstances().setArea((String) jsontosingle.get("area"));//设置用户名
+		                	MyApplication.getInstances().setTruename((String) jsontosingle.get("truename"));//设置用户名
+		                	MyApplication.getInstances().setName((String) jsontosingle.get("membername"));//设置用户名
+		                	
+		                	
+	                   		Intent login_intent=new Intent();
+	                		login_intent.setClass(Login.this, My.class);
+	                		Bundle bu=new Bundle();// 这个组件 存值
+	                		bu.putString("username", (String) jsontosingle.get("membername"));
+	                		login_intent.putExtras(bu);
+	                		//设置返回数据
+	                		Login.this.setResult(1, login_intent);
+	                		
 	                   		RegularUtil.alert_msg(Login.this, "登录成功"); 
-	               			login();
+	                   		Login.this.finish();
+	               			
 	                   	}else{
-	                   		RegularUtil.alert_msg(Login.this, "登录失败，"+resmsg.get("msg")); 
+	                   		RegularUtil.alert_msg(Login.this, "微博验证失败，"+resmsg.get("msg")); 
 	                   	} 
                 	}else{
+                		 Log.i("aaaa","------第三方登录返回信息  kong");
                 		RegularUtil.alert_msg(Login.this, "登录失败"); 
                 	} 	
                  }  
             }
         }; 
 		String params="name="+name+"&token="+token+"&hf="+avatar_large+"&nname="+screen_name+"&regtype=sina";
-		Log.i("aaaa","------发出的信息"+params); 
+		
 		 pDialog = new ProgressDialog(Login.this);
-		 pDialog.setMessage("请求中。。。");
+		 pDialog.setMessage("请求中。。。"); 
 		 pDialog.show();
         new Thread(new AccessNetwork("POST", WebApiUrl.THREE_LOGIN, params, sina)).start(); 
 	} 
@@ -461,6 +511,61 @@ public class Login extends Activity implements OnClickListener
         }
     }
     
+  //微信登录开始--------------------------------------------------------------------------------------------------------
+    
+	private void weixin_login_submit() {
+		// TODO Auto-generated method stub
+		
+		final SendAuth.Req req = new SendAuth.Req();
+		req.scope = "snsapi_userinfo";
+		req.state = "wechat_sdk_demo_test";
+		api.sendReq(req);
+		//finish();
+	}
 	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		
+		setIntent(intent);
+        api.handleIntent(intent, this);
+	}
+	
+	// 微信发送请求到第三方应用时，会回调到该方法
+	public void onReq(BaseReq req) {
+		switch (req.getType()) {
+		case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
+			Log.i("weixin","------发出的信息1111"); 	
+			break;
+		case ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX:
+			Log.i("weixin","------发出的信息222"); 	
+			break;
+		default:
+			break;
+		}
+	}
+
+	// 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
+	public void onResp(BaseResp resp) {
+		String result = "";
+		Log.i("weixin","------发出的信息333"+resp.toString()); 
+		switch (resp.errCode) {
+		case BaseResp.ErrCode.ERR_OK:
+			result = "成功";
+			break;
+		case BaseResp.ErrCode.ERR_USER_CANCEL:
+			result = "取消";
+			break;
+		case BaseResp.ErrCode.ERR_AUTH_DENIED:
+			result = "拒绝";
+			break;
+		default:
+			result = "返回";
+			break;
+		}
+		
+		Toast.makeText(Login.this, result, Toast.LENGTH_LONG).show();
+	}
+    
 	
 }

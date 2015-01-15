@@ -30,7 +30,7 @@ public class My extends Activity implements OnClickListener
 	TextView user;
 	ImageView my_avatar_face;
 	/* 头像名称 */
-	private static final String IMAGE_FILE_NAME = "faceImage.jpg";
+	private static final String IMAGE_FILE_NAME = MyApplication.getInstances().getUserName()+"_faceImage.jpg";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
