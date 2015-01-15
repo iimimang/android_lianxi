@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg" >
+
+        <Button
+            android:id="@+id/businessSupply_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn" />
+
+        <Button
+            android:id="@+id/businessSupply_detail_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/top_btn3" />
+
+        <Button
+            android:id="@+id/businessSupply_detail_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/businessSupply_detail_search"
+            android:background="@drawable/top_btn2" />
+
+        <Button
+            android:id="@+id/businessSupply_detail_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/businessSupply_detail_go"
+            android:background="@drawable/top_btn1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bj3" >
+        <TextView
+            android:id="@+id/businessSupply_detail_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="16sp" 
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/businessSupply_detail_fbsj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/businessSupply_detail_name"
+            android:layout_marginTop="5dp"
+            android:text="发布时间:"
+            android:textColor="@color/gray"
+            android:textSize="14sp" 
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/businessSupply_detail_fbsj1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/businessSupply_detail_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/businessSupply_detail_fbsj"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+          <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+	        android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+             >
+       <LinearLayout
+            android:id="@+id/businessSupplyTitle1CloseLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listitem_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+	        android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+             >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/listitem_image5" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="详细信息"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/businessSupplyTitle1Arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_right" />
+        </LinearLayout>
+          <LinearLayout
+            android:id="@+id/supplycontentLayout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:visibility="gone"
+	        android:background="@drawable/shop_gllary_bg"
+	         >
+ 
+        <LinearLayout
+            android:id="@+id/businessSupplyTitle1OpenLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/detail_title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/listitem_image5" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="详细信息"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_down" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+       <LinearLayout
+       		
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="5dp"
+             >
+            
+       
+        <TableLayout    
+	    android:layout_width="wrap_content"    
+	    android:layout_height="wrap_content">    
+   
+    <TableRow>    
+   
+        <TextView    
+            android:text="有效期:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+            android:textSize="10sp"
+             />    
+
+    </TableRow>    
+       <TableRow>    
+   
+        <TextView    
+            android:text="类别:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+            android:textSize="10sp"
+             />    
+
+    </TableRow>  
+       <TableRow>    
+   
+        <TextView    
+            android:text="规格型号:"    
+            android:padding="3dip" 
+            android:gravity="right"
+             android:textSize="10sp" 
+             />    
+
+    </TableRow>    
+   
+          <TableRow>    
+   
+        <TextView    
+            android:text="产品数量:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+             android:textSize="10sp"
+             />    
+
+    </TableRow>  
+           <TableRow>    
+   
+        <TextView    
+            android:text="地区:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+             android:textSize="10sp"
+             />    
+
+    </TableRow>  
+          
+</TableLayout>    
+        
+         <TableLayout    
+   
+	    android:layout_width="wrap_content"    	   
+	    android:layout_height="wrap_content">    
+   
+    <TableRow>    
+   
+       
+        <TextView    
+            android:id="@+id/yxq" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+   
+       <TableRow>    
+   
+        <TextView    
+            android:id="@+id/lb" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+         <TableRow>    
+   
+        <TextView    
+            android:id="@+id/ggxh" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+         <TableRow>    
+   
+        <TextView    
+            android:id="@+id/cpsl" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+         <TableRow>    
+   
+        <TextView    
+            android:id="@+id/dq" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+        
+   
+</TableLayout>    
+        
+       </LinearLayout>
+
+</LinearLayout>
+
+       <LinearLayout
+            android:id="@+id/businessSupplyTitle2CloseLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listitem_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+	        android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="5dp"
+             >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="联系方式"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/businessSupplyTitle2Arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_right" />
+        </LinearLayout>
+          <LinearLayout
+            android:id="@+id/contentLayout1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:visibility="gone"
+	        android:background="@drawable/shop_gllary_bg"
+	         >
+ 
+        <LinearLayout
+            android:id="@+id/businessSupplyTitle2OpenLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/detail_title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="5dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="联系方式"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/businessSupplyTitle2Arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_down" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+       <LinearLayout
+       		
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="5dp"
+           
+             >
+            
+       
+        <TableLayout    
+	    android:layout_width="wrap_content"    
+	    android:layout_height="wrap_content">    
+   
+    <TableRow>    
+   
+        <TextView    
+            android:text="联系人:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+            android:textSize="10sp"
+             />    
+
+    </TableRow>    
+       <TableRow>    
+   
+        <TextView    
+            android:text="Email:"    
+            android:padding="3dip" 
+            android:gravity="right" 
+            android:textSize="10sp"
+             />    
+
+    </TableRow>  
+       <TableRow>    
+   
+        <TextView    
+            android:text="联系电话:"    
+            android:padding="3dip" 
+            android:gravity="right"
+             android:textSize="10sp" 
+             />    
+
+    </TableRow>    
+   
+      
+</TableLayout>    
+        
+         <TableLayout    
+   
+	    android:layout_width="wrap_content"    
+	   
+	    android:layout_height="wrap_content">    
+   
+    <TableRow>    
+   
+       
+        <TextView    
+            android:id="@+id/lxr" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+   
+       <TableRow>    
+   
+        <TextView    
+            android:id="@+id/email" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+         <TableRow>    
+   
+        <TextView    
+            android:id="@+id/lxdh" 
+            android:gravity="left"   
+            android:padding="3dip"  />    
+    </TableRow>    
+</TableLayout>    
+        
+       </LinearLayout>
+
+</LinearLayout>    
+</LinearLayout>
+</LinearLayout>

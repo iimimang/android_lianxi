@@ -1,0 +1,10 @@
+package com.wyj.shangxiang;
+
+import  com.tencent.mm.sdk.constants.*;
+
+
+public class WebApiUrl  {
+	
+	
+	
+}

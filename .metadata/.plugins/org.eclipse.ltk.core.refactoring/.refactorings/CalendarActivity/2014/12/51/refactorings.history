@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ChinaDate.java&apos; to &apos;shangxiang/src/com.wyj.calendar&apos;&#x0D;&#x0A;- Original project: &apos;CalendarActivity&apos;&#x0D;&#x0A;- Destination element: &apos;shangxiang/src/com.wyj.calendar&apos;&#x0D;&#x0A;- Original element: &apos;com.example.calendargridview.ChinaDate.java&apos;" description="Copy compilation unit" destination="=shangxiang/src&lt;com.wyj.calendar" element1="/src&lt;com.example.calendargridview{ChinaDate.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1418864610301" units="1" version="1.0"/>
+</session>

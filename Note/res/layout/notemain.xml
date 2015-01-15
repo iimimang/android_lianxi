@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/title"
+    android:orientation="vertical" >
+
+    <include layout="@layout/note_top" />
+
+    <ListView
+        android:id="@+id/note_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar_note"
+        android:layout_margin="2dp"
+        android:divider="@color/transparent" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/nonote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:text="还未记录了，点击记录先记录一条吧"
+        android:visibility="gone" />
+
+</RelativeLayout>

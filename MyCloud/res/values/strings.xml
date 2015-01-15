@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">云产品</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">云产品</string>
+    <string name="yifu">奢华的青春（服装）\n春装新品   糖果色针织衫无扣开衫长袖 \n百搭亮色系</string>
+	<string name="pageSize">5</string>
+</resources>

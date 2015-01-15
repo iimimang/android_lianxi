@@ -1,0 +1,109 @@
+package com.wyj.Activity;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.wyj.adapter.ListTempleAdapter;
+import com.wyj.dataprocessing.AccessNetwork;
+import com.wyj.dataprocessing.JsonToListHelper;
+import com.wyj.dataprocessing.MyApplication;
+import com.wyj.dataprocessing.RegularUtil;
+import com.wyj.http.WebApiUrl;
+import com.wyj.utils.FilePath;
+import com.wyj.utils.Tools;
+import com.wyj.Activity.R;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+
+public class OrderForm extends Activity implements OnClickListener {
+	
+
+	private static String TAG = "OrderForm";
+
+	private ImageView userinfo_edit_back;
+	private ProgressDialog pDialog = null;
+	
+
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.userinfo_edit);
+
+		findViewById();
+		setListener();
+
+	}
+
+	private void findViewById() {
+
+	
+		userinfo_edit_back = (ImageView) findViewById(R.id.userinfo_edit_back);
+	}
+
+	private void setListener() {
+	
+		userinfo_edit_back.setOnClickListener(this);
+
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		
+		case R.id.userinfo_edit_back:
+			 Intent bak_My_intent = new Intent(OrderForm.this, User.class);
+			UserGroupTab.getInstance().switchActivity("User", bak_My_intent, -1, -1);
+			break;
+	
+			
+		}
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	
+}

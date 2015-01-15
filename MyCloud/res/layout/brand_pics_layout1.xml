@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg" >
+
+        <Button
+            android:id="@+id/brand_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn" />
+
+        <Button
+            android:id="@+id/product_detail_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/top_btn3" />
+
+        <Button
+            android:id="@+id/product_detail_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/product_detail_search"
+            android:background="@drawable/top_btn2" />
+
+        <Button
+            android:id="@+id/product_detail_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/product_detail_go"
+            android:background="@drawable/top_btn1" />
+    </RelativeLayout>
+	<ListView 
+	    android:id="@+id/brandlistview"  
+	    android:layout_marginTop="5dp"
+	    android:layout_width="fill_parent"   
+	    android:layout_height="wrap_content"   
+	    android:cacheColorHint="#00000000"
+	    android:listSelector="@android:color/transparent"
+	     
+	/> 
+</LinearLayout>

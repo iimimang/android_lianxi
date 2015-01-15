@@ -1,0 +1,9 @@
+# view AndroidManifest.xml #generated:28
+-keep class com.app.note.MainActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:16
+-keep class com.app.note.StartActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:33
+-keep class com.app.note.note.NoteNowActivity { <init>(...); }
+

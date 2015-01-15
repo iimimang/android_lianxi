@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bj3"
+    android:orientation="horizontal"
+    >
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bj3" >
+
+        <ImageView
+            android:id="@+id/business_supply_list_Logo"
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/business_supply_list_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/business_supply_list_Logo"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="16sp" 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <TextView
+            android:id="@+id/business_supply_list_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/business_supply_list_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/business_supply_list_Logo"
+            android:textColor="@color/gray"
+            android:textSize="12sp" 
+            android:singleLine="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+        <TextView
+            android:id="@+id/business_supply_list_pubtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/business_supply_list_description"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/business_supply_list_Logo"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/arrow_right"
+		   	android:layout_alignParentRight="true"
+		   	android:layout_centerVertical="true"
+		  	/>
+    </RelativeLayout>
+    
+</LinearLayout>

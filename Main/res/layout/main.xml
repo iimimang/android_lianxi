@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#ffffff"
     >
 <TextView  
     android:layout_width="fill_parent" 
@@ -42,7 +43,11 @@
     android:layout_height="wrap_content"
     android:text="@string/s_myAdapter_btn"
     />
-    
-    
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_22x" />
     
 </LinearLayout>

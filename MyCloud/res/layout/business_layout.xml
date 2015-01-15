@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:id="@+id/business_layout"
+    >
+    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/title_bg"
+	        android:gravity="center_vertical"
+	        android:orientation="horizontal">
+	        <RelativeLayout 
+	            style="@style/input_cell" 
+	            android:layout_weight="1">
+	            <EditText
+	                android:id="@+id/business_search_text"
+                    style="@style/input_edit"
+                    android:hint="企业搜索"
+                    />
+	        </RelativeLayout>
+	       <Button 
+	            android:id="@+id/business_search_btn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/top_btn3"
+	            android:layout_marginLeft="5dp"
+	            android:layout_marginRight="5dp"/>
+	    </LinearLayout>
+	   
+    <ListView 
+        android:id="@+id/business_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginRight="10dp">
+        
+    </ListView>
+</LinearLayout>

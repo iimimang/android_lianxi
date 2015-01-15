@@ -1,7 +1,12 @@
 package com.example.panduola;
 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +19,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.example.file.image;
 import com.example.json.List_json;
 
 
@@ -23,6 +29,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -69,16 +77,14 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
         mListView.addFooterView(moreView);
         
         Listdata =  new ArrayList<HashMap<String,Object>>();
-        loadMoreData();
+        prepareData();
         ImageView fanhui=(ImageView)findViewById(R.id.listimg1);
         fanhui.setOnClickListener(this);
     }
     
-    
-    private void loadMoreData() {
-		// TODO Auto-generated method stub
+    private void prepareData(){
     	
-     	handler=new Handler() {  
+    	handler=new Handler() {  
             @Override  
             public void handleMessage(Message msg) { 
             	if (Listdata != null) {
@@ -96,6 +102,19 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
 			}
 		}).start(); 
     	
+    }
+    
+    private void loadMoreData() {
+		// TODO Auto-generated method stub
+    	
+        new Thread(new Runnable() {
+			public void run() {
+				send();
+				Message m = handler.obtainMessage(); 
+				handler.sendMessage(m); 
+			}
+		}).start(); 
+    	
 	}
  
     
@@ -103,7 +122,7 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
 		   
 		
 		String target = List_json.LISTGOOD+"?page="+page;
-		List_json  makejson= new List_json();
+		List_json  makejson= new List_json(this);
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpRequest = new HttpGet(target);	
 		HttpResponse httpResponse;
@@ -142,7 +161,7 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
 		// TODO Auto-generated method stub
 		
 		 mAdapter=new BaseListAdapter(this);
-		 mAdapter.setValues(Listdata);
+		 //mAdapter.setValues(Listdata);
 		 mListView.setAdapter(mAdapter); 
 	     mListView.setOnScrollListener(this); 
 	}
@@ -232,6 +251,8 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
         public BaseListAdapter(Context mContext) {
             this.mContext = mContext;
             inflater = LayoutInflater.from(mContext);
+            
+            this.mData = Listdata;
         }
         
         public void setValues(List<HashMap<String, Object>> listdata) {
@@ -272,9 +293,13 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
             }
             
             System.out.println("viewHolder = " + viewHolder);
-            viewHolder.img.setBackgroundResource((Integer) this.mData.get(position).get("img"));
+            Log.i("bbbb", "setImageBitmap111111="+this.mData.get(position).get("img")); 
+            Bitmap imgs=image.GetLocalOrNetBitmap((String)this.mData.get(position).get("img"));
+             Log.i("bbbb", "setImageBitmap="+imgs); 
+            viewHolder.img.setImageBitmap(imgs);
+             
+          //  viewHolder.img.setBackgroundResource((Integer)this.mData.get(position).get("img"));
             viewHolder.title.setText((CharSequence) this.mData.get(position).get("title"));
-           
             viewHolder.sale_btn.setOnClickListener(this);
             
             return convertView;
@@ -298,7 +323,8 @@ public class Textlist extends Activity implements OnClickListener  , OnScrollLis
                 break;
             }
         }
-
+        
+    	
         private void showInfo() {
             new AlertDialog.Builder(Textlist.this).setTitle("my listview").setMessage("introduce....").
             setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
          android:gravity="center_horizontal"
-      	android:orientation="horizontal" >
+      	android:orientation="vertical" >
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -138,6 +138,28 @@
              
              
          </TableLayout>
+         
+        <TextView
+			            android:id="@+id/weibo_logo"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:textSize="20dp"
+			            android:text="新狼" />
+        <TextView
+        android:id="@+id/token_text_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="aaaaaaaaaa" />
+	  <TextView
+        android:id="@+id/obtain_token_hint"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="12sp"
+        android:scrollbars="vertical"
+        android:maxLines="1000"
+        />
     
     </LinearLayout>
 

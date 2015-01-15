@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;shangxiang/src/com.wyj.shangxiang&apos;&#x0D;&#x0A;- Original project: &apos;android_weixin&apos;&#x0D;&#x0A;- Destination element: &apos;shangxiang/src/com.wyj.shangxiang&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     net.sourceforge.simcpux.AppRegister.java&#x0D;&#x0A;     net.sourceforge.simcpux.Constants.java" description="Copy compilation units" destination="=shangxiang/src&lt;com.wyj.shangxiang" element1="/src&lt;net.sourceforge.simcpux{AppRegister.java" element2="/src&lt;net.sourceforge.simcpux{Constants.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1421293925753" units="2" version="1.0"/>
+</session>

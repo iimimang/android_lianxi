@@ -1,4 +1,6 @@
+com.android.ide.eclipse.adt.customDebugKeyStore=E\:\\AndroidWorkSpace\\WeiboSDKDemo\\debug.keystore
 com.android.ide.eclipse.adt.fixLegacyEditors=1
 com.android.ide.eclipse.adt.sdk=D\:\\adt-bundle-windows-x86\\sdk
 com.android.ide.eclipse.adt.xmlEditor=true
+design.structure.flyout.state=1
 eclipse.preferences.version=1

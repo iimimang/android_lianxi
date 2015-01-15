@@ -13,7 +13,7 @@ public class DBHelper {
 	private static DatabaseHelper mDbHelper;
 	private static SQLiteDatabase mDb;
 
-	private static final String DATABASE_NAME = "zhyy.db";
+	private static final String DATABASE_NAME = "sunli.db";
 
 	private static final int DATABASE_VERSION = 1;
 

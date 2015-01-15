@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="">
+		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
+	</section>
 	<section name="DialogBounds_SearchDialog">
 		<item value="659" key="DIALOG_WIDTH"/>
 		<item value="368" key="DIALOG_Y_ORIGIN"/>
-		<item value="529" key="DIALOG_X_ORIGIN"/>
 		<item value="553" key="DIALOG_HEIGHT"/>
+		<item value="529" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|10.5|0|WINDOWS|1|-14|0|0|0|400|0|0|0|-122|3|2|1|34|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="Search">
@@ -26,6 +29,9 @@
 			<item value="org.eclipse.wst.jsdt.ui.JavaSearchPage"/>
 			<item value="org.eclipse.pde.internal.ui.search.SearchPage"/>
 		</list>
+	</section>
+	<section name="org.eclipse.search.text.FileSearchResultPage">
+		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
 	</section>
 	<section name="TextSearchPage">
 		<item value="false" key="CASE_SENSITIVE"/>

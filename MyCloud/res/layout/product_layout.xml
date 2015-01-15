@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+         >
+
+        <Button
+            android:id="@+id/product_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/top_btn3" />
+
+        <Button
+            android:id="@+id/news_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/news_search"
+            android:background="@drawable/top_btn2" />
+
+        <Button
+            android:id="@+id/news_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/news_go"
+            android:background="@drawable/top_btn1" />
+    </RelativeLayout>
+    <RelativeLayout 
+        android:id="@+id/product_sort_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bj3"
+        android:layout_margin="10dp">
+        <GridView
+             android:id="@+id/product_sort_grid"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:cacheColorHint="#00000000"
+             android:columnWidth="50dp"
+             android:divider="@drawable/line"
+             android:numColumns="2" >
+         </GridView>
+         <ImageView 
+             android:id="@+id/product_sort_btn1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/open_btn"
+             android:layout_alignBottom="@id/product_sort_grid"
+             android:layout_alignParentRight="true"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="10dp"/>
+         <ImageView 
+             android:id="@+id/product_sort_btn2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/close_btn"
+             android:layout_alignBottom="@id/product_sort_grid"
+             android:layout_alignParentRight="true"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="10dp"
+             android:visibility="gone"/>
+    </RelativeLayout>
+    <ListView
+             android:id="@+id/product_new_list"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:cacheColorHint="#00000000"
+             android:divider="@drawable/line" 
+             android:background="@drawable/bj3"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+              android:listSelector="@android:color/transparent"
+             android:layout_marginBottom="10dp">
+
+    </ListView>
+</LinearLayout>

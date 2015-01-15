@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/title_bg"
+         >
+
+        <Button
+            android:id="@+id/exhibition_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_btn" />
+
+        <Button
+            android:id="@+id/exhibition_detail_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/top_btn3" />
+
+        <Button
+            android:id="@+id/exhibition_detail_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/exhibition_detail_search"
+            android:background="@drawable/top_btn2" />
+
+        <Button
+            android:id="@+id/exhibition_detail_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/exhibition_detail_go"
+            android:background="@drawable/top_btn1" />
+    </RelativeLayout>
+	<ScrollView 
+	    android:layout_width="fill_parent"   
+ 		android:layout_height="wrap_content" >   
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bj3"
+        android:orientation="vertical"
+        >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+       >
+
+        <ImageView
+            android:id="@+id/exhibition_detail_pic"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/exhibition_detail_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/exhibition_detail_pic"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="20sp" 
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/exhibition_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exhibition_detail_name"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/exhibition_detail_pic"
+            android:text="发布时间:"
+            android:textColor="@color/gray"
+            android:textSize="16sp" 
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/exhibition_detail_time1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exhibition_detail_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/exhibition_detail_time"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+    </RelativeLayout>
+     <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+         <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+       <TableLayout    
+		    android:layout_width="wrap_content"    
+		    android:layout_height="wrap_content">    
+	
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:text="展会日期:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="展会名称:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="展会地址:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="省份/城市:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="行业类别:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>  
+		       
+		    <TableRow>    
+		   
+		        <TextView    
+		            android:text="展会范围:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		</TableLayout>  
+		 <TableLayout    
+		    android:layout_width="wrap_content"    
+		    android:layout_height="wrap_content">    
+	
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/zhrq1"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         /> 
+		            <TextView  
+		            android:text="至"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		  		<TextView  
+		            android:id="@+id/zhrq2"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         /> 
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView 
+		            android:id="@+id/zhmc1"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/zhdz1"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/sfcs1"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/hylb1"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>  
+		       
+		    <TableRow>    
+		   
+		        <TextView 
+		            android:id="@+id/zhfw1"   
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		</TableLayout>  
+		</LinearLayout>
+       
+  <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/listitem_bg"
+        android:layout_marginTop="10dp"
+        >
+       <TableLayout    
+		    android:layout_width="wrap_content"    
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="20dp"
+		    android:layout_marginBottom="20dp"
+		    android:layout_marginLeft="20dp"
+		    >    
+	
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:text="主办单位:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="承办单位:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="联系人:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="联系电话:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView    
+		            android:text="联系传真:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>  
+		       
+		    <TableRow>    
+		   
+		        <TextView    
+		            android:text="联系地址:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		    		    <TableRow>    
+		   
+		        <TextView    
+		            android:text="邮箱:"    
+		            android:padding="3dip" 
+		            android:gravity="right" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		</TableLayout>  
+		 <TableLayout    
+		    android:layout_width="wrap_content"    
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="20dp"
+		    android:layout_marginBottom="20dp"
+		    android:layout_marginLeft="10dp"
+		    >    
+	
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/zbdw"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView 
+		            android:id="@+id/cbdw"
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/lxr"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/lxdh"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		        <TableRow>    
+		   
+		        <TextView  
+		            android:id="@+id/lxcz"  
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>  
+		       
+		    <TableRow>    
+		   
+		        <TextView 
+		            android:id="@+id/lxdz"   
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		    		    <TableRow>    
+		   
+		        <TextView 
+		            android:id="@+id/yx"   
+		            android:padding="3dip" 
+		            android:gravity="left" 
+		            android:textSize="10sp"
+		         />    
+		
+		    </TableRow>
+		</TableLayout>  
+		</LinearLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

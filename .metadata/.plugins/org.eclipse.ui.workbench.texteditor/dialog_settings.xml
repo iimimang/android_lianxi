@@ -13,13 +13,24 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Log.i(&quot;aaaa&quot;" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="Log.i(&quot;aaaa&quot;"/>
-			<item value="count"/>
-			<item value="Button_openTxt"/>
+			<item value="MODIFY_AUDIO_SETTINGS"/>
+			<item value="snsapi_userinfo"/>
+			<item value="get_token"/>
+			<item value="&quot;"/>
+			<item value="order_people_head"/>
+			<item value="onActivityResult"/>
+			<item value="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+			<item value="android.permission.MOUNT_UNMOUNT_FILESYSTEMSandroid.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 		</list>
 		<list key="replacehistory">
+			<item value="&apos;"/>
+			<item value=""/>
 		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="371" key="DIALOG_Y_ORIGIN"/>
+		<item value="691" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

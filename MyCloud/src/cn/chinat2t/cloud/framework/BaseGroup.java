@@ -1,0 +1,162 @@
+package cn.chinat2t.cloud.framework;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.chinat2t.cloud.MainActivity;
+import cn.chinat2t.cloud.R;
+import cn.chinat2t.cloud.utils.CtLog;
+
+import android.app.Activity;
+import android.app.ActivityGroup;
+import android.content.Intent;
+import android.content.res.Resources.NotFoundException;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.widget.ViewFlipper;
+import android.widget.LinearLayout.LayoutParams;
+
+public class BaseGroup extends ActivityGroup {
+
+	private static final String TAG = "BaseGroup";
+	protected TabStack stack = new TabStack();
+	protected ViewFlipper containerFlipper;
+	private List<Bitmap> gl_bitmap = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		gl_bitmap = new ArrayList<Bitmap>();
+	}
+	
+	public void addbitmap(Bitmap bitmap){
+		gl_bitmap.add(bitmap);
+		if(gl_bitmap.size() > 50){
+			Bitmap b = gl_bitmap.get(0);
+			if(b != null){
+				b.recycle();
+				b = null;
+				System.gc();
+			}
+			gl_bitmap.remove(0);
+		}
+	}
+
+	public void clearbitmap(){
+		CtLog.d(TAG, "clear bitmap-------------------");
+		for(Bitmap bt:gl_bitmap){
+			if(bt!=null)
+			{
+				bt.recycle();
+			}
+		}
+			gl_bitmap.clear();
+			System.gc();
+	}
+
+	public void switchActivity(String id, Intent intent, int inAnimation,
+			int outAnimation) {
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		Window window = getLocalActivityManager().startActivity(id, intent);
+		View v = window.getDecorView();
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		LayoutParams param = new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
+		v.setLayoutParams(param);
+		if (inAnimation != -1) {
+			try {
+				containerFlipper.setInAnimation(AnimationUtils.loadAnimation(
+						this, inAnimation));
+				containerFlipper.setOutAnimation(AnimationUtils.loadAnimation(
+						this, outAnimation));
+			} catch (NotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			containerFlipper.setInAnimation(null);
+			containerFlipper.setOutAnimation(null);
+		}
+		// printViewFlipper();
+
+		containerFlipper.addView(v);
+		containerFlipper.showNext();
+		if (inAnimation == R.anim.in_left_right) {
+			containerFlipper.removeViewAt(stack.size());
+		}
+		stack.push(id);
+	}
+
+	public void back() {
+		if (stack.size() > 1) {
+//			containerFlipper.setInAnimation(AnimationUtils.loadAnimation(this,
+//					R.anim.in_left_right));
+//			containerFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,
+//					R.anim.out_left_right));
+			Log.i("wyq", "containerFlipperµÄchildCount="+containerFlipper.getChildCount());
+			Log.i("wyq", "containerFlipper="+containerFlipper.toString());
+			
+			if(stack.top().equals("BusinessDetailActivity"))
+			{
+				return ;
+			}
+			//stack.
+			if(stack.top().equals("BusinessActivity")||stack.top().equals("NewsActivity")||stack.top().equals("ProductActivity")||stack.top().equals("MoreActivity"))
+			{
+				Log.i("wyq", "Ö´ÐÐÁËssss="+getParent());
+				//containerFlipper.removeViewAt(containerFlipper.getChildCount() - 1);
+				((MainActivity)getParent()).exitApp();
+			}else
+			{
+				containerFlipper.showPrevious();
+				containerFlipper.removeViewAt(stack.size() - 1);
+				stack.pop();
+			}
+		} else {
+			((MainActivity)getParent()).exitApp();
+		}
+	}
+
+	public void noAnimationback() {
+		if (stack.size() > 1) {
+			containerFlipper.showPrevious();
+			containerFlipper.removeViewAt(stack.size() - 1);
+			stack.pop();
+		} else {
+			((MainActivity)getParent()).exitApp();
+		}
+	}
+	
+	public Activity getActivityByTag(String tag){
+		return getLocalActivityManager().getActivity(tag);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		CtLog.i(TAG, "onKeyDown" + stack.toString());
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (!stack.isEmpty()) {
+				back();
+			} else {
+				((MainActivity)getParent()).onKeyDown(keyCode, event);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	public void popSome(String id) {
+		int sum = stack.getTheSumToPop(id);
+		containerFlipper.removeViews(stack.size() - sum, sum - 1);
+		stack.popSome(id);
+		containerFlipper
+				.setDisplayedChild(containerFlipper.getChildCount() - 1);
+	}
+	
+}
