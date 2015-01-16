@@ -46,6 +46,8 @@ public class ShowTemple extends Activity implements OnClickListener,
 	private RadioButton radio_fashi;
 	private LinearLayout layoutHall;
 	private LinearLayout layoutBuddhist;
+	
+	private Button show_temple_create_order_button;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,13 @@ public class ShowTemple extends Activity implements OnClickListener,
 
 		ImageView back_button = (ImageView) findViewById(R.id.show_temple_layout_back);
 		back_button.setOnClickListener(this);
+			
+		findViewById();		
+		// loadTemplate();
+	}
 
+	private void findViewById() {
+		// TODO Auto-generated method stub
 		radio_simiao = (RadioButton) findViewById(R.id.show_temple_radio_simiao);
 		radio_simiao.setChecked(true);
 		radio_simiao.setOnCheckedChangeListener(this);
@@ -62,9 +70,8 @@ public class ShowTemple extends Activity implements OnClickListener,
 		radio_fashi.setOnCheckedChangeListener(this);
 		layoutHall = (LinearLayout) findViewById(R.id.show_temple_simiao_description);
 		layoutBuddhist = (LinearLayout) findViewById(R.id.show_temple_fashi_description);
-
-		// loadTemplate();
-
+		show_temple_create_order_button = (Button) findViewById(R.id.show_temple_create_order_button);
+		show_temple_create_order_button.setOnClickListener(this);
 	}
 
 	private void loadTemplate() {
@@ -114,6 +121,12 @@ public class ShowTemple extends Activity implements OnClickListener,
 			// 要跳转的Activity
 			Intent intent = new Intent(ShowTemple.this, ListTemple.class);
 			WishGroupTab.getInstance().switchActivity("ListTemple", intent, -1,
+					-1);
+			break;
+		case R.id.show_temple_create_order_button:
+			// 要跳转的Activity
+			Intent intent2 = new Intent(ShowTemple.this, OrderForm.class);
+			WishGroupTab.getInstance().switchActivity("OrderForm", intent2, -1,
 					-1);
 			break;
 		}

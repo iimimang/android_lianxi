@@ -92,7 +92,7 @@ public class My extends Activity implements OnClickListener {
 		} else {
 			user.setText("立即登录");
 		}
-	}
+	} 
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

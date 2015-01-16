@@ -31,6 +31,14 @@
         </activity>
         <activity android:name="com.wyj.Activity.ShowTemple" >
         </activity>
+         <activity android:name="com.wyj.Activity.OrderForm" >
+        </activity>
+        <activity android:name="com.wyj.Activity.OrderFormDetail" >
+        </activity>
+        <activity android:name="com.wyj.Activity.OrderFormPay" >
+        </activity>
+        <activity android:name="com.wyj.Activity.OrderPaySucc" >
+        </activity>
          <activity android:name="com.wyj.Activity.FindGroupTab" >
         </activity>
         <activity android:name="com.wyj.Activity.MemberGroupTab" >

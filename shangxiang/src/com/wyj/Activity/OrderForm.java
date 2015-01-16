@@ -27,7 +27,7 @@ public class OrderForm extends Activity implements OnClickListener {
 
 	private ImageView order_form_back;
 	private ProgressDialog pDialog = null;
-
+    private Button order_form_submit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,12 +41,13 @@ public class OrderForm extends Activity implements OnClickListener {
 	private void findViewById() {
 
 		order_form_back = (ImageView) findViewById(R.id.order_form_back);
+		order_form_submit =(Button) findViewById(R.id.order_form_submit);
 	}
 
 	private void setListener() {
 
 		order_form_back.setOnClickListener(this);
-
+		order_form_submit.setOnClickListener(this);
 	}
 
 	@Override
@@ -54,8 +55,13 @@ public class OrderForm extends Activity implements OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.order_form_back:
-			Intent bak_My_intent = new Intent(OrderForm.this, User.class);
-			UserGroupTab.getInstance().switchActivity("User", bak_My_intent,
+			Intent bak_My_intent = new Intent(OrderForm.this, ListTemple.class);
+			WishGroupTab.getInstance().switchActivity("ListTemple", bak_My_intent,
+					-1, -1);
+			break;
+		case R.id.order_form_submit:
+			Intent intent1 = new Intent(OrderForm.this, OrderFormDetail.class);
+			WishGroupTab.getInstance().switchActivity("OrderFormDetail", intent1,
 					-1, -1);
 			break;
 
@@ -65,7 +71,7 @@ public class OrderForm extends Activity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			WishGroupTab.getInstance().onKeyDown(keyCode, event);
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
