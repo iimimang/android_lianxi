@@ -305,6 +305,9 @@ public class User extends Activity implements OnClickListener {
 									intentFromGallery, IMAGE_REQUEST_CODE);
 
 							break;
+						case 2:		//查看大图
+							
+							break;
 						}
 					}
 				})

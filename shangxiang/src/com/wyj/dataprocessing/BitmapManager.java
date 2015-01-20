@@ -254,13 +254,47 @@ public class BitmapManager {
 		}
 		return bitmap;
 	}
+	
+	
+	/**
+	 * 根据url读取缓存图片
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public Bitmap getBitmapCacheByUrl(String url) {
+		Bitmap bitmap = null;
+		bitmap = getBitmapFromCache(url);
+		if (bitmap == null) {
+			// 加载SD卡中的图片缓
+			String filename = FilePath.getInstance().getFileName(url);
+			FilePath.getInstance().isExists(FilePath.PICTURE);
+			String filepath = FilePath.PICTURE + "/" + filename;
+			File file = new File(filepath);
+			if (file.exists()) {
+				// 显示SD卡中的图片缓
+				try {
+					FileInputStream fis = new FileInputStream(file);
+					BitmapFactory.Options options = new BitmapFactory.Options();
+					options.inSampleSize = 2;
+					bitmap = BitmapFactory.decodeStream(fis, null, options);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				// 缓存不存在返回空
+				bitmap = null;
+			}
+		}
+		return bitmap;
+	}
 
 	/**
 	 * 从缓存中获取图片
 	 * 
 	 * @param url
 	 */
-	private Bitmap getBitmapFromCache(String url) {
+	public Bitmap getBitmapFromCache(String url) {
 		Bitmap bitmap = null;
 		if (cache.containsKey(url)) {
 			bitmap = cache.get(url).get();

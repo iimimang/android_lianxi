@@ -13,6 +13,11 @@ public class WebApiUrl {
 			+ "/api/app/getorderinfo.php"; // 发现详情接口
 	public static final String Getwishtemplelist = IP + PORT
 			+ "/api/app/getwishtemplelist.php"; // 委托求愿寺庙接口
+	
+	public static final String Gettemplelistinfo = IP + PORT
+			+ "/api/app/gettempleinfo.php"; //  寺庙介绍接口
+	public static final String Getattacheinfo = IP + PORT
+			+ "/api/app/getattacheinfo.php"; //  法师介绍接口
 
 	public static final String REGSITER = IP + PORT + "/api/app/regdo.php"; // 注册接口
 	public static final String LOGIN = IP + PORT + "/api/app/logindo.php"; // 登录接口
@@ -28,5 +33,8 @@ public class WebApiUrl {
 
 	public static String[] keyNames = { "memberid", "membername", "headface",
 			"nickname", "truename", "sex", "area", "tmb_headface" };// 读取用户信息接口
+	public static String[] simiaoimages = { "pic_path", "pic_tmb_path"};// 读取寺庙介绍图片数组接口
+	
+	public static String[] fashiinfo = { "buddhistname", "conversion", "headface", "templename", "description"};// 读取法师数组
 
 }

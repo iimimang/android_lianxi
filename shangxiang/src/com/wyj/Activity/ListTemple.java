@@ -102,7 +102,7 @@ public class ListTemple extends Activity implements OnClickListener {
 		case R.id.list_temple_back_button:
 			// 要跳转的Activity
 			Intent intent = new Intent(ListTemple.this, Wish.class);
-			WishGroupTab.getInstance().switchActivity("ListTemple", intent, -1,
+			WishGroupTab.getInstance().switchActivity("Wish", intent, -1,
 					-1);
 			break;
 		}

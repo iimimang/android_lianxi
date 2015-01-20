@@ -3,6 +3,7 @@ package com.wyj.adapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.wyj.Activity.OrderForm;
 import com.wyj.Activity.R;
 import com.wyj.Activity.ShowTemple;
 import com.wyj.Activity.Wish;
@@ -14,7 +15,9 @@ import com.wyj.utils.Tools;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +64,9 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ListItem listItem;
+		
+		final JSONObject item = this.data.optJSONObject(position);
+		
 		if (null == convertView) {
 			convertView = LayoutInflater.from(this.context).inflate(
 					R.layout.list_temple_listview_item, null);
@@ -75,12 +81,27 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 					.findViewById(R.id.list_temple_hall_name_text);
 			listItem.createOrder = (Button) convertView
 					.findViewById(R.id.list_temple_order_button);
-			convertView.setOnClickListener(this);
+			
+			convertView.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(context, ShowTemple.class);
+					Bundle bu=new Bundle();
+					bu.putInt("tid", item.optInt("templeid"));
+					bu.putInt("aid", item.optInt("attacheid"));
+					intent.putExtras(bu);
+					WishGroupTab.getInstance().switchActivity("ShowTemple", intent, -1,
+							-1);
+				}
+			});
+			
 			convertView.setTag(listItem);
 		} else {
 			listItem = (ListItem) convertView.getTag();
 		}
-		JSONObject item = this.data.optJSONObject(position);
+		
 		listItem.nameMaster.setText(item.optString("templename", "") + "("
 				+ item.optString("province", "") + ")");
 		listItem.nameHall.setText(item.optString("buddhistname", ""));
@@ -93,19 +114,27 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 				Tools.readBitmap(this.context, R.drawable.temp1));
 
 		listItem.createOrder.setOnClickListener(this);
-		listItem.thumbHall.setOnClickListener(this);
-		listItem.thumbMaster.setOnClickListener(this);
-		return convertView;
+		//listItem.thumbHall.setOnClickListener(this);
+		//listItem.thumbMaster.setOnClickListener(this);
+		return convertView; 
 	}
 
 	@Override
 	public void onClick(View v) {
+		
+		Log.i("aaaa", "------点击view" +v.getTag() );
 		switch (v.getId()) {
-		case R.id.list_temlple_image_1:
-			Intent intent = new Intent(context, ShowTemple.class);
-			WishGroupTab.getInstance().switchActivity("ShowTemple", intent, -1,
+		case R.id.list_temple_order_button:
+			Intent intent2 = new Intent(context, OrderForm.class);
+			WishGroupTab.getInstance().switchActivity("OrderForm", intent2, -1,
 					-1);
 			break;
+//		case -1:
+//			Intent intent = new Intent(context, ShowTemple.class);
+//			WishGroupTab.getInstance().switchActivity("ShowTemple", intent, -1,
+//					-1);
+//			break;	
+			
 		}
 	}
 }

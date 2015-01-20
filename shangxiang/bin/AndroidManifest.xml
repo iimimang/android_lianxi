@@ -31,6 +31,8 @@
         </activity>
         <activity android:name="com.wyj.Activity.ShowTemple" >
         </activity>
+        <activity android:name="com.wyj.Activity.ShowPhotoActivity" >
+        </activity>
          <activity android:name="com.wyj.Activity.OrderForm" >
         </activity>
         <activity android:name="com.wyj.Activity.OrderFormDetail" >
@@ -55,19 +57,7 @@
         </activity>
         <activity android:name="com.wyj.Activity.UserInfo" >
         </activity>
-         <activity android:name="com.wyj.Activity.Login"
-             android:exported="true"
-             android:launchMode="singleTop"
-             ><intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="sdksample"/>
-            </intent-filter>
+         <activity android:name="com.wyj.Activity.Login" >
              
         </activity>
          <activity android:name="com.wyj.Activity.Reg" >

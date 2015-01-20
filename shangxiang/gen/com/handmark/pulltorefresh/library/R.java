@@ -27,10 +27,10 @@ public final class R {
 		public static final int manualOnly = 0x7f090004;
 	}
 	public static final class anim {
-		public static final int slide_out_to_bottom = 0x7f04000d;
-		public static final int slide_out_to_top = 0x7f04000e;
-		public static final int slide_in_from_bottom = 0x7f04000b;
-		public static final int slide_in_from_top = 0x7f04000c;
+		public static final int slide_out_to_bottom = 0x7f040011;
+		public static final int slide_out_to_top = 0x7f040012;
+		public static final int slide_in_from_bottom = 0x7f04000f;
+		public static final int slide_in_from_top = 0x7f040010;
 	}
 	public static final class string {
 		public static final int pull_to_refresh_refreshing_label = 0x7f060005;
@@ -41,8 +41,8 @@ public final class R {
 		public static final int pull_to_refresh_from_bottom_release_label = 0x7f060007;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header_horizontal = 0x7f030015;
-		public static final int pull_to_refresh_header_vertical = 0x7f030016;
+		public static final int pull_to_refresh_header_horizontal = 0x7f030014;
+		public static final int pull_to_refresh_header_vertical = 0x7f030015;
 	}
 	public static final class styleable {
 		public static final int PullToRefresh_ptrDrawableStart = 7;
