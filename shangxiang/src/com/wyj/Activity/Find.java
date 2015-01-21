@@ -116,10 +116,8 @@ public class Find extends Activity {
 					List<String> countriesStrlist = new ArrayList<String>();
 					countriesStrlist.add("全部道场");
 					for (int i = 0; i < items.size(); i++) {
-
 						Map<String, Object> map = items.get(i);
 						countriesStrlist.add(map.get("templename").toString());
-
 					}
 
 					default_template_list(countriesStrlist);// 初始化适配数据

@@ -13,18 +13,19 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="create_order_select_content_layout" key="selection"/>
 		<list key="findhistory">
-			<item value="MODIFY_AUDIO_SETTINGS"/>
-			<item value="snsapi_userinfo"/>
-			<item value="get_token"/>
-			<item value="&quot;"/>
-			<item value="order_people_head"/>
-			<item value="onActivityResult"/>
-			<item value="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-			<item value="android.permission.MOUNT_UNMOUNT_FILESYSTEMSandroid.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+			<item value="create_order_select_content_layout"/>
+			<item value="setStyle"/>
+			<item value="create_order_hide_select_content_button"/>
+			<item value="this.layoutContentSelect.setVisibility(View.GONE);"/>
+			<item value="layoutContentSelect"/>
+			<item value="create_order_show_select_content_button"/>
+			<item value="create_order_select_content_view"/>
+			<item value="makeView"/>
 		</list>
 		<list key="replacehistory">
+			<item value="pay"/>
 			<item value="&apos;"/>
 			<item value=""/>
 		</list>

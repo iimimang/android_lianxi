@@ -13,9 +13,10 @@
         android:label="@string/app_name" 
         android:theme="@style/SinhaTheme"
         android:name="com.wyj.dataprocessing.MyApplication"
-        >  
+     >  
         <activity
             android:name=".TabMenu"
+              android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.wyj.Activity.WishGroupTab" >
+        <activity android:name="com.wyj.Activity.WishGroupTab">
         </activity>
-        <activity android:name="com.wyj.Activity.Wish" >
+        <activity android:name="com.wyj.Activity.Wish">
         </activity>
          <activity android:name="com.wyj.Activity.ListTemple" >
         </activity>

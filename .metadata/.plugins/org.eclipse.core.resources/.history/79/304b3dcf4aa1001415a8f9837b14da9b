@@ -1,0 +1,85 @@
+package com.demo.popupwindowdemo;
+
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+
+public class MainActivity extends Activity implements OnClickListener {
+
+	private PopupWindow popupwindow;
+	private Button button;
+	private ListView List;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		button = (Button) findViewById(R.id.button1);
+		button.setOnClickListener(this);
+		
+		List =(ListView) findViewById(R.id.discover_container);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.button1:
+			if (popupwindow != null&&popupwindow.isShowing()) {
+				popupwindow.dismiss();
+				return;
+			} else {
+				initmPopupWindowView();
+				popupwindow.showAsDropDown(v, 0, 5);
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	public void initmPopupWindowView() {
+
+		// // 获取自定义布局文件pop.xml的视图
+		View customView = getLayoutInflater().inflate(R.layout.popview_item,
+				null, false);
+		// 创建PopupWindow实例,200,150分别是宽度和高度
+		popupwindow = new PopupWindow(customView);
+		// 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
+		//popupwindow.setAnimationStyle(R.style.AnimationFade);
+		customView.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,
+				R.anim.fade_in));
+		popupwindow.setWidth(LayoutParams.FILL_PARENT);
+		popupwindow.setHeight(LayoutParams.FILL_PARENT);
+		popupwindow.setBackgroundDrawable(new BitmapDrawable());
+		popupwindow.setFocusable(true);
+		popupwindow.setOutsideTouchable(true);
+		popupwindow.setContentView(customView);
+		// 自定义view添加触摸事件
+		customView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (popupwindow != null && popupwindow.isShowing()) {
+					popupwindow.dismiss();
+					popupwindow = null;
+				}
+
+				return false;
+			}
+		});
+	}
+
+}
