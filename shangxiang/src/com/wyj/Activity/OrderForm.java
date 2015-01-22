@@ -1,10 +1,17 @@
 package com.wyj.Activity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import com.wyj.Activity.R;
+
+import com.wyj.popupwindow.MyPopupWindows;
 import com.wyj.select.AbstractWheel;
 import com.wyj.select.AbstractWheelTextAdapter;
+import com.wyj.select.OnWheelChangedListener;
+import com.wyj.select.OnWheelScrollListener;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,6 +27,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 
 import android.widget.Button;
@@ -35,11 +43,16 @@ public class OrderForm extends Activity implements OnClickListener {
 
 	private ImageView order_form_back;
 	private ProgressDialog pDialog = null;
-    private Button order_form_submit;
-    private TextView buttonShowContentSelect;
-    private LinearLayout  layoutContentSelect;
-    private Button hide_wish_content;
-    private  ScrollView ScrollView_form;
+	private Button order_form_submit;
+	private TextView buttonShowContentSelect;
+	private LinearLayout create_order_select_location_layout;
+	private Button hide_wish_content;
+	private ScrollView ScrollView_form;
+	private EditText order_form_layout_wish_content_input;
+	
+	private TextView order_form_layout_wish_address_input;
+	private boolean scrolling = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,27 +66,64 @@ public class OrderForm extends Activity implements OnClickListener {
 	private void findViewById() {
 
 		order_form_back = (ImageView) findViewById(R.id.order_form_back);
-		order_form_submit =(Button) findViewById(R.id.order_form_submit);
+		order_form_submit = (Button) findViewById(R.id.order_form_submit);
+		buttonShowContentSelect = (TextView) findViewById(R.id.order_form_layout_wish_content_head_right);	//显示祝福语的点击按钮 
+		ScrollView_form = (ScrollView) findViewById(R.id.order_form_ScrollView);
+		order_form_layout_wish_content_input = (EditText) findViewById(R.id.order_form_layout_wish_content_input);
 		
-		this.buttonShowContentSelect = (TextView) findViewById(R.id.order_form_layout_wish_content_head_right);
-		this.buttonShowContentSelect.setOnClickListener(this);
-		this.hide_wish_content = (Button) findViewById(R.id.order_hide_select_content_button);
-		this.hide_wish_content.setOnClickListener(this);
+		order_form_layout_wish_address_input=(TextView) findViewById(R.id.order_form_layout_wish_address_input);
+		create_order_select_location_layout= (LinearLayout) findViewById(R.id.create_order_select_location_layout);
 		
-		ScrollView_form=(ScrollView) findViewById(R.id.order_form_ScrollView);
 		
-		layoutContentSelect = (LinearLayout) findViewById(R.id.create_order_select_content_layout);
-		final AbstractWheel contentSelect = (AbstractWheel) OrderForm.this.findViewById(R.id.create_order_select_content_view);
-		ContentAdapter contentAdapter = new ContentAdapter(OrderForm.this);
-		contentAdapter.contents = new String[] { "身体健康，财源广进", "身体健康，财源广进", "的反反复复发射点发", "身体健康，财源广进", "身体健康，财源广进", "身体健康，财源广进" , "身体健康，财源广进", "身体健康，财源广进" , "身体健康，财源广进", "身体健康，财源广进" , "身体健康，财源广进", "身体健康，财源广进"  };
-		contentSelect.setViewAdapter(contentAdapter);
-		contentSelect.setCurrentItem(2);
+		final AbstractWheel locationCitySelect = (AbstractWheel) findViewById(R.id.create_order_select_location_city_view);
+		LocationCityAdapter locationCityAdapter = new LocationCityAdapter(OrderForm.this);
+		try {
+			locationCityAdapter.locations = new JSONArray("[{\"name\":\"请选择\"}]");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		locationCitySelect.setViewAdapter(locationCityAdapter);
+		
+		final AbstractWheel locationProvSelect = (AbstractWheel) findViewById(R.id.create_order_select_location_prov_view);
+		final LocationProvAdapter locationProvAdapter = new LocationProvAdapter(OrderForm.this);
+		try {
+			locationProvAdapter.locations = new JSONArray(
+"[{\"name\":\"请选择\",\"sub\":[{\"name\":\"请选择\"}],\"type\":1},{\"name\":\"北京\",\"sub\":[{\"name\":\"请选择\"},{\"name\":\"东城区\"},{\"name\":\"西城区\"},{\"name\":\"崇文区\"},{\"name\":\"其他\"}],\"type\":0},{\"name\":\"海外\",\"sub\":[{\"name\":\"请选择\"},{\"name\":\"西城区\"},{\"name\":\"崇文区\"},{\"name\":\"其他\"}],\"type\":0},{\"name\":\"其他\",\"sub\":[{\"name\":\"请选择\"}],\"type\":0}]");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		locationProvSelect.setViewAdapter(locationProvAdapter);
+		locationProvSelect.addScrollingListener(new OnWheelScrollListener() {
+			public void onScrollingStarted(AbstractWheel wheel) {
+				scrolling = true;
+			}
+
+			public void onScrollingFinished(AbstractWheel wheel) {
+				scrolling = false;
+				LocationCityAdapter locationCityAdapter = new LocationCityAdapter(OrderForm.this);
+				locationCityAdapter.locations = locationProvAdapter.locations.optJSONObject(locationProvSelect.getCurrentItem()).optJSONArray("sub");
+				locationCitySelect.setViewAdapter(locationCityAdapter);
+				locationCitySelect.setCurrentItem(0);
+			}
+		});
+		locationProvSelect.addChangingListener(new OnWheelChangedListener() {
+			public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+				if (!scrolling) {
+					LocationCityAdapter locationCityAdapter = new LocationCityAdapter(OrderForm.this);
+					locationCityAdapter.locations = locationProvAdapter.locations.optJSONObject(newValue).optJSONArray("sub");
+					locationCitySelect.setViewAdapter(locationCityAdapter);
+					locationCitySelect.setCurrentItem(0);
+				}
+			}
+		});
+		locationProvSelect.setCurrentItem(1);
 	}
 
 	private void setListener() {
-
+		buttonShowContentSelect.setOnClickListener(this);
 		order_form_back.setOnClickListener(this);
 		order_form_submit.setOnClickListener(this);
+		order_form_layout_wish_address_input.setOnClickListener(this);
 	}
 
 	@Override
@@ -82,24 +132,35 @@ public class OrderForm extends Activity implements OnClickListener {
 
 		case R.id.order_form_back:
 			Intent bak_My_intent = new Intent(OrderForm.this, ListTemple.class);
-			WishGroupTab.getInstance().switchActivity("ListTemple", bak_My_intent,
-					-1, -1);
+			WishGroupTab.getInstance().switchActivity("ListTemple",
+					bak_My_intent, -1, -1);
 			break;
 		case R.id.order_form_submit:
 			Intent intent1 = new Intent(OrderForm.this, OrderFormDetail.class);
-			WishGroupTab.getInstance().switchActivity("OrderFormDetail", intent1,
-					-1, -1);
+			WishGroupTab.getInstance().switchActivity("OrderFormDetail",
+					intent1, -1, -1);
 			break;
 		case R.id.order_form_layout_wish_content_head_right:
-		
-			this.layoutContentSelect.setVisibility(View.VISIBLE);
+			String[] aaa=new String[] { "阿发是否阿发是否阿发是否", "332324323",
+					"的反反复复发射点发", "巴巴爸爸" };
+			MyPopupWindows daochang_select_widow = new MyPopupWindows(
+					OrderForm.this, order_form_layout_wish_content_input,
+					getParent().getParent(),aaa);
 			break;
-		case R.id.order_hide_select_content_button:
+		case R.id.order_form_layout_wish_address_input:
 			
-			this.layoutContentSelect.setVisibility(View.GONE);
+			create_order_select_location_layout.setVisibility(View.VISIBLE);
 			break;
 
 		}
+	}
+
+	private void background_remove_focus() {
+		// TODO Auto-generated method stub
+		WindowManager.LayoutParams lp = getParent().getParent().getWindow()
+				.getAttributes();
+		lp.alpha = 0.7f;
+		getParent().getParent().getWindow().setAttributes(lp);
 	}
 
 	@Override
@@ -111,16 +172,16 @@ public class OrderForm extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	private class ContentAdapter extends AbstractWheelTextAdapter {
-		String[] contents = new String[] {};
+	private class LocationProvAdapter extends AbstractWheelTextAdapter {
+		JSONArray locations = new JSONArray();
 
-		protected ContentAdapter(Context context) {
-			super(context, R.layout.select_custom_text, NO_RESOURCE); 
+		protected LocationProvAdapter(Context context) {
+			super(context, R.layout.select_custom_text, NO_RESOURCE);
 		}
 
 		@Override
 		public int getItemsCount() {
-			return this.contents.length;
+			return this.locations.length();
 		}
 
 		@Override
@@ -131,10 +192,40 @@ public class OrderForm extends Activity implements OnClickListener {
 		@Override
 		public View getItem(int index, View cachedView, ViewGroup parent) {
 			View view = super.getItem(index, cachedView, parent);
-			TextView JSCView = (TextView) view.findViewById(R.id.select_custom_text);
-			JSCView.setText(this.contents[index]);
+			JSONObject prov = this.locations.optJSONObject(index);
+			TextView provView = (TextView) view.findViewById(R.id.select_custom_text);
+			provView.setText(prov.optString("name", ""));
 			return view;
 		}
 	}
+	
+	private class LocationCityAdapter extends AbstractWheelTextAdapter {
+		JSONArray locations = new JSONArray();
+
+		protected LocationCityAdapter(Context context) {
+			super(context, R.layout.select_custom_text, NO_RESOURCE);
+		}
+
+		@Override
+		public int getItemsCount() {
+			return this.locations.length();
+		}
+
+		@Override
+		protected CharSequence getItemText(int index) {
+			return "";
+		}
+
+		@Override
+		public View getItem(int index, View cachedView, ViewGroup parent) {
+			View view = super.getItem(index, cachedView, parent);
+			JSONObject city = this.locations.optJSONObject(index);
+			TextView cityView = (TextView) view.findViewById(R.id.select_custom_text);
+			cityView.setText(city.optString("name", ""));
+			return view;
+		}
+	}
+
+
 
 }

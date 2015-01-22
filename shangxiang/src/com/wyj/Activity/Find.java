@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 
+import com.wyj.adapter.ListTempleNameAdapter;
 import com.wyj.dataprocessing.AsynTaskHelper;
 import com.wyj.dataprocessing.BitmapManager;
 import com.wyj.dataprocessing.JsonToListHelper;
@@ -18,13 +20,20 @@ import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 
 import com.wyj.http.WebApiUrl;
 import com.wyj.Activity.R;
+
 import com.wyj.utils.Tools;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
@@ -32,31 +41,39 @@ import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import android.widget.TextView;
 
 import android.widget.Toast;
 
 public class Find extends Activity {
+	
 
-	private List<Map<String, Object>> countriesStr = new ArrayList<Map<String, Object>>();
-	private Spinner mySpinner;
-	private ArrayAdapter<String> adapter;
+
+	private TextView daochang_select_showname;
+	private LinearLayout daochang_select;
+	private List<Map<String, Object>> daochang_data; // 加载到适配器中的数据源
 	private int tid = 0; // 道场id的标识
-	View views;
-	List<Map<String, Object>> templelist_list;
-	List<Map<String, Object>> order_list;
 
 	private View moreView;
 	private ListView mListView;
@@ -84,16 +101,47 @@ public class Find extends Activity {
 		if (detail_tid != 0) {
 			tid = detail_tid; // 详情页面返回寺庙的传值
 		}
-		get_daochang_list(null, WebApiUrl.GET_TEMPLELIST, getParent());
+		
+		
+		ActivityfindViewById();
+		ActivityAction();
 		select_order_list();
 
-		// mListView.setAdapter(new BaseListAdapter(this));
+	}
+	
+	private void ActivityfindViewById() {
+		// TODO Auto-generated method stub
+		
+		daochang_select =(LinearLayout) findViewById(R.id.daochang_select);
+		daochang_select_showname= (TextView) findViewById(R.id.daochang_select_showname);
+		default_order_list();
+	}
+	
+	private void ActivityAction() {
+		// TODO Auto-generated method stub
+		daochang_select.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						
+						
+						if(daochang_data!=null){
+							MyPopupWindows daochang_select_widow=new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);	
+						}else{
+						    get_daochang_list(null, WebApiUrl.GET_TEMPLELIST, getParent(),v);
+						}
+						
+						
+					}
+				});
 	}
 
-	private void get_daochang_list(Map<String, Object> map, String url,
-			final Context context) {
 
-		mySpinner = (Spinner) findViewById(R.id.daochang_select);
+	private void get_daochang_list(Map<String, Object> map, String url,
+			final Context context,final View v) {
+
+		
 		AsynTaskHelper asyntask = new AsynTaskHelper();
 		asyntask.dataDownload(url, map, new OnDataDownloadListener() {
 			@Override
@@ -103,24 +151,16 @@ public class Find extends Activity {
 					List<Map<String, Object>> items;
 
 					items = JsonToListHelper.gettemplelist_json(result);
-
+					daochang_data=new ArrayList<Map<String,Object>>(); 
+					Map<String, Object> map = new HashMap<String, Object>(){{put("templeid", 0);put("templename", "全部道场");}};
+					daochang_data.add(map);
+					daochang_data.addAll(items);
+					//daochang_data =items;
 					// 初始化------------------------------------
-					Map<String, Object> defaultmap = new HashMap<String, Object>();
-					defaultmap.put("templeid", 0);
-					defaultmap.put("templename", "全部道场");
-
-					countriesStr.add(defaultmap);
-					countriesStr.addAll(items);
 
 					// 初始化下拉选项------------------------------------
-					List<String> countriesStrlist = new ArrayList<String>();
-					countriesStrlist.add("全部道场");
-					for (int i = 0; i < items.size(); i++) {
-						Map<String, Object> map = items.get(i);
-						countriesStrlist.add(map.get("templename").toString());
-					}
-
-					default_template_list(countriesStrlist);// 初始化适配数据
+					
+			MyPopupWindows daochang_select_widow=new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);
 
 				} else {
 					Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
@@ -129,54 +169,9 @@ public class Find extends Activity {
 			}
 		}, context, "GET");
 
-		// 建立数据源
-		// List<templates> templates=new ArrayList<templates>();
-		// templates.add(new templates("张三","张三", 1));
-		// templates.add(new templates("李四", "李四",2));
-		// TemplateAdapter TemplateAdapter=new TemplateAdapter(getBaseContext(),
-		// templates);
-
-		mySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// 获取item内容
-				String data = arg0.getItemAtPosition(arg2).toString();
-
-				for (int i = 0; i < countriesStr.size(); i++) {
-
-					// countriesStr[i]=items.get(i).toString();
-					Map<String, Object> map = countriesStr.get(i);
-					if (map.get("templename").toString().equals(data)) {
-
-						tid = (Integer) map.get("templeid");
-						Log.i("aaaa", "------templeid更改为--------------" + tid);
-						default_order_list();
-					}
-				}
-				// templates templates=arg0.getItemAtPosition(arg2);
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-
-			}
-
-		});
 	}
 
-	private void default_template_list(List<String> countriesStr) { // 默认加载
-																	// 和更换道场加载
 
-		adapter = new ArrayAdapter<String>(this, R.layout.template_spinner,
-				countriesStr);
-		/* myspinner_dropdown为自定义下拉菜单模式定义在res/layout目录下 */
-		adapter.setDropDownViewResource(R.layout.template_spinner_items);
-		// 绑定Adapter
-		mySpinner.setAdapter(adapter);
-	}
 
 	private void default_order_list() { // 默认加载 和更换道场加载
 
@@ -186,7 +181,7 @@ public class Find extends Activity {
 
 		page = 1;
 		Listdata.clear();
-		// Log.i("bbbb","------变前"+Listdata.toString());
+		
 
 		listAdapter(null, WebApiUrl.GET_ORDERLIST + "?p=" + page + "&&pz="
 				+ pagesize + "&&tid=" + tid, getParent()); // 默认加载第一页
@@ -230,7 +225,7 @@ public class Find extends Activity {
 									+ "?p=" + page + "&&pz=" + pagesize
 									+ "&&tid=" + tid, getParent());
 						} else {
-							Log.i("bbbb", "------bug出现的时候-----");
+							
 
 							Toast.makeText(getParent(), "没有了",
 									Toast.LENGTH_SHORT).show();
@@ -369,16 +364,9 @@ public class Find extends Activity {
 
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			FindGroupTab.getInstance().onKeyDown(keyCode, event);
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+	
 
-	private class BaseListAdapter extends BaseAdapter {
+	private class BaseListAdapter extends BaseAdapter implements OnClickListener{
 
 		private Context mContext;
 		private LayoutInflater inflater;
@@ -390,14 +378,6 @@ public class Find extends Activity {
 			this.mData = list;
 		}
 
-		public void addFirst(List<Map<String, Object>> items) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void setValues(List<HashMap<String, Object>> listdata) {
-			// TODO Auto-generated method stub
-		}
 
 		@Override
 		public int getCount() {
@@ -406,12 +386,12 @@ public class Find extends Activity {
 
 		@Override
 		public Object getItem(int position) {
-			return null;
+			return position;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return 0;
+			return position;
 		}
 
 		@Override
@@ -419,18 +399,21 @@ public class Find extends Activity {
 			ViewHolder viewHolder = null;
 			if (convertView == null) {
 				viewHolder = new ViewHolder();
-				convertView = inflater.inflate(R.layout.items, null);
+				convertView = inflater.inflate(R.layout.list_find_items, null);
 
-				viewHolder.img = (ImageView) convertView.findViewById(R.id.img);
-				viewHolder.title = (TextView) convertView
-						.findViewById(R.id.title);
-				viewHolder.username = (TextView) convertView
-						.findViewById(R.id.username);
-				viewHolder.address = (TextView) convertView
-						.findViewById(R.id.address);
-				viewHolder.jiachi = (TextView) convertView
-						.findViewById(R.id.jiachi);
-
+				viewHolder.list_find_headface = (ImageView) convertView.findViewById(R.id.list_find_headface);
+				viewHolder.list_find_content = (TextView) convertView
+						.findViewById(R.id.list_find_content);
+				viewHolder.list_find_username = (TextView) convertView
+						.findViewById(R.id.list_find_username);
+				viewHolder.list_find_address = (TextView) convertView
+						.findViewById(R.id.list_find_address);
+				viewHolder.list_find_jiachi = (TextView) convertView
+						.findViewById(R.id.list_find_jiachi);
+				
+				viewHolder.list_find_zan = (TextView) convertView
+						.findViewById(R.id.list_find_zan);
+ 
 				convertView.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
@@ -439,48 +422,160 @@ public class Find extends Activity {
 			// viewHolder.img.setBackgroundResource(R.drawable.foot_07);
 			BitmapManager.getInstance().loadBitmap(
 					(String) this.mData.get(position).get("headface"),
-					viewHolder.img,
+					viewHolder.list_find_headface,
 					Tools.readBitmap(Find.this, R.drawable.foot_07));
 
-			viewHolder.title.setText((CharSequence) this.mData.get(position)
+			viewHolder.list_find_content.setText((CharSequence) this.mData.get(position)
 					.get("wishtext"));
-			viewHolder.username.setText((CharSequence) this.mData.get(position)
-					.get("truename"));
-			viewHolder.address.setText((CharSequence) this.mData.get(position)
-					.get("templename"));
-			viewHolder.jiachi.setText((CharSequence) this.mData.get(position)
+			viewHolder.list_find_username.setText((CharSequence) this.mData.get(position)
 					.get("wishname"));
+			
+			
+			String findaddress="刚刚在"+(String) this.mData.get(position).get("templename")+(String) this.mData.get(position).get("alsowish")+(String) this.mData.get(position).get("wishtype");
+			
+			int co_blessings=(Integer) this.mData.get(position).get("co_blessings");
+			String jiachipeople="";
+			if(co_blessings>0){
+				 jiachipeople=(String) this.mData.get(position).get("name_blessings")+"等"+co_blessings+"人加持";
+			}
+			viewHolder.list_find_address.setText(findaddress);
+			viewHolder.list_find_jiachi.setText(jiachipeople);
 
-			// viewHolder.jiachi.setOnClickListener(this);
+			viewHolder.list_find_zan.setOnClickListener(this);
 
 			return convertView;
 		}
 
 		class ViewHolder {
-			ImageView img;
-			TextView title;
-			TextView username;
-			TextView address;
-			TextView jiachi;
+			ImageView list_find_headface;
+			TextView list_find_content;
+			TextView list_find_username;
+			TextView list_find_address;
+			TextView list_find_jiachi;
+			
+			TextView list_find_zan;
 
 		}
 
-		// public void onClick(View v) {
-		// // TODO Auto-generated method stub
-		//
-		// //要跳转的Activity
-		// Intent intent = new Intent(Find.this, Find_item.class);
-		// Bundle bu=new Bundle(); // 这个组件 存值
-		// bu.putString("username", v.toString());
-		// intent.putExtras(bu); //放到 intent 里面 然后 传出去
-		// // 把Activity转换成一个Window，然后转换成View
-		// Window w = FindGroupTab.group.getLocalActivityManager()
-		// .startActivity("Find_item",intent);
-		// View view = w.getDecorView();
-		// //设置要跳转的Activity显示为本ActivityGroup的内容
-		// FindGroupTab.group.setContentView(view);
-		// }
+		
+		
+		public void onClick(View v) {
+		 // TODO Auto-generated method stub
+		    switch (v.getId()) {
+			case R.id.list_find_zan:
+				
+				TextView list_find_zany=(TextView) v;
+				
+				Resources resource = (Resources) getBaseContext().getResources();
+				ColorStateList csl = (ColorStateList) resource
+						.getColorStateList(R.color.color_text_selected);
+				list_find_zany.setTextColor(csl);
+				Drawable drawable= getResources().getDrawable(R.drawable.load_hover);
+				/// 这一步必须要做,否则不会显示.
+				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+				list_find_zany.setCompoundDrawables(drawable, null, null, null);
+				break;
 
+			default:
+				break;
+			}
+		
+		 }
+
+	}
+	
+	
+	public class MyPopupWindows extends PopupWindow {
+		
+		private PopupWindow popupwindow;
+		private ListTempleNameAdapter adapterListTemple;
+		
+		public MyPopupWindows(Context mContext,  View parent, final Activity activity, final List<Map<String, Object>> items) {
+			
+			final Activity pactivity=activity;
+			
+			View customView = View.inflate(mContext, R.layout.popview_item,
+					null);
+			ListView List = (ListView) customView
+					.findViewById(R.id.popview_discover_container);
+			
+			adapterListTemple = new ListTempleNameAdapter(
+					Find.this, items);
+			List.setAdapter(adapterListTemple);
+			
+			
+			popupwindow = new PopupWindow(customView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);			
+			 //以下为弹窗后面的背景色设置
+		 	ColorDrawable cd = new ColorDrawable(0x000000);
+		 	popupwindow.setBackgroundDrawable(cd); 
+		   	//产生背景变暗效果
+		    WindowManager.LayoutParams lp=activity.getWindow().getAttributes(); 
+			lp.alpha = 0.7f;
+			activity.getWindow().setAttributes(lp);
+			
+			popupwindow.setWidth(LayoutParams.FILL_PARENT);
+			popupwindow.setHeight(LayoutParams.FILL_PARENT);
+			popupwindow.setBackgroundDrawable(new BitmapDrawable());
+			popupwindow.setFocusable(true);
+			popupwindow.setOutsideTouchable(true);
+			popupwindow.setContentView(customView);
+
+			int[] location = new int[2];
+			parent.getLocationOnScreen(location);
+
+			popupwindow.showAsDropDown(parent); //显示在button的下面
+
+			// 自定义view添加触摸事件
+			popupwindow.update();
+			popupwindow.setOnDismissListener(new OnDismissListener() {		//恢复背景色
+				
+				public void onDismiss() {
+					// TODO Auto-generated method stub
+					WindowManager.LayoutParams lp=pactivity.getWindow().getAttributes();
+	    			lp.alpha = 1f;
+	    			pactivity.getWindow().setAttributes(lp);
+				}
+			});
+			
+			List.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					
+					Log.i("aaaa", "-----弹窗点击1111111111111111111-");
+					 tid = (Integer) items.get(arg2).get("templeid");
+					 default_order_list();
+					 daochang_select_showname.setText((String) items.get(arg2).get("templename"));
+					 popupwindow.dismiss();
+				}
+			});
+			adapterListTemple.notifyDataSetChanged();
+			
+			customView.setOnTouchListener(new OnTouchListener() {
+
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (popupwindow != null && popupwindow.isShowing()) {
+						popupwindow.dismiss();
+						popupwindow = null;
+					}
+
+					return false;
+				}
+			});		
+		}
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			FindGroupTab.getInstance().onKeyDown(keyCode, event);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
