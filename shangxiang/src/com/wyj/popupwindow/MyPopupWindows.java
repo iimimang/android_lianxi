@@ -52,7 +52,7 @@ public class MyPopupWindows extends PopupWindow {
 		contentAdapter.contents = data;
 		contentSelect.setViewAdapter(contentAdapter);
 		contentSelect.setCurrentItem(2);
-		
+		contentSelect.setCyclic(true);
 		
 		// 创建PopupWindow实例,200,150分别是宽度和高度-- popupwindow = new
 		// PopupWindow(customView,200,150);

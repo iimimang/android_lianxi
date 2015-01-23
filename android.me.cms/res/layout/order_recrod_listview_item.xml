@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_highlight" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingBottom="10.0dip"
+        android:paddingTop="10.0dip" >
+
+        <TextView
+            android:id="@id/order_record_listitem_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingLeft="20.0dip"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@id/order_record_listitem_desc_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingLeft="20.0dip"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textColor="@color/text_gray"
+            android:textSize="14.0sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@id/order_record_listitem_status_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:gravity="right|center_vertical"
+        android:paddingRight="20.0dip"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textSize="16.0sp" />
+
+</RelativeLayout>

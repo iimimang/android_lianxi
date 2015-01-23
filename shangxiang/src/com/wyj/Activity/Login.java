@@ -33,10 +33,10 @@ import com.wyj.dataprocessing.JsonHelper;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
+import com.wyj.db_member.Member_model;
 import com.wyj.http.AccessTokenKeeper;
 import com.wyj.http.Constants;
 import com.wyj.http.WebApiUrl;
-import com.wyj.member_db.Member_model;
 import com.wyj.weixin.WeiXinConstants;
 import com.wyj.Activity.R;
 
