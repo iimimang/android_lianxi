@@ -2,6 +2,7 @@ package com.wyj.dataprocessing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,39 @@ public class JsonHelper {
 		}
 		return arrString;
 	}
+	
+	// 将json字符串反序列化成 listmap
+		public static List<Map<String, Object>> jsonTolistmap(String jsonString, String key) {
+			JSONArray jsonArray = null;
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			try {
+				
+				if (key == null) {
+					jsonArray = new JSONArray(jsonString);
+				} else {
+					
+					JSONObject jsonObject = new JSONObject(jsonString);
+					jsonArray = jsonObject.getJSONArray(key);
+				}
+				
+				for(int i=0;i<jsonArray.length();i++){
+					JSONObject jsonboject2=jsonArray.getJSONObject(i);
+					Map<String, Object> map = new HashMap<String, Object>();
+					Iterator<String> iterator=jsonboject2.keys();		//迭代器
+					while(iterator.hasNext()){
+						String keys=iterator.next();
+						Object value=jsonboject2.get(keys);
+						map.put(keys, value);
+					}
+					list.add(map);
+				}
+	
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				System.out.println("====>" + ex.toString());
+			}
+			return list;
+		}
 
 	// 将json字符串反序列化成Map对象
 	public static Map<String, Object> jsonStringToMap(String jsonString,

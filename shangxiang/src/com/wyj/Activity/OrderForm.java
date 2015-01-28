@@ -1,11 +1,23 @@
 package com.wyj.Activity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import com.wyj.Activity.R;
 
+import com.wyj.dataprocessing.JsonHelper;
+import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.SinhaPipeClient;
+import com.wyj.pipe.SinhaPipeMethod;
+import com.wyj.pipe.Utils;
 import com.wyj.popupwindow.MyPopupWindows;
 import com.wyj.popupwindow.MyPopupWindowsCity;
 import com.wyj.popupwindow.MyPopupWindowsDate;
@@ -26,6 +38,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +49,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -56,7 +70,15 @@ public class OrderForm extends Activity implements OnClickListener {
 	private TextView order_form_layout_wish_date_input;
 	private TextView order_form_layout_wish_xiangtype_input;
 	private boolean scrolling = false;
-
+	
+	private SinhaPipeClient httpClient;
+	private SinhaPipeMethod httpMethod;
+	private boolean showLoading = false;
+	
+	
+	private String[] incense_data ;
+	private String[] wishcontent_data ;
+	private JSONArray citylist_data;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,7 +90,8 @@ public class OrderForm extends Activity implements OnClickListener {
 	}
 
 	private void findViewById() {
-
+		
+		
 		order_form_back = (ImageView) findViewById(R.id.order_form_back);
 		order_form_submit = (Button) findViewById(R.id.order_form_submit);
 		buttonShowContentSelect = (TextView) findViewById(R.id.order_form_layout_wish_content_head_right); // 显示祝福语的点击按钮
@@ -87,6 +110,8 @@ public class OrderForm extends Activity implements OnClickListener {
 		order_form_layout_wish_address_input.setOnClickListener(this);
 		order_form_layout_wish_date_input.setOnClickListener(this);
 		order_form_layout_wish_xiangtype_input.setOnClickListener(this);
+		
+		this.httpClient = new SinhaPipeClient();
 	}
 
 	@Override
@@ -104,54 +129,234 @@ public class OrderForm extends Activity implements OnClickListener {
 					intent1, -1, -1);
 			break;
 		case R.id.order_form_layout_wish_content_head_right:
-			String[] aaa = new String[] { "阿发是否阿发是否阿发是否", "332324323",
-					"的反反复复发射点发", "巴巴爸爸" };
-			MyPopupWindows daochang_select_widow = new MyPopupWindows(
+			
+			if(wishcontent_data!=null){
+				 new MyPopupWindows(
 					OrderForm.this, order_form_layout_wish_content_input,
-					getParent().getParent(), aaa);
+					getParent().getParent(),wishcontent_data);
+			}else{
+				loadWishcontent();
+			}
+			
 			break;
 		case R.id.order_form_layout_wish_address_input:
-
-			JSONArray data;
-			try {
-				data = new JSONArray(
-						"[{\"name\":\"请选择\",\"sub\":[{\"name\":\"请选择\"}],\"type\":1},{\"name\":\"北京\",\"sub\":[{\"name\":\"请选择\"},{\"name\":\"东城区\"},{\"name\":\"西城区\"},{\"name\":\"崇文区\"},{\"name\":\"其他\"}],\"type\":0},{\"name\":\"海外\",\"sub\":[{\"name\":\"请选择\"},{\"name\":\"西城区\"},{\"name\":\"崇文区\"},{\"name\":\"其他\"}],\"type\":0},{\"name\":\"其他\",\"sub\":[{\"name\":\"请选择\"}],\"type\":0}]");
-
-				MyPopupWindowsCity city_select_widow = new MyPopupWindowsCity(
-						OrderForm.this, order_form_layout_wish_address_input,
-						getParent().getParent(), data);
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+		if(citylist_data!=null){
+			 new MyPopupWindowsCity(
+				OrderForm.this, order_form_layout_wish_address_input,
+				getParent().getParent(),citylist_data);
+		}else{
+			loadCity();
+		}
 
 			break;
 		case R.id.order_form_layout_wish_date_input:
 
-			MyPopupWindowsDate date_select_widow = new MyPopupWindowsDate(
+			 new MyPopupWindowsDate(
 					OrderForm.this, order_form_layout_wish_date_input,
 					getParent().getParent());
 
 			break;
 		case R.id.order_form_layout_wish_xiangtype_input:
 			
-			String[] bbb = new String[] { "头柱香   ￥800", "开光香   ￥200", "高香   ￥90", "清香   ￥19" };
-			MyPopupWindowsIncense incense_select_widow = new MyPopupWindowsIncense(
-				OrderForm.this, order_form_layout_wish_xiangtype_input,
-				getParent().getParent(),bbb);
-
+			if(incense_data!=null){
+				 new MyPopupWindowsIncense(
+					OrderForm.this, order_form_layout_wish_xiangtype_input,
+					getParent().getParent(),incense_data);
+			}else{
+				loadIncense();
+			}
+			
 		break;
 
 		}
 	}
 
-	private void background_remove_focus() {
-		// TODO Auto-generated method stub
-		WindowManager.LayoutParams lp = getParent().getParent().getWindow()
-				.getAttributes();
-		lp.alpha = 0.7f;
-		getParent().getParent().getWindow().setAttributes(lp);
+	
+	private void loadIncense() {
+		if (Utils.CheckNetwork()) {
+			showLoading();
+			Log.i("aaaa", "-----GET请求22222222222222222222-");
+			this.httpClient.Config("get", WebApiUrl.GetIncense, null, true);
+			this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+				public void CallFinished(String error, Object result) {
+					showLoading();
+					if (null == error) {
+						loadIncense((String) result);
+					} else {
+						int err = R.string.dialog_system_error_content;
+						if (error == httpClient.ERR_TIME_OUT) {
+							err = R.string.dialog_network_error_timeout;
+						}
+						if (error == httpClient.ERR_GET_ERR) {
+							err = R.string.dialog_network_error_getdata;
+						}
+						Utils.ShowToast(OrderForm.this, err);
+					}
+				}
+			});
+			this.httpMethod.start();
+		} else {
+			Utils.ShowToast(OrderForm.this, R.string.dialog_network_check_content);
+		}
+	}
+
+	private void loadIncense(String s) {
+		if (null != s) {
+			try {
+				JSONObject result = new JSONObject(s);
+				if (result.optString("code", "").equals("succeed")) {
+					
+					JSONArray jsonArray = result.getJSONArray("wishgradeinfo");
+				
+
+					String[] arrString = new String[jsonArray.length()];
+					for (int i = 0; i < jsonArray.length(); i++) {
+						
+						JSONObject jsonboject2=jsonArray.getJSONObject(i);
+						
+						arrString[i] = jsonboject2.getString("name")+"  ￥"+jsonboject2.getString("price");
+					
+					}
+					incense_data=arrString;
+					new MyPopupWindowsIncense(
+					OrderForm.this, order_form_layout_wish_xiangtype_input,
+					getParent().getParent(),arrString);
+					 
+					
+					
+				} else {
+					
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	private void loadWishcontent() {
+		if (Utils.CheckNetwork()) {
+			showLoading();
+			
+			this.httpClient.Config("get", WebApiUrl.GetWishcontent, null, true);
+			this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+				public void CallFinished(String error, Object result) {
+					showLoading();
+					if (null == error) {
+						loadWishcontent((String) result);
+					} else {
+						int err = R.string.dialog_system_error_content;
+						if (error == httpClient.ERR_TIME_OUT) {
+							err = R.string.dialog_network_error_timeout;
+						}
+						if (error == httpClient.ERR_GET_ERR) {
+							err = R.string.dialog_network_error_getdata;
+						}
+						Utils.ShowToast(OrderForm.this, err);
+					}
+				}
+			});
+			this.httpMethod.start();
+		} else {
+			Utils.ShowToast(OrderForm.this, R.string.dialog_network_check_content);
+		}
+	}
+
+	private void loadWishcontent(String s) {
+		if (null != s) {
+			try {
+				JSONObject result = new JSONObject(s);
+				if (result.optString("code", "").equals("succeed")) {
+					
+					JSONArray jsonArray = result.getJSONArray("wishtextchoice");
+					Log.i("aaaa", "-----GET请求11111111111111-"+jsonArray.toString());
+					
+					String[] arrString = new String[jsonArray.length()];
+					for (int i = 0; i < jsonArray.length(); i++) {
+						
+//						JSONObject jsonboject2=jsonArray.getString(i);
+//						Log.i("aaaa", "-----GET请求22222222222222222222-"+jsonboject2.toString());
+						arrString[i] = jsonArray.getString(i);
+					
+					}
+					wishcontent_data=arrString;
+					new MyPopupWindows(
+					OrderForm.this, order_form_layout_wish_content_input,
+					getParent().getParent(),arrString);
+					 
+				} else {
+					
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void loadCity() {
+		if (Utils.CheckNetwork()) {
+			showLoading();
+			
+			this.httpClient.Config("post", WebApiUrl.Getprovincecitylist, null, true);
+			this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+				public void CallFinished(String error, Object result) {
+					showLoading();
+					if (null == error) {
+						loadCity((String) result);
+					} else {
+						int err = R.string.dialog_system_error_content;
+						if (error == httpClient.ERR_TIME_OUT) {
+							err = R.string.dialog_network_error_timeout;
+						}
+						if (error == httpClient.ERR_GET_ERR) {
+							err = R.string.dialog_network_error_getdata;
+						}
+						Utils.ShowToast(OrderForm.this, err);
+					}
+				}
+			});
+			this.httpMethod.start();
+		} else {
+			Utils.ShowToast(OrderForm.this, R.string.dialog_network_check_content);
+		}
+	}
+
+	private void loadCity(String s) {
+		if (null != s) {
+			try {
+				JSONObject result = new JSONObject(s);
+				if (result.optString("code", "").equals("succeed")) {
+					
+					
+					JSONArray jsonArray = result.getJSONArray("province_city");
+				
+					citylist_data=jsonArray;
+					 new MyPopupWindowsCity(
+								OrderForm.this, order_form_layout_wish_address_input,
+								getParent().getParent(), citylist_data);
+					 
+				} else {
+					
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void showLoading() {
+		
+		if(pDialog!=null){
+			pDialog.dismiss();
+		}else{
+			
+			pDialog = new ProgressDialog(getParent().getParent());
+			pDialog.setMessage("数据加载中。。。");
+			pDialog.show();
+		}
+		
 	}
 
 	@Override

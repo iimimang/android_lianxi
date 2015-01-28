@@ -13,6 +13,7 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
 import com.wyj.utils.FilePath;
 import com.wyj.utils.Tools;
 import com.wyj.Activity.R;
@@ -44,11 +45,13 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class UserInfo extends Activity implements OnClickListener {
 
 	EditText user_info_truename_input;
+	RelativeLayout user_info_sex_relative;
 	TextView user_info_sex_input;
 	EditText user_info_address_input;
 	Button user_info_submit;
@@ -72,14 +75,14 @@ public class UserInfo extends Activity implements OnClickListener {
 	}
 
 	private void findViewById() {
-
+		user_info_sex_relative = (RelativeLayout) findViewById(R.id.user_info_sex_relative);
 		user_info_truename_input = (EditText) findViewById(R.id.user_info_truename_input);
 		user_info_sex_input = (TextView) findViewById(R.id.user_info_sex_input);
 		user_info_address_input = (EditText) findViewById(R.id.user_info_address_input);
 
-		if (MyApplication.getInstances().getSex() == 1) {
+		if (Cms.memberInfo.optString("sex", "").equals("1")) {
 			user_info_sex_input.setText("男");
-		} else if (MyApplication.getInstances().getSex() == 2) {
+		} else if (Cms.memberInfo.optString("sex", "").equals("2")) {
 			user_info_sex_input.setText("女");
 		} else {
 			user_info_sex_input.setText("未填写");
@@ -88,12 +91,10 @@ public class UserInfo extends Activity implements OnClickListener {
 					.getColorStateList(R.color.text_hint);
 			user_info_sex_input.setTextColor(csl);
 		}
-		user_info_truename_input.setText((MyApplication.getInstances()
-				.getTruename() != "") ? (MyApplication.getInstances()
-				.getTruename()) : "");
+		user_info_truename_input.setText((Cms.memberInfo.optString("truename", "")
+				 != "") ? (Cms.memberInfo.optString("truename", "")) : "");
 		user_info_address_input
-				.setText((MyApplication.getInstances().getArea() != "") ? (MyApplication
-						.getInstances().getArea()) : "");
+				.setText((Cms.memberInfo.optString("area", "") != "") ? (Cms.memberInfo.optString("area", "")) : "");
 
 		user_info_submit = (Button) findViewById(R.id.user_info_submit);
 		userinfo_edit_back = (ImageView) findViewById(R.id.userinfo_edit_back);
@@ -102,7 +103,7 @@ public class UserInfo extends Activity implements OnClickListener {
 	private void setListener() {
 		user_info_submit.setOnClickListener(this);
 		userinfo_edit_back.setOnClickListener(this);
-		user_info_sex_input.setOnClickListener(this);
+		user_info_sex_relative.setOnClickListener(this);
 
 	}
 
@@ -118,7 +119,7 @@ public class UserInfo extends Activity implements OnClickListener {
 			UserGroupTab.getInstance().switchActivity("User", bak_My_intent,
 					-1, -1);
 			break;
-		case R.id.user_info_sex_input:
+		case R.id.user_info_sex_relative:
 			sex_select();
 			break;
 
@@ -155,14 +156,13 @@ public class UserInfo extends Activity implements OnClickListener {
 
 		} else {
 
-			server_api_userinfo(truename, sex, address, MyApplication
-					.getInstances().getUserName()); // 接口请求
+			server_api_userinfo(truename, sex, address, Cms.APP.getMemberId()); // 接口请求
 		}
 
 	}
 
 	private void server_api_userinfo(String truename, int sex, String address,
-			String username) {
+			String uid) {
 		// TODO Auto-generated method stub
 		// 利用Handler更新UI
 		final Handler h = new Handler() {
@@ -177,10 +177,7 @@ public class UserInfo extends Activity implements OnClickListener {
 					if (resmsg.get("code").equals("succeed")) {
 						RegularUtil.alert_msg(UserInfo.this, "修改成功");
 						update_app_userinfo();
-						Intent bak_My_intent = new Intent(UserInfo.this,
-								User.class);
-						UserGroupTab.getInstance().switchActivity("User",
-								bak_My_intent, -1, -1);
+						
 					} else {
 
 						RegularUtil.alert_msg(UserInfo.this,
@@ -191,11 +188,12 @@ public class UserInfo extends Activity implements OnClickListener {
 				}
 			}
 		};
-		String params = "mobile=" + username + "&truename=" + truename
+		String params = "mid=" + uid + "&truename=" + truename
 				+ "&area=" + address + "&sex=" + sex;
 		user_address = address;
 		user_sex = sex;
 		user_truename = truename;
+		Log.i("aaaa", "------修改的信息" + params);
 		pDialog = new ProgressDialog(UserInfo.this.getParent());
 		pDialog.setMessage("请求中。。。");
 		pDialog.show();
@@ -203,14 +201,47 @@ public class UserInfo extends Activity implements OnClickListener {
 				.start();
 
 	}
+	
 
-	protected void update_app_userinfo() {
+	private void update_app_userinfo() { // 登录获取账户信息
+
 		// TODO Auto-generated method stub
 
-		MyApplication.getInstances().setSex(user_sex);// 设置用户ID
-		MyApplication.getInstances().setArea(user_address);// 设置用户名
-		MyApplication.getInstances().setTruename(user_truename);// 设置用户名
+		final Handler h = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				if (msg.what == 0x123) {
+
+					pDialog.dismiss();
+					String backmsg = msg.obj.toString();
+
+					try {
+						JSONObject jsonobject = new JSONObject(backmsg);
+						JSONObject memberobject = jsonobject
+								.getJSONObject("memberinfo");
+						if (jsonobject.optString("code", "").equals("succeed")) {
+							
+							Cms.APP.setConfig(memberobject.toString()); //更新用户信息cookie
+							Cms.memberInfo = new JSONObject(Cms.APP.getConfig());
+							Intent bak_My_intent = new Intent(UserInfo.this,
+									User.class);
+							UserGroupTab.getInstance().switchActivity("User",
+									bak_My_intent, -1, -1);
+						} 
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		String params = "mobile=" + Cms.APP.getMobile();
+
+		new Thread(new AccessNetwork("GET", WebApiUrl.GET_USERINFO, params, h))
+				.start();
 	}
+
+
 
 	private void sex_select() {
 		Log.i(TAG, "------弹窗了没有");
@@ -238,13 +269,20 @@ public class UserInfo extends Activity implements OnClickListener {
 		alertDialog.show();
 	}
 
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			Log.i("aaaa", "后退总部userinfo----------" );
+			Intent bak_My_intent = new Intent(UserInfo.this, User.class);
+			UserGroupTab.getInstance().switchActivity("User", bak_My_intent,
+					-1, -1);
+			
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
 
 }

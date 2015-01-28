@@ -7,6 +7,7 @@ import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ViewFlipper;
 
 public class UserGroupTab extends BaseGroup {
@@ -39,14 +40,30 @@ public class UserGroupTab extends BaseGroup {
 		return group_manage;
 	}
 
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.i("aaaa", "后退总部usergroup----------" );
+			//group_manage.getLocalActivityManager().getCurrentActivity().onKeyDown(keyCode, event);
+			((TabMenu) getParent()).exitApp();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		Log.i("aaaa", "------父级-回来了-----------" + resultCode);
 		if (resultCode > 0) {
-			Log.i("aaaa", "--------------是劣化-");
+			Log.i("aaaa", "------父级-回来了-MY----------" + resultCode);
 			switch (requestCode) {
 			case 1: // global variable to indicate camera result
+				Log.i("aaaa", "------父级-回来了-activity----------"
+						+ getLocalActivityManager().getCurrentActivity()
+								.toString());
 				My activity = (My) getLocalActivityManager()
 						.getCurrentActivity();
 				activity.onActivityResult(resultCode, resultCode, data);

@@ -54,37 +54,42 @@ public class BaseGroup extends ActivityGroup {
 				e.printStackTrace();
 			}
 		} else {
-			Log.i("aaaa", "-cccc---" + id);
+
 			containerFlipper.setInAnimation(null);
 			containerFlipper.setOutAnimation(null);
 
 		}
 		// printViewFlipper();
-		Log.i("bbbb", "-idactivity---" + id);
-
+		Log.i(TAG, "当前页面-添加前 size---------" + stack.size());
+		Log.i(TAG, "当前页面-添加---------" + id);
 		containerFlipper.addView(v);
 		containerFlipper.showNext();
+		
+		
 		if (inAnimation == R.anim.in_left_right) {
 			containerFlipper.removeViewAt(stack.size());
 		}
 		stack.push(id);
+		Log.i(TAG, "当前页面-添加后 size---------" + stack.size());
 	}
 
 	public void back() {
-
+		Log.i(TAG, "当前页面-view--------" + stack.top());
 		if (stack.size() > 1) {
 			// stack.
+			
 			if (stack.top().equals("Find") || stack.top().equals("Wish")
 					|| stack.top().equals("My") || stack.top().equals("Foli")) {
-
+				
 				((TabMenu) getParent()).exitApp();
 			} else {
-				Log.i(TAG, "删除页面----------" + stack.size());
+				
 				containerFlipper.showPrevious();
 				containerFlipper.removeViewAt(stack.size() - 1);
 				// View view_old=containerFlipper.getChildAt(stack.size() - 1);
 				// containerFlipper.removeView(view_old);
 				stack.pop();
+				Log.i(TAG, "删除页面后剩余size----------" + stack.size());
 			}
 		} else {
 
@@ -108,7 +113,7 @@ public class BaseGroup extends ActivityGroup {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
+		Log.i("aaaa", "后退总部----------" );
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (!stack.isEmpty()) {
 				back();

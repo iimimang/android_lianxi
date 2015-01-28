@@ -131,7 +131,7 @@ public class Reg extends Activity implements OnClickListener {
 								"注册失败，" + resmsg.get("msg"));
 					}
 
-					Log.i("aaaa", "------线程返回注册验证信息" + resmsg.get("code"));
+					Log.i("aaaa", "------线程返回注册验证信息" + backmsg);
 				}
 			}
 		};

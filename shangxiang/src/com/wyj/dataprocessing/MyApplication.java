@@ -12,7 +12,7 @@ import com.wyj.weixin.WeiXinConstants;
 import android.app.Activity;
 import android.app.Application;
 
-public class MyApplication extends Application {
+public class MyApplication  {
 	private static MyApplication instance;
 	private List<Activity> activityList = new LinkedList<Activity>();
 
@@ -48,11 +48,7 @@ public class MyApplication extends Application {
 		return instance;
 	}
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-
-	}
+	
 
 	public String getUserName() {
 		return username;

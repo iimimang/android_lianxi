@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 
+import com.wyj.adapter.FindListAdapter;
 import com.wyj.adapter.ListTempleNameAdapter;
 import com.wyj.dataprocessing.AsynTaskHelper;
 import com.wyj.dataprocessing.BitmapManager;
@@ -78,7 +81,9 @@ public class Find extends Activity {
 	private View moreView;
 	private ListView mListView;
 	private List<Map<String, Object>> Listdata; // 加载到适配器中的数据源
-	private BaseListAdapter mAdapter;
+	private JSONArray findlistdata;
+	private FindListAdapter mAdapter;
+	//private BaseListAdapter mAdapter;
 	private int page = 1;
 	private int pagesize = 30;
 	private boolean isBottom = false;// 判断是否滚动到数据最后一条
@@ -105,7 +110,7 @@ public class Find extends Activity {
 		
 		ActivityfindViewById();
 		ActivityAction();
-		select_order_list();
+
 
 	}
 	
@@ -114,20 +119,20 @@ public class Find extends Activity {
 		
 		daochang_select =(LinearLayout) findViewById(R.id.daochang_select);
 		daochang_select_showname= (TextView) findViewById(R.id.daochang_select_showname);
-		default_order_list();
+		
 	}
 	
 	private void ActivityAction() {
 		// TODO Auto-generated method stub
+		default_order_list();
+		select_order_list();
 		daochang_select.setOnClickListener(new View.OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						
-						
 						if(daochang_data!=null){
-							MyPopupWindows daochang_select_widow=new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);	
+							new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);	
 						}else{
 						    get_daochang_list(null, WebApiUrl.GET_TEMPLELIST, getParent(),v);
 						}
@@ -160,7 +165,7 @@ public class Find extends Activity {
 
 					// 初始化下拉选项------------------------------------
 					
-			MyPopupWindows daochang_select_widow=new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);
+			new MyPopupWindows(Find.this,v,getParent().getParent(),daochang_data);
 
 				} else {
 					Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
@@ -187,7 +192,7 @@ public class Find extends Activity {
 				+ pagesize + "&&tid=" + tid, getParent()); // 默认加载第一页
 	}
 
-	private void select_order_list() {
+	private void select_order_list() {  // 默认适配上拉下拉操作
 		// TODO Auto-generated method stub
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.find_list);
 		// 设置底部加载的字幕
@@ -239,32 +244,32 @@ public class Find extends Activity {
 		mListView = mPullRefreshListView.getRefreshableView();
 
 		// mListView = (ListView) findViewById(R.id.find_list);
-		mAdapter = new BaseListAdapter(getBaseContext(), Listdata);
+		mAdapter = new FindListAdapter(getBaseContext(), Listdata,tid);
 		mListView.setAdapter(mAdapter);
 
-		mPullRefreshListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				// String data = arg0.getItemAtPosition(arg2).toString();
-
-				Integer orderid = (Integer) Listdata.get(arg2 - 1).get(
-						"orderid");
-				// 要跳转的Activity
-				Intent intent = new Intent(Find.this, Find_item.class);
-
-				Bundle bu = new Bundle(); // 这个组件 存值
-				bu.putInt("orderid", orderid);
-				bu.putInt("tid", tid);
-				intent.putExtras(bu); // 放到 intent 里面 然后 传出去
-				// 把Activity转换成一个Window，然后转换成View
-				Log.i("bbbb", "------传了没传啊----" + orderid);
-				FindGroupTab.getInstance().switchActivity("Find_item", intent,
-						-1, -1);
-			}
-		});
+//		mPullRefreshListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				// TODO Auto-generated method stub
+//				// String data = arg0.getItemAtPosition(arg2).toString();
+//
+//				Integer orderid = (Integer) Listdata.get(arg2 - 1).get(
+//						"orderid");
+//				// 要跳转的Activity
+//				Intent intent = new Intent(Find.this, Find_item.class);
+//
+//				Bundle bu = new Bundle(); // 这个组件 存值
+//				bu.putInt("orderid", orderid);
+//				bu.putInt("tid", tid);
+//				intent.putExtras(bu); // 放到 intent 里面 然后 传出去
+//				// 把Activity转换成一个Window，然后转换成View
+//				Log.i("bbbb", "------传了没传啊----" + orderid);
+//				FindGroupTab.getInstance().switchActivity("Find_item", intent,
+//						-1, -1);
+//			}
+//		});
 	}
 
 	private void listAdapter(Map<String, Object> map, String url,
@@ -281,6 +286,7 @@ public class Find extends Activity {
 
 					Listdata.addAll(items);
 					count = Listdata.size();
+					mAdapter = new FindListAdapter(getBaseContext(), Listdata,tid);
 					mListView.setAdapter(mAdapter);
 					mAdapter.notifyDataSetChanged();
 
@@ -365,125 +371,6 @@ public class Find extends Activity {
 	}
 
 	
-
-	private class BaseListAdapter extends BaseAdapter implements OnClickListener{
-
-		private Context mContext;
-		private LayoutInflater inflater;
-		private List<Map<String, Object>> mData;
-
-		public BaseListAdapter(Context mContext, List<Map<String, Object>> list) {
-			this.mContext = mContext;
-			inflater = LayoutInflater.from(mContext);
-			this.mData = list;
-		}
-
-
-		@Override
-		public int getCount() {
-			return this.mData.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
-				convertView = inflater.inflate(R.layout.list_find_items, null);
-
-				viewHolder.list_find_headface = (ImageView) convertView.findViewById(R.id.list_find_headface);
-				viewHolder.list_find_content = (TextView) convertView
-						.findViewById(R.id.list_find_content);
-				viewHolder.list_find_username = (TextView) convertView
-						.findViewById(R.id.list_find_username);
-				viewHolder.list_find_address = (TextView) convertView
-						.findViewById(R.id.list_find_address);
-				viewHolder.list_find_jiachi = (TextView) convertView
-						.findViewById(R.id.list_find_jiachi);
-				
-				viewHolder.list_find_zan = (TextView) convertView
-						.findViewById(R.id.list_find_zan);
- 
-				convertView.setTag(viewHolder);
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
-
-			// viewHolder.img.setBackgroundResource(R.drawable.foot_07);
-			BitmapManager.getInstance().loadBitmap(
-					(String) this.mData.get(position).get("headface"),
-					viewHolder.list_find_headface,
-					Tools.readBitmap(Find.this, R.drawable.foot_07));
-
-			viewHolder.list_find_content.setText((CharSequence) this.mData.get(position)
-					.get("wishtext"));
-			viewHolder.list_find_username.setText((CharSequence) this.mData.get(position)
-					.get("wishname"));
-			
-			
-			String findaddress="刚刚在"+(String) this.mData.get(position).get("templename")+(String) this.mData.get(position).get("alsowish")+(String) this.mData.get(position).get("wishtype");
-			
-			int co_blessings=(Integer) this.mData.get(position).get("co_blessings");
-			String jiachipeople="";
-			if(co_blessings>0){
-				 jiachipeople=(String) this.mData.get(position).get("name_blessings")+"等"+co_blessings+"人加持";
-			}
-			viewHolder.list_find_address.setText(findaddress);
-			viewHolder.list_find_jiachi.setText(jiachipeople);
-
-			viewHolder.list_find_zan.setOnClickListener(this);
-
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView list_find_headface;
-			TextView list_find_content;
-			TextView list_find_username;
-			TextView list_find_address;
-			TextView list_find_jiachi;
-			
-			TextView list_find_zan;
-
-		}
-
-		
-		
-		public void onClick(View v) {
-		 // TODO Auto-generated method stub
-		    switch (v.getId()) {
-			case R.id.list_find_zan:
-				
-				TextView list_find_zany=(TextView) v;
-				
-				Resources resource = (Resources) getBaseContext().getResources();
-				ColorStateList csl = (ColorStateList) resource
-						.getColorStateList(R.color.color_text_selected);
-				list_find_zany.setTextColor(csl);
-				Drawable drawable= getResources().getDrawable(R.drawable.load_hover);
-				/// 这一步必须要做,否则不会显示.
-				drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-				list_find_zany.setCompoundDrawables(drawable, null, null, null);
-				break;
-
-			default:
-				break;
-			}
-		
-		 }
-
-	}
-	
 	
 	public class MyPopupWindows extends PopupWindow {
 		
@@ -544,7 +431,7 @@ public class Find extends Activity {
 						int arg2, long arg3) {
 					// TODO Auto-generated method stub
 					
-					Log.i("aaaa", "-----弹窗点击1111111111111111111-");
+					
 					 tid = (Integer) items.get(arg2).get("templeid");
 					 default_order_list();
 					 daochang_select_showname.setText((String) items.get(arg2).get("templename"));

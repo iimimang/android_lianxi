@@ -1,13 +1,19 @@
 package com.wyj.Activity;
 
+
 import com.wyj.Activity.R;
 
 import com.wyj.Activity.*;
+import com.wyj.pipe.Cms;
+import com.wyj.services.AutoLoginService;
+
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.RadioButton;
@@ -41,6 +47,16 @@ public class TabMenu extends TabActivity {
 		init();
 		// 底部菜单点击事件
 		clickevent();
+		
+		if (!TextUtils.isEmpty(Cms.APP.getMobile()) && !TextUtils.isEmpty(Cms.APP.getPassword())) {
+			Intent intent = new Intent(Cms.APP, AutoLoginService.class);
+			startService(intent);
+			Log.i("cccc", "------tttttttttttttttttt");
+		} else {
+			Cms.APP.Logout();
+			Log.i("cccc", "------tgggggggggggggggggg");
+		}
+		
 	}
 
 	private void initViews() {

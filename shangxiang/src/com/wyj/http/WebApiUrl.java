@@ -18,6 +18,17 @@ public class WebApiUrl {
 			+ "/api/app/gettempleinfo.php"; //  寺庙介绍接口
 	public static final String Getattacheinfo = IP + PORT
 			+ "/api/app/getattacheinfo.php"; //  法师介绍接口
+	
+	
+	public static final String GetIncense = IP + PORT
+			+ "/api/app/getwishgradeinfo.php"; //  订单的香的种类和价格
+	public static final String GetWishcontent = IP + PORT
+			+ "/api/app/getwishtextchoice.php"; //  订单祈福内容精选
+	public static final String Getprovincecitylist = IP + PORT
+			+ "/api/app/getprovincecitylist.php"; //  订单祈福地区
+	
+	
+	
 
 	public static final String REGSITER = IP + PORT + "/api/app/regdo.php"; // 注册接口
 	public static final String LOGIN = IP + PORT + "/api/app/logindo.php"; // 登录接口

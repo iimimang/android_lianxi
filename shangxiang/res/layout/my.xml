@@ -274,4 +274,34 @@
 
 </RelativeLayout>
 
+<RelativeLayout 
+      	android:id="@+id/memberlogout"
+    	android:background="#D1D1D3"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+ >
+    
+     <TextView
+      
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="30dp"
+        android:textColor="#373737"
+        android:textSize="18dp"
+        android:text="退出" />
+
+    <ImageView
+     
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+			android:layout_marginRight="20dp"
+            android:src="@drawable/me_2" />
+
+</RelativeLayout>
+
 </LinearLayout>

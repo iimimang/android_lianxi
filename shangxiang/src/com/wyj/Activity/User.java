@@ -1,22 +1,16 @@
 package com.wyj.Activity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.wyj.adapter.ListTempleAdapter;
 import com.wyj.dataprocessing.AccessNetwork;
 import com.wyj.dataprocessing.BitmapManager;
-import com.wyj.dataprocessing.MyApplication;
-import com.wyj.dataprocessing.RegularUtil;
+
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
 import com.wyj.utils.FilePath;
 import com.wyj.utils.Tools;
 import com.wyj.Activity.R;
@@ -37,6 +31,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -62,8 +57,7 @@ public class User extends Activity implements OnClickListener {
 	private static final int CAMERA_REQUEST_CODE = 30; // 拍照
 	private static final int RESULT_REQUEST_CODE = 20; // 返回图片数据 处理图片把图片放置当前页面
 	/* 头像名称 */
-	private static final String IMAGE_FILE_NAME = MyApplication.getInstances()
-			.getUserName() + "_faceImage.jpg";
+	private static final String IMAGE_FILE_NAME = Cms.APP.getMemberId() + "_faceImage.jpg";
 	// private static final String IMAGE_FILE_NAME = "aaa.png";
 	private ImageView faceImage;
 	private ImageView userinfo_back;
@@ -92,21 +86,26 @@ public class User extends Activity implements OnClickListener {
 		truename_input = (TextView) findViewById(R.id.truename_input);
 		address_input = (TextView) findViewById(R.id.address_input);
 		sex_input = (TextView) findViewById(R.id.sex_input);
-
-		username_input.setText(MyApplication.getInstances().getUserName());
-		if (MyApplication.getInstances().getSex() == 1) {
+		
+		if (!TextUtils.isEmpty(Cms.APP.getMobile())) {
+			username_input.setText(Cms.APP.getMobile());
+		} else {
+			username_input.setText("未登录");
+		}
+		
+		Log.i("aaaa", "------修改hou的信息" + Cms.memberInfo.optString("truename", ""));
+		
+		if (Cms.memberInfo.optString("sex", "").equals("1")) {
 			sex_input.setText("男");
-		} else if (MyApplication.getInstances().getSex() == 2) {
+		} else if (Cms.memberInfo.optString("sex", "").equals("2")) {
 			sex_input.setText("女");
 		} else {
 			sex_input.setText("未填写");
 		}
 		truename_input
-				.setText((MyApplication.getInstances().getTruename() != "") ? (MyApplication
-						.getInstances().getTruename()) : "未填写");
+				.setText((Cms.memberInfo.optString("truename", "") != "") ? (Cms.memberInfo.optString("truename", "")) : "未填写");
 		address_input
-				.setText((MyApplication.getInstances().getArea() != "") ? (MyApplication
-						.getInstances().getArea()) : "未填写");
+				.setText((Cms.memberInfo.optString("area", "") != "") ? (Cms.memberInfo.optString("area", "")) : "未填写");
 
 		if (Tools.fileIsExists(FilePath.ROOT_DIRECTORY + IMAGE_FILE_NAME)) {
 			Bitmap bitmap = BitmapFactory.decodeFile(FilePath.ROOT_DIRECTORY
@@ -114,7 +113,7 @@ public class User extends Activity implements OnClickListener {
 			faceImage.setImageBitmap(bitmap);
 		} else {
 			BitmapManager.getInstance().loadBitmap(
-					MyApplication.getInstances().getHeadface(), faceImage,
+					Cms.memberInfo.optString("headface", ""), faceImage,
 					Tools.readBitmap(User.this, R.drawable.foot_07));
 		}
 
@@ -165,7 +164,7 @@ public class User extends Activity implements OnClickListener {
 				if (msg.what == 0x123) {
 					pDialog.dismiss();
 					String backmsg = msg.obj.toString();
-					Log.i(TAG, "------返回信息" + backmsg);
+					
 					// RegularUtil.alert_msg(User.this, "加载失败");
 
 				}
@@ -256,7 +255,7 @@ public class User extends Activity implements OnClickListener {
 			Drawable drawable = new BitmapDrawable(photo);
 			faceImage.setImageDrawable(drawable);
 			upload_image_file(FilePath.ROOT_DIRECTORY + IMAGE_FILE_NAME,
-					MyApplication.getInstances().getUserName());
+					Cms.APP.getMobile());
 		}
 	}
 
@@ -324,11 +323,18 @@ public class User extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			Log.i("aaaa", "后退总部user----------" );
+			Intent bak_My_intent = new Intent(User.this, My.class);
+			UserGroupTab.getInstance().switchActivity("My", bak_My_intent,
+					-1, -1);
+			
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	
 
 }

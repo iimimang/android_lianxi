@@ -34,9 +34,11 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.db_member.Member_model;
+import com.wyj.define.memberinfo;
 import com.wyj.http.AccessTokenKeeper;
 import com.wyj.http.Constants;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
 import com.wyj.weixin.WeiXinConstants;
 import com.wyj.Activity.R;
 
@@ -69,6 +71,7 @@ public class Login extends Activity implements OnClickListener,
 	TextView passwd;
 	private ProgressDialog pDialog = null;
 	private String login_username = "";
+	private String login_password = "";
 	private static final String TAG = "weibosdk";
 
 	/** 显示认证后的信息，如 AccessToken */
@@ -203,7 +206,8 @@ public class Login extends Activity implements OnClickListener,
 
 	}
 
-	private void logincheckapi(final String reg_username, String reg_passwd) {
+	private void logincheckapi(final String reg_username,
+			final String reg_passwd) {
 		// TODO Auto-generated method stub
 		// 接口验证注册
 
@@ -213,18 +217,34 @@ public class Login extends Activity implements OnClickListener,
 			public void handleMessage(Message msg) {
 				if (msg.what == 0x123) {
 					pDialog.dismiss();
-					String backmsg = msg.obj.toString();
-					Map<String, Object> resmsg = new HashMap<String, Object>();
-					resmsg = JsonToListHelper.jsontoCode(backmsg);
-					if (resmsg.get("code").equals("succeed")) {
-						login_username = reg_username;
-						RegularUtil.alert_msg(Login.this, "登录成功");
-						login();
-					} else {
-						RegularUtil.alert_msg(Login.this,
-								"登录失败，" + resmsg.get("msg"));
-					}
+					String backmsg = msg.obj.toString();					
+					try {
+						JSONObject jsonobject = new JSONObject(backmsg);
+						JSONObject memberobject = jsonobject
+								.getJSONObject("memberinfo");
+						if (jsonobject.optString("code", "").equals("succeed")) {
+										
+							Cms.APP.setLogin(true,
+									memberobject.optString("memberid"),
+									memberobject.optString("membername"),
+									reg_passwd);  //登录
+							
+							Log.i("aaaa",
+									"--用户登录信息" + memberobject.toString());
+							Cms.APP.setConfig(memberobject.toString()); //设置用户信息cookie
+							RegularUtil.alert_msg(Login.this, "登录成功");
+							// 关闭Activity
+							login();
+							
+						} else {
 
+							RegularUtil.alert_msg(Login.this, "登录失败，"
+									+ jsonobject.optString("msg"));
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		};
@@ -241,73 +261,16 @@ public class Login extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		Intent login_intent = new Intent();
 		login_intent.setClass(Login.this, My.class);
-		Bundle bu = new Bundle();// 这个组件 存值
-		bu.putString("username", login_username);
-		login_intent.putExtras(bu);
+//		Bundle bu = new Bundle();// 这个组件 存值
+//		bu.putString("username", login_username);
+//		login_intent.putExtras(bu);
 		// 设置返回数据
 		Login.this.setResult(1, login_intent);
-
-		session_member();
+		Login.this.finish();
+		//session_member();
 
 	}
 
-	private void session_member() { // 登录获取账户信息
-
-		// TODO Auto-generated method stub
-		MyApplication.getInstances().setName(login_username);// 设置用户名
-
-		final Handler h = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				if (msg.what == 0x123) {
-
-					pDialog.dismiss();
-					String backmsg = msg.obj.toString();
-					Map<String, Object> resmsg = new HashMap<String, Object>();
-					Map<String, Object> jsontosingle = new HashMap<String, Object>();
-
-					jsontosingle = JsonHelper.jsonStringToMap(backmsg,
-							WebApiUrl.keyNames, "memberinfo");
-
-					int memberid = Integer.valueOf(
-							String.valueOf(jsontosingle.get("memberid")))
-							.intValue();
-					int sex = Integer.valueOf(
-							String.valueOf(jsontosingle.get("sex"))).intValue();
-					MyApplication.getInstances().setMemberid(memberid);// 设置用户ID
-					MyApplication.getInstances().setSex(sex);// 设置用户ID
-					MyApplication.getInstances().setHeadface(
-							(String) jsontosingle.get("headface"));// 设置用户名
-					MyApplication.getInstances().setArea(
-							(String) jsontosingle.get("area"));// 设置用户名
-					MyApplication.getInstances().setTruename(
-							(String) jsontosingle.get("truename"));// 设置用户名
-
-					Log.i("aaaa", "------用户信息" + jsontosingle.toString());
-
-					resmsg = JsonToListHelper.jsontoCode(backmsg);
-
-					if (resmsg.get("code").equals("succeed")) {
-
-						RegularUtil.alert_msg(Login.this, "登录成功");
-						// 关闭Activity
-						Login.this.finish();
-					} else {
-
-						RegularUtil.alert_msg(Login.this,
-								"登录失败，" + resmsg.get("msg"));
-					}
-
-				}
-			}
-		};
-		String params = "mobile=" + login_username;
-		pDialog = new ProgressDialog(Login.this);
-		pDialog.setMessage("登录中。。。");
-		pDialog.show();
-		new Thread(new AccessNetwork("GET", WebApiUrl.GET_USERINFO, params, h))
-				.start();
-	}
 
 	// 新浪微博登录开始--------------------------------------------------------------------------------------------------------
 	/**

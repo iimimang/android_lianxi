@@ -12,7 +12,9 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class JsonToListHelper {
-	public static List<Map<String, Object>> jsonToList(String jsonString) {
+	
+	
+	public static List<Map<String, Object>> jsonToList(String jsonString,String key) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = null;
 		try {
@@ -31,43 +33,6 @@ public class JsonToListHelper {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return list;
-	}
-
-	public static List<Map<String, Object>> jsonToWBList(String jsonString) {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = null;
-		try {
-			JSONObject jsonObject = new JSONObject(jsonString);
-			JSONObject jsonObject_data = jsonObject.getJSONObject("data");
-
-			map = new HashMap<String, Object>();
-			map.put("wap_content", jsonObject_data.getString("wap_content"));
-			list.add(map);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.i("json", "==err");
-		}
-		return list;
-	}
-
-	public static List<Map<String, Object>> jsonToHeaderList(String jsonString) {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = null;
-		try {
-			JSONObject jsonObject = new JSONObject(jsonString);
-			JSONArray jsonArray_datas = jsonObject.getJSONArray("data");
-			for (int i = 0; i < jsonArray_datas.length(); i++) {
-				JSONObject jsonObject_data = jsonArray_datas.getJSONObject(i);
-				map = new HashMap<String, Object>();
-				map.put("image", jsonObject_data.getString("image_s"));
-				list.add(map);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.i("json", "==err");
 		}
 		return list;
 	}

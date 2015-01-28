@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
     <ImageView
-        android:id="@+id/order_people_head"
+        android:id="@+id/finditem_people_head"
         android:layout_width="40dip"
         android:layout_height="40dip"
         android:layout_margin="5px"
@@ -81,7 +81,7 @@
              >
      
         <TextView
-            android:id="@+id/order_username"
+            android:id="@+id/finditem_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -92,7 +92,7 @@
 
        
          <TextView
-                android:id="@+id/order_templename"
+                android:id="@+id/finditem_templename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -127,7 +127,7 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/order_wishtext"
+                android:id="@+id/finditem_wishtext"
             	android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -143,7 +143,7 @@
             android:layout_marginTop="8dp"
    			android:orientation="horizontal" >
             <TextView
-                android:id="@+id/order_blessingser"
+                android:id="@+id/finditem_blessingser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="太乙真人，居然三人等2532人加持"

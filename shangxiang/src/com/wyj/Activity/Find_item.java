@@ -1,14 +1,19 @@
 package com.wyj.Activity;
 
-import java.util.List;
+
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.wyj.Activity.TabMenu;
+import com.wyj.adapter.FindItemListAdapter;
 import com.wyj.dataprocessing.AsynTaskHelper;
 import com.wyj.dataprocessing.BitmapManager;
-import com.wyj.dataprocessing.JsonToListHelper;
+
 import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
-import com.wyj.define.templates;
+
 import com.wyj.http.WebApiUrl;
 import com.wyj.Activity.R;
 import com.wyj.utils.Tools;
@@ -20,11 +25,11 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.view.View.OnClickListener;
-import android.widget.BaseAdapter;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,7 +39,6 @@ import android.widget.Toast;
 public class Find_item extends Activity implements OnClickListener {
 
 	private ListView mListView;
-	private List<Map<String, Object>> ListMemberdata;
 	private int tid;
 
 	@Override
@@ -55,6 +59,7 @@ public class Find_item extends Activity implements OnClickListener {
 		int orderid = budle.getInt("orderid");
 		tid = budle.getInt("tid"); // 寺庙的传值
 
+		Log.i("aaaa", "------orderid-----"+orderid);
 		api_show_detail(null, WebApiUrl.GET_ORDER_DETAIL + "?oid=" + orderid,
 				getParent());
 	}
@@ -69,17 +74,20 @@ public class Find_item extends Activity implements OnClickListener {
 					public void onDataDownload(String result) {
 						if (result != null) {
 
-							List<Map<String, Object>> member_listitems;
-							Map<String, Object> orderdetail_orderinfo;
-							orderdetail_orderinfo = JsonToListHelper
-									.orderdetail_orderinfo(result);
-							member_listitems = JsonToListHelper
-									.orderdetail_memberlist_json(result);
-
-							Ui_orderinfo(orderdetail_orderinfo);
-							Ui_orderinfo_memberlist(member_listitems);
-
-						} else {
+							try {
+								JSONObject jsonobject = new JSONObject(result);
+								JSONObject orderinfoobject = jsonobject
+										.getJSONObject("orderinfo");
+								Ui_orderinfo(orderinfoobject);
+								
+								JSONArray member_jiachilist= jsonobject.getJSONArray("blessings_members");
+								Ui_orderinfo_memberlist(member_jiachilist);
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							} else {
 							Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT)
 									.show();
 						}
@@ -88,30 +96,42 @@ public class Find_item extends Activity implements OnClickListener {
 				}, context, "GET");
 	}
 
-	protected void Ui_orderinfo(Map<String, Object> orderdetail_orderinfo) {
+	protected void Ui_orderinfo(JSONObject orderdetail_orderinfo) {
 		// TODO Auto-generated method stub
-		ImageView order_people_head = (ImageView) findViewById(R.id.order_people_head);
-		TextView order_username = (TextView) findViewById(R.id.order_username);
-		TextView templename = (TextView) findViewById(R.id.order_templename);
-		TextView order_wishtext = (TextView) findViewById(R.id.order_wishtext);
-		TextView order_blessingser = (TextView) findViewById(R.id.order_blessingser);
+		ImageView order_people_head = (ImageView) findViewById(R.id.finditem_people_head);
+		TextView finditem_username = (TextView) findViewById(R.id.finditem_username);
+		TextView finditem_templename = (TextView) findViewById(R.id.finditem_templename);
+		TextView finditem_wishtext = (TextView) findViewById(R.id.finditem_wishtext);
+		TextView finditem_blessingser = (TextView) findViewById(R.id.finditem_blessingser);
 
 		BitmapManager.getInstance().loadBitmap(
-				(String) orderdetail_orderinfo.get("headface"),
+				orderdetail_orderinfo.optString("headface", ""),
 				order_people_head,
 				Tools.readBitmap(Find_item.this, R.drawable.foot_07));
-		order_username.setText((String) orderdetail_orderinfo.get("wishname"));
-		templename.setText((String) orderdetail_orderinfo.get("templename"));
-		order_wishtext.setText((String) orderdetail_orderinfo.get("wishtext"));
-		order_blessingser.setText((String) orderdetail_orderinfo
-				.get("blessingser"));
+		finditem_username.setText(orderdetail_orderinfo.optString("wishname",
+				""));
+		finditem_templename.setText("刚刚在"
+				+ orderdetail_orderinfo.optString("templename", "")
+				+ orderdetail_orderinfo.optString("alsowish", "")
+				+ orderdetail_orderinfo.optString("wishtype", "") + "");
+		finditem_wishtext.setText(orderdetail_orderinfo.optString("wishtext",
+				""));
+		
+		String bless="";
+		if(!orderdetail_orderinfo.optString(
+				"co_blessings").equals("0")){
+			 bless=orderdetail_orderinfo.optString(
+						"blessingser", "")+"等"+orderdetail_orderinfo.optString(
+								"co_blessings")+"人刚刚加持过";
+		}
+		finditem_blessingser.setText(bless);
 	}
 
 	protected void Ui_orderinfo_memberlist(
-			List<Map<String, Object>> member_listitems) {
+			JSONArray member_listitems) {
 		// TODO Auto-generated method stub
 
-		mListView.setAdapter(new FindListAdapter(this, member_listitems));
+		mListView.setAdapter(new FindItemListAdapter(this, member_listitems));
 	}
 
 	@Override
@@ -131,7 +151,7 @@ public class Find_item extends Activity implements OnClickListener {
 			TabMenu mainactivity = (TabMenu) getParent().getParent(); // 查找父级的父级
 
 			if (WishGroupTab.getInstance() == null) {
-				Log.i("aaaa", "------view为null-----");
+				
 				mainactivity.setCurrentActivity(1);
 			} else {
 				Log.i("aaaa", "------view不为null-----");
@@ -156,77 +176,6 @@ public class Find_item extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
-	public void onBackPressed() {
 
-	}
-
-	private class FindListAdapter extends BaseAdapter {
-
-		private Context mContext;
-		private LayoutInflater inflater;
-		private List<Map<String, Object>> mData;
-
-		public FindListAdapter(Context mContext, List<Map<String, Object>> list) {
-			this.mContext = mContext;
-			inflater = LayoutInflater.from(mContext);
-			this.mData = list;
-		}
-
-		@Override
-		public int getCount() {
-			return this.mData.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder viewHolder = null;
-			if (convertView == null) {
-				viewHolder = new ViewHolder();
-				convertView = inflater.inflate(R.layout.find_list_items, null);
-
-				viewHolder.header = (ImageView) convertView
-						.findViewById(R.id.order_member_list_head);
-				viewHolder.username = (TextView) convertView
-						.findViewById(R.id.order_member_list_username);
-				viewHolder.time_diff = (TextView) convertView
-						.findViewById(R.id.order_member_list_jiachi);
-
-				convertView.setTag(viewHolder);
-			} else {
-				viewHolder = (ViewHolder) convertView.getTag();
-			}
-
-			// viewHolder.header.setBackgroundResource(R.drawable.foot_07);
-			BitmapManager.getInstance().loadBitmap(
-					(String) this.mData.get(position).get("headface"),
-					viewHolder.header,
-					Tools.readBitmap(Find_item.this, R.drawable.foot_07));
-			viewHolder.username.setText((CharSequence) this.mData.get(position)
-					.get("nickname"));
-			viewHolder.time_diff.setText((CharSequence) this.mData
-					.get(position).get("time_diff"));
-
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView header;
-			TextView username;
-			TextView time_diff;
-
-		}
-
-	}
 
 }
