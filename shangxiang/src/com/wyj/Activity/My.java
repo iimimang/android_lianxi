@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.wyj.dataprocessing.BitmapManager;
-import com.wyj.dataprocessing.MyApplication;
+
 import com.wyj.pipe.Cms;
 import com.wyj.pipe.Utils;
 import com.wyj.utils.FilePath;
@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class My extends Activity implements OnClickListener {
 	/* 头像名称 */
 	private static String IMAGE_FILE_NAME="";
 	private RelativeLayout memberlogout;
+	private LinearLayout my_bless_order,formy_bless_order;
+	private RelativeLayout myorder_in;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +47,7 @@ public class My extends Activity implements OnClickListener {
 		setListener();
 		
 		if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
-			IMAGE_FILE_NAME= Cms.APP.getMemberId() + "_faceImage.jpg";
-			
-			
-			
+			IMAGE_FILE_NAME= Cms.APP.getMemberId() + "_faceImage.jpg";	
 		}else{
 			IMAGE_FILE_NAME= "_faceImage.jpg";
 		}
@@ -61,11 +61,18 @@ public class My extends Activity implements OnClickListener {
 		action_login = (RelativeLayout) findViewById(R.id.login_action);
 		user = (TextView) findViewById(R.id.member_center_username);
 		memberlogout =(RelativeLayout) findViewById(R.id.memberlogout);
+		
+		my_bless_order=(LinearLayout) findViewById(R.id.my_bless_order);
+		formy_bless_order =(LinearLayout) findViewById(R.id.formy_bless_order);
+		myorder_in=(RelativeLayout) findViewById(R.id.myorder_in);
 	}
 
 	private void setListener() {
 		action_login.setOnClickListener(this);
 		memberlogout.setOnClickListener(this);
+		my_bless_order.setOnClickListener(this);
+		formy_bless_order.setOnClickListener(this);
+		myorder_in.setOnClickListener(this);
 	}
 
 
@@ -136,6 +143,35 @@ public class My extends Activity implements OnClickListener {
 			memberlogout.setVisibility(View.GONE);
 			user.setText("立即登录");
 			my_avatar_face.setImageResource(R.drawable.me);
+			break;
+			
+		case R.id.my_bless_order:
+			if(!TextUtils.isEmpty(Cms.APP.getMobile())){
+				Intent intent = new Intent(My.this, MyFind.class);
+				UserGroupTab.getInstance().switchActivity("MyFind", intent, -1,
+						-1);
+			} else {
+				Utils.ShowToast(My.this, "请先登录");
+			}
+			break;
+			
+		case R.id.formy_bless_order:
+			if(!TextUtils.isEmpty(Cms.APP.getMobile())){
+				Intent intent = new Intent(My.this, MyFind.class);
+				UserGroupTab.getInstance().switchActivity("MyFind", intent, -1,
+						-1);
+			} else {
+				Utils.ShowToast(My.this, "请先登录");
+			}
+			break;
+		case R.id.myorder_in:
+			if(!TextUtils.isEmpty(Cms.APP.getMobile())){
+				Intent intent = new Intent(My.this, MyOrder.class);
+				UserGroupTab.getInstance().switchActivity("MyOrder", intent, -1,
+						-1);
+			} else {
+				Utils.ShowToast(My.this, "请先登录");
+			}
 			break;
 		}
 	}

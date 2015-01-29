@@ -1,0 +1,52 @@
+package com.example.activity;
+
+import com.shangxiang.android.R;
+import com.shangxiang.android.BaseFragment;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class ShowEvent extends BaseFragment {
+	private Button buttonBack;
+	private Button buttonDelete;
+	private Button buttonEdit;
+	private Button buttonDesire;
+
+	@SuppressLint("InflateParams")
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sinha) {
+		View view = inflater.inflate(R.layout.show_event, null);
+
+		this.buttonBack = (Button) view.findViewById(R.id.show_event_title_back_button);
+		this.buttonBack.setOnClickListener(this);
+		this.buttonDelete = (Button) view.findViewById(R.id.show_event_delete_button);
+		this.buttonDelete.setOnClickListener(this);
+		this.buttonEdit = (Button) view.findViewById(R.id.show_event_edit_button);
+		this.buttonEdit.setOnClickListener(this);
+		this.buttonDesire = (Button) view.findViewById(R.id.show_event_desire_button);
+		this.buttonDesire.setOnClickListener(this);
+
+		return view;
+	}
+
+	public void onActivityCreated(Bundle sinha) {
+		super.onActivityCreated(sinha);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == this.buttonBack) {
+			getActivity().onBackPressed();
+		}
+		if (v == this.buttonDelete) {
+		}
+		if (v == this.buttonEdit) {
+			goFragment(new CreateEvent());
+		}
+		if (v == this.buttonDesire) {
+		}
+	}
+}

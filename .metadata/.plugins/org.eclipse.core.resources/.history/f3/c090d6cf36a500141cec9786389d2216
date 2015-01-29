@@ -1,0 +1,60 @@
+package com.wyj.define;
+
+public class memberinfo {
+	private static String username = "";	//相当于mobile
+	private static int memberid;
+	private static String headface = "";
+	private static String tmb_headface = "";
+	private static String truename = "";
+	private static int sex;
+	private static String area = "";
+	
+	
+	public static String getUsername() {
+		return username;
+	}
+	public static void setUsername(String username) {
+		memberinfo.username = username;
+	}
+	public static int getMemberid() {
+		return memberid;
+	}
+	public static void setMemberid(int memberid) {
+		memberinfo.memberid = memberid;
+	}
+	public static String getHeadface() {
+		return headface;
+	}
+	public static void setHeadface(String headface) {
+		memberinfo.headface = headface;
+	}
+	public static String getTmb_headface() {
+		return tmb_headface;
+	}
+	public static void setTmb_headface(String tmb_headface) {
+		memberinfo.tmb_headface = tmb_headface;
+	}
+	public static String getTruename() {
+		return truename;
+	}
+	public static void setTruename(String truename) {
+		memberinfo.truename = truename;
+	}
+	public static int getSex() {
+		return sex;
+	}
+	public static void setSex(int sex) {
+		memberinfo.sex = sex;
+	}
+	public static String getArea() {
+		return area;
+	}
+	public static void setArea(String area) {
+		memberinfo.area = area;
+	}
+
+
+
+	
+
+}

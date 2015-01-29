@@ -4,15 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import com.wyj.Activity.FindGroupTab;
 import com.wyj.Activity.Find_item;
+
 import com.wyj.Activity.R;
 
 import com.wyj.dataprocessing.BitmapManager;
+import com.wyj.http.WebApiUrl;
 
+import com.wyj.pipe.Cms;
+import com.wyj.pipe.SinhaPipeClient;
+import com.wyj.pipe.SinhaPipeMethod;
+import com.wyj.pipe.Utils;
 import com.wyj.utils.Tools;
 
 import android.annotation.SuppressLint;
@@ -23,6 +33,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +43,7 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 
 import android.widget.ImageView;
-import android.widget.Switch;
+
 import android.widget.TextView;
 
 public class FindListAdapter extends BaseAdapter implements OnClickListener{
@@ -41,6 +52,8 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 	private List<Map<String, Object>> mData;
 	private int tid;
 	private ArrayList<Object> btnMap=new ArrayList<Object>();
+	private SinhaPipeClient httpClient;
+	private SinhaPipeMethod httpMethod;
 
 	public static class ListItem {
 		ImageView list_find_headface;
@@ -132,6 +145,12 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		
 		listItem.list_find_content.setTag(this.mData.get(position).get("orderid"));
 		listItem.list_find_content.setOnClickListener(this);
+		
+		if(!this.mData.get(position).get("bleuser").equals("0")){
+			
+			Log.i("bbbb", "------等不等空----" + this.mData.get(position).get("bleuser"));
+			 setcolorstatus(listItem.list_find_zan);
+		}
 		listItem.list_find_zan.setTag(position);
 		listItem.list_find_zan.setOnClickListener(this);
 		return convertView;
@@ -152,26 +171,92 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 			bu.putInt("tid", tid);
 			intent.putExtras(bu); // 放到 intent 里面 然后 传出去
 			// 把Activity转换成一个Window，然后转换成View
-			Log.i("bbbb", "------传了没传啊----" + orderid);
+			
 			FindGroupTab.getInstance().switchActivity("Find_item", intent,
 					-1, -1);
 		}
-		Log.i("bbbb", "-----位置1111----" + Id);
+		//Log.i("bbbb", "-----位置1111----" + Id);
 		if (R.id.list_find_zan == Id) {
 			int position = (Integer) v.getTag();
-			Log.i("bbbb", "-----位置222----" + mData.get(position).get("orderid"));
+			
+			
+			addblessingsdo((String) String.valueOf(mData.get(position).get("orderid")));//加持操作
 	        //遍历并更改按钮状态
-			TextView list_find_zany=(TextView) v;
-			   Resources resource = (Resources) this.context.getResources();
-               ColorStateList csl = (ColorStateList) resource
-                       .getColorStateList(R.color.color_text_selected);
-               list_find_zany.setTextColor(csl);
-               Drawable drawable= this.context.getResources().getDrawable(R.drawable.load_hover);
-               /// 这一步必须要做,否则不会显示.
-               drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-               list_find_zany.setCompoundDrawables(drawable, null, null, null);
+			   TextView list_find_zany=(TextView) v;
+			   setcolorstatus(list_find_zany);
+			  
 		}
 		
 	}
+	
+	
+	private void setcolorstatus(TextView list_find_zany) {
+		// TODO Auto-generated method stub
+		 Resources resource = (Resources) this.context.getResources();
+         ColorStateList csl = (ColorStateList) resource
+                 .getColorStateList(R.color.color_text_selected);
+         list_find_zany.setTextColor(csl);
+         Drawable drawable= this.context.getResources().getDrawable(R.drawable.load_hover);
+         /// 这一步必须要做,否则不会显示.
+         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+         list_find_zany.setCompoundDrawables(drawable, null, null, null);
+	}
+
+	private void addblessingsdo(String oid) {
+		
+		this.httpClient = new SinhaPipeClient();
+		if (Utils.CheckNetwork()) {
+			
+			if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("mid", Cms.APP.getMemberId()));
+				params.add(new BasicNameValuePair("oid", oid));
+				Log.i("bbbb", "-----请求----"+params.toString() );
+				this.httpClient.Config("get", WebApiUrl.GET_addblessingsdo, params, true);
+				this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+					public void CallFinished(String error, Object result) {
+						Log.i("bbbb", "-----请求回来----"+result );
+						if (null == error) {
+							try {
+								JSONObject jsonobject=new JSONObject((String) result);
+								if(jsonobject.optString("code", "").equals("succeed")){
+									
+									Utils.ShowToast(context, jsonobject.optString("msg", ""));
+								}else{
+									Utils.ShowToast(context, jsonobject.optString("msg", ""));
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							int err = R.string.dialog_system_error_content;
+							if (error == httpClient.ERR_TIME_OUT) {
+								err = R.string.dialog_network_error_timeout;
+							}
+							if (error == httpClient.ERR_GET_ERR) {
+								err = R.string.dialog_network_error_getdata;
+							}
+							Utils.ShowToast(context, err);
+						}
+					}
+				});
+				this.httpMethod.start();
+			
+			}else{
+				
+			//	Utils.Dialog(context, "提示","请先登录账户！");
+				Utils.ShowToast(context, "请先登录账户！");
+			}
+			
+		} else {
+			Utils.ShowToast(context, R.string.dialog_network_check_content);
+		}
+	}
+	
+	
+	
+	
+	
 
 }

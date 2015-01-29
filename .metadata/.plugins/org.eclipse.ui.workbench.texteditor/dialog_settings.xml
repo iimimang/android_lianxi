@@ -13,18 +13,19 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="create_order_select_content_layout" key="selection"/>
+		<item value="myorder_in" key="selection"/>
 		<list key="findhistory">
-			<item value="create_order_select_content_layout"/>
-			<item value="setStyle"/>
-			<item value="create_order_hide_select_content_button"/>
-			<item value="this.layoutContentSelect.setVisibility(View.GONE);"/>
-			<item value="layoutContentSelect"/>
-			<item value="create_order_show_select_content_button"/>
-			<item value="create_order_select_content_view"/>
-			<item value="makeView"/>
+			<item value="myorder_in"/>
+			<item value="discover_listitem_blessit_layout"/>
+			<item value="discoverHandler"/>
+			<item value="list_find_zan"/>
+			<item value="finditem_wishtext"/>
+			<item value="memberInfo"/>
+			<item value="MyApplication"/>
+			<item value="SinhaCrashUtil"/>
 		</list>
 		<list key="replacehistory">
+			<item value="example"/>
 			<item value="pay"/>
 			<item value="&apos;"/>
 			<item value=""/>

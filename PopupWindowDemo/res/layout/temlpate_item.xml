@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+	android:descendantFocusability="blocksDescendants"
     android:orientation="vertical" >
 
     <Button
@@ -13,7 +14,10 @@
         android:paddingBottom="15.0dip"
         android:paddingLeft="40.0dip"
         android:paddingTop="15.0dip"
-        android:text="普陀山什么寺庙"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:text="普陀山什么寺庙" 
         android:textSize="14.0sp" />
 
   

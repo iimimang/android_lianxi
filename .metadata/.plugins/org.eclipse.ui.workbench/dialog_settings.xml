@@ -18,28 +18,28 @@
 		<item value="8" key="DIALOG_Y_ORIGIN"/>
 		<item value="459" key="DIALOG_X_ORIGIN"/>
 	</section>
-	<section name="FileExtensionDialogSettings">
-		<item value="613" key="DIALOG_WIDTH"/>
-		<item value="224" key="DIALOG_Y_ORIGIN"/>
-		<item value="120" key="DIALOG_X_ORIGIN"/>
-		<item value="375" key="DIALOG_HEIGHT"/>
-		<item value="1|微软雅黑|10.5|0|WINDOWS|1|-14|0|0|0|400|0|0|0|-122|3|2|1|34|微软雅黑" key="DIALOG_FONT_NAME"/>
-	</section>
 	<section name="ShowViewDialog">
 		<item value="388" key="DIALOG_WIDTH"/>
 		<item value="com.android.ide.eclipse.ddms.views.FileExplorerView" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
 		<item value="215" key="DIALOG_Y_ORIGIN"/>
-		<item value="774" key="DIALOG_X_ORIGIN"/>
 		<item value="470" key="DIALOG_HEIGHT"/>
+		<item value="774" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|10.5|0|WINDOWS|1|-14|0|0|0|400|0|0|0|-122|3|2|1|34|微软雅黑" key="DIALOG_FONT_NAME"/>
 		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="com.android.ide.eclipse.ddms.views.category"/>
 		</list>
 	</section>
+	<section name="FileExtensionDialogSettings">
+		<item value="613" key="DIALOG_WIDTH"/>
+		<item value="224" key="DIALOG_Y_ORIGIN"/>
+		<item value="375" key="DIALOG_HEIGHT"/>
+		<item value="120" key="DIALOG_X_ORIGIN"/>
+		<item value="1|微软雅黑|10.5|0|WINDOWS|1|-14|0|0|0|400|0|0|0|-122|3|2|1|34|微软雅黑" key="DIALOG_FONT_NAME"/>
+	</section>
 	<section name="org.eclipse.ui.preferences.keysPreferencePage">
 	</section>
 	<section name="ImportExportAction">
-		<item value="com.android.ide.eclipse.adt.project.ImportProjectWizard" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<item value="org.eclipse.jdt.internal.ui.jarpackager.JarPackageWizard" key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
 			<item value="org.eclipse.ui.Basic"/>

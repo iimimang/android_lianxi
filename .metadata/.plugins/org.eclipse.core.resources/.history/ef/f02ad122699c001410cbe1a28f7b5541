@@ -1,9 +1,0 @@
-package com.wyj.shangxiang;
-
-import com.tencent.mm.sdk.openapi.WXTextObject;
-
-public class WeiXinApi  {
-	
-	
-		
-}

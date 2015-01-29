@@ -24,6 +24,7 @@ import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 import com.wyj.http.WebApiUrl;
 import com.wyj.Activity.R;
 
+import com.wyj.pipe.Cms;
 import com.wyj.utils.Tools;
 
 import android.annotation.SuppressLint;
@@ -40,6 +41,7 @@ import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -77,6 +79,7 @@ public class Find extends Activity {
 	private LinearLayout daochang_select;
 	private List<Map<String, Object>> daochang_data; // 加载到适配器中的数据源
 	private int tid = 0; // 道场id的标识
+	private int mid=0;
 
 	private View moreView;
 	private ListView mListView;
@@ -100,7 +103,9 @@ public class Find extends Activity {
 				R.layout.tab_find, null);
 
 		setContentView(contenView);
-
+		if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+			mid=  Integer.valueOf(Cms.APP.getMemberId()).intValue();
+		}
 		int detail_tid = getIntent().getIntExtra("tid", 0);
 
 		if (detail_tid != 0) {
@@ -189,7 +194,7 @@ public class Find extends Activity {
 		
 
 		listAdapter(null, WebApiUrl.GET_ORDERLIST + "?p=" + page + "&&pz="
-				+ pagesize + "&&tid=" + tid, getParent()); // 默认加载第一页
+				+ pagesize + "&&tid=" + tid+ "&&mid=" + mid, getParent()); // 默认加载第一页
 	}
 
 	private void select_order_list() {  // 默认适配上拉下拉操作
@@ -228,7 +233,7 @@ public class Find extends Activity {
 							page++;
 							morelistAdapter(null, WebApiUrl.GET_ORDERLIST
 									+ "?p=" + page + "&&pz=" + pagesize
-									+ "&&tid=" + tid, getParent());
+									+ "&&tid=" + tid+ "&&mid=" + mid, getParent());
 						} else {
 							
 

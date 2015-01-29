@@ -1,0 +1,87 @@
+package com.wyj.Activity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.wyj.dataprocessing.BitmapManager;
+import com.wyj.dataprocessing.MyApplication;
+import com.wyj.pipe.Cms;
+import com.wyj.pipe.Utils;
+import com.wyj.utils.FilePath;
+import com.wyj.utils.Tools;
+import com.wyj.Activity.R;
+
+import android.app.Activity;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+public class MyOrder extends Activity implements OnClickListener {
+
+	private ImageView back_my;
+	private LinearLayout my_order_wish_list, my_order_alsowish_list;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.my_order);
+		findViewById();
+		setListener();
+
+	}
+
+	private void findViewById() {
+
+		back_my = (ImageView) findViewById(R.id.my_order_back);
+		my_order_wish_list = (LinearLayout) findViewById(R.id.my_order_wish_list);
+		my_order_alsowish_list = (LinearLayout) findViewById(R.id.my_order_alsowish_list);
+	}
+
+	private void setListener() {
+		back_my.setOnClickListener(this);
+		my_order_wish_list.setOnClickListener(this);
+		my_order_alsowish_list.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.my_find_bless_back:
+
+			Intent intent = new Intent(MyOrder.this, My.class);
+			UserGroupTab.getInstance().switchActivity("My", intent, -1, -1);
+
+			break;
+
+		case R.id.my_bless_order_list:
+
+			break;
+
+		case R.id.formy_bless_order_list:
+
+			break;
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			UserGroupTab.getInstance().onKeyDown(keyCode, event);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+}

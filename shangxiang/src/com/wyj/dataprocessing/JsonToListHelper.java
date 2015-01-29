@@ -77,7 +77,7 @@ public class JsonToListHelper {
 				map.put("wishtype", jsonObject_data.getString("wishtype"));
 				map.put("name_blessings", jsonObject_data.getString("name_blessings"));
 				map.put("co_blessings", jsonObject_data.getInt("co_blessings"));
-				// map.put("headface",
+				map.put("bleuser", jsonObject_data.getString("bleuser"));
 				// "http://v1.qzone.cc/avatar/201402/03/12/16/52ef1800d3656616.jpg%21200x200.jpg");
 				map.put("headface", jsonObject_data.getString("headface"));
 				list.add(map);

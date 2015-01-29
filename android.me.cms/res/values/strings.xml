@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="desc"></string>
-	<string name="app_name">上香网</string>
+	<string name="app_name">cms</string>
 	<string name="ok">确定</string>
 	<string name="submit">提交</string>
 	<string name="truesubmit">确认提交</string>

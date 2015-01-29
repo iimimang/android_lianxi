@@ -11,6 +11,11 @@ public class WebApiUrl {
 			+ "/api/app/getorderlist.php"; // 发现列表接口
 	public static final String GET_ORDER_DETAIL = IP + PORT
 			+ "/api/app/getorderinfo.php"; // 发现详情接口
+	
+	public static final String GET_addblessingsdo = IP + PORT
+			+ "/api/app/addblessingsdo.php"; // 发现加持接口
+	
+	
 	public static final String Getwishtemplelist = IP + PORT
 			+ "/api/app/getwishtemplelist.php"; // 委托求愿寺庙接口
 	
@@ -27,7 +32,8 @@ public class WebApiUrl {
 	public static final String Getprovincecitylist = IP + PORT
 			+ "/api/app/getprovincecitylist.php"; //  订单祈福地区
 	
-	
+	public static final String Getgetmemberorderlist = IP + PORT
+			+ "/api/app/getmemberorderlist.php"; //  用户订单列表
 	
 
 	public static final String REGSITER = IP + PORT + "/api/app/regdo.php"; // 注册接口

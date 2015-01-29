@@ -283,4 +283,12 @@
 	<string name="dialog_network_error_getdata">内容获取失败，请重试</string>
 	<string name="dialog_network_check_title">无网络连接</string>
 	<string name="dialog_network_check_content">当前无可用连接，应用将无法正常使用</string>
+	
+	
+	 <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
 </resources>
