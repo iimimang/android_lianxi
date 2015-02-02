@@ -132,8 +132,9 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 				+ (String) this.mData.get(position).get("alsowish")
 				+ (String) this.mData.get(position).get("wishtype");
 
-		int co_blessings = (Integer) this.mData.get(position).get(
-				"co_blessings");
+		int co_blessings = Integer.valueOf(
+				(String) this.mData.get(position).get("co_blessings"))
+				.intValue();
 		String jiachipeople = "";
 		if (co_blessings > 0) {
 			jiachipeople = (String) this.mData.get(position).get(
@@ -148,7 +149,7 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		
 		if(!this.mData.get(position).get("bleuser").equals("0")){
 			
-			Log.i("bbbb", "------等不等空----" + this.mData.get(position).get("bleuser"));
+			Log.i("cccc", "------等不等空----" + this.mData.get(position).get("orderid")+"----------"+position);
 			 setcolorstatus(listItem.list_find_zan);
 		}
 		listItem.list_find_zan.setTag(position);
@@ -162,7 +163,8 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		int Id = v.getId();
 		if (R.id.list_find_content == Id) {
 			
-			Integer orderid = (Integer) v.getTag();
+			Integer orderid = Integer.valueOf((String) v.getTag())
+					.intValue();
 			// 要跳转的Activity
 			Intent intent = new Intent(this.context, Find_item.class);
 		

@@ -10,13 +10,17 @@ import com.wyj.Activity.Wish;
 import com.wyj.Activity.WishGroupTab;
 import com.wyj.dataprocessing.BitmapManager;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
+import com.wyj.pipe.Utils;
 import com.wyj.utils.Tools;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,8 @@ import android.widget.TextView;
 public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 	private Context context;
 	public JSONArray data = new JSONArray();
+	private int wishtype;
+	private Activity Parent;
 
 	public static class ListItem {
 		public ImageView thumbHall;
@@ -40,9 +46,11 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 		public Button createOrder;
 	}
 
-	public ListTempleAdapter(Context context, JSONArray data) {
+	public ListTempleAdapter(Context context, JSONArray data,int wishtype, Activity activity) {
 		this.context = context;
 		this.data = data;
+		this.wishtype=wishtype;
+		this.Parent=activity;
 	}
 
 	@Override
@@ -91,6 +99,8 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 					Bundle bu=new Bundle();
 					bu.putInt("tid", item.optInt("templeid"));
 					bu.putInt("aid", item.optInt("attacheid"));
+					bu.putInt("wishtype", wishtype);
+					bu.putString("info", item.toString());
 					intent.putExtras(bu);
 					WishGroupTab.getInstance().switchActivity("ShowTemple", intent, -1,
 							-1);
@@ -112,7 +122,8 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 		BitmapManager.getInstance().loadBitmap(
 				item.optString("pic_tmb_path", ""), listItem.thumbHall,
 				Tools.readBitmap(this.context, R.drawable.temp1));
-
+		
+		listItem.createOrder.setTag(item);
 		listItem.createOrder.setOnClickListener(this);
 		//listItem.thumbHall.setOnClickListener(this);
 		//listItem.thumbMaster.setOnClickListener(this);
@@ -122,18 +133,30 @@ public class ListTempleAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
-		Log.i("aaaa", "------点击view" +v.getTag() );
+		
 		switch (v.getId()) {
 		case R.id.list_temple_order_button:
-			Intent intent2 = new Intent(context, OrderForm.class);
-			WishGroupTab.getInstance().switchActivity("OrderForm", intent2, -1,
-					-1);
+			Log.i("aaaa", "------点击view" +v.getTag() );
+			
+			if(TextUtils.isEmpty(Cms.APP.getMemberId())){
+				
+				Utils.Dialog(Parent, "提示", "请登录后操作！");
+			
+			}else{
+				JSONObject item =(JSONObject) v.getTag();
+				Intent intent2 = new Intent(context, OrderForm.class);
+				
+				Bundle bu=new Bundle();
+				bu.putInt("tid", item.optInt("templeid"));
+				bu.putInt("aid", item.optInt("attacheid"));
+				bu.putInt("wishtype", wishtype);
+				bu.putString("info", item.toString());
+				intent2.putExtras(bu);
+				WishGroupTab.getInstance().switchActivity("OrderForm", intent2, -1,
+						-1);
+			}
+			
 			break;
-//		case -1:
-//			Intent intent = new Intent(context, ShowTemple.class);
-//			WishGroupTab.getInstance().switchActivity("ShowTemple", intent, -1,
-//					-1);
-//			break;	
 			
 		}
 	}

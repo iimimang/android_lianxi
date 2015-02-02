@@ -108,6 +108,7 @@ public class XListViewFooter extends LinearLayout {
 		
 		mContentView = moreView.findViewById(R.id.xlistview_footer_content);
 		mProgressBar = moreView.findViewById(R.id.xlistview_footer_progressbar);
+		//mProgressBar = moreView.findViewById(R.id.xlistview_footer_loads);
 		mHintView = (TextView)moreView.findViewById(R.id.xlistview_footer_hint_textview);
 	}
 	

@@ -90,7 +90,7 @@ public class FindItemListAdapter extends BaseAdapter  {
 
 		BitmapManager.getInstance().loadBitmap(
 				item.optString("headface", ""), listItem.finditem_member_list_head,
-				Tools.readBitmap(this.context, R.drawable.temp2));
+				Tools.readBitmap(this.context, R.drawable.me));
 
 
 		return convertView; 

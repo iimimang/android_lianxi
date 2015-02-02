@@ -32,6 +32,12 @@ public class WebApiUrl {
 	public static final String Getprovincecitylist = IP + PORT
 			+ "/api/app/getprovincecitylist.php"; //  订单祈福地区
 	
+	public static final String Getaddorderdo = IP + PORT
+			+ "/api/app/addorderdo.php"; //  订单提交
+	public static final String Getgetorderinfo = IP + PORT
+			+ "/api/app/getorderinfo.php"; //  订单详情
+	
+	
 	public static final String Getgetmemberorderlist = IP + PORT
 			+ "/api/app/getmemberorderlist.php"; //  用户订单列表
 	
@@ -48,6 +54,9 @@ public class WebApiUrl {
 	// public static final String CESHIURL =
 	// "http://192.168.1.30/sms/module.php?m=sms&c=index&a=ceshi";
 
+	public static String[] wishtypes = {  "财富", "健康",
+		"求子", "平安", "学业", "姻缘", "事业" };// 
+	
 	public static String[] keyNames = { "memberid", "membername", "headface",
 			"nickname", "truename", "sex", "area", "tmb_headface" };// 读取用户信息接口
 	public static String[] simiaoimages = { "pic_path", "pic_tmb_path"};// 读取寺庙介绍图片数组接口

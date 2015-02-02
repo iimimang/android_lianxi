@@ -18,6 +18,7 @@ import com.wyj.adapter.FindListAdapter;
 import com.wyj.adapter.ListTempleNameAdapter;
 import com.wyj.dataprocessing.AsynTaskHelper;
 import com.wyj.dataprocessing.BitmapManager;
+import com.wyj.dataprocessing.JsonHelper;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 
@@ -202,7 +203,7 @@ public class Find extends Activity {
 		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.find_list);
 		// 设置底部加载的字幕
 
-		mPullRefreshListView.setMode(Mode.BOTH); // 支持上拉和下拉操作
+		mPullRefreshListView.setMode(Mode.PULL_FROM_END); // 支持上拉和下拉操作
 		mPullRefreshListView.getLoadingLayoutProxy(false, true).setPullLabel(
 				"加载中");
 		mPullRefreshListView.getLoadingLayoutProxy(false, true)
@@ -279,16 +280,19 @@ public class Find extends Activity {
 
 	private void listAdapter(Map<String, Object> map, String url,
 			final Context context) {
+		Log.i("bbbb", "------列表---" + url);
 		AsynTaskHelper asyntask = new AsynTaskHelper();
 		asyntask.dataDownload(url, map, new OnDataDownloadListener() {
 
 			@Override
 			public void onDataDownload(String result) {
 				if (result != null) {
-
+					Log.i("bbbb", "------列表---" + result);
+					
 					List<Map<String, Object>> items;
-					items = JsonToListHelper.orderlist_json(result);
-
+					items = JsonHelper.jsonTolistmap(
+							(String) result, "orderlist");
+					
 					Listdata.addAll(items);
 					count = Listdata.size();
 					mAdapter = new FindListAdapter(getBaseContext(), Listdata,tid);
@@ -298,7 +302,7 @@ public class Find extends Activity {
 					if (items.toString().equals("[]")) {
 						isBottom = true;
 					} else {
-						lastItemId = (Integer) items.get(0).get("orderid");
+						lastItemId =Integer.valueOf((String)items.get(0).get("orderid")).intValue(); 
 					}
 
 				} else {
@@ -320,7 +324,8 @@ public class Find extends Activity {
 				if (result != null) {
 					// Listdata.clear();
 					List<Map<String, Object>> items;
-					items = JsonToListHelper.orderlist_json(result);
+					items = JsonHelper.jsonTolistmap(
+							(String) result, "orderlist");
 					Listdata.addAll(items);
 					count = Listdata.size();
 					mAdapter.notifyDataSetChanged();
@@ -351,7 +356,8 @@ public class Find extends Activity {
 				if (result != null) {
 					// Listdata.clear();
 					List<Map<String, Object>> items;
-					items = JsonToListHelper.orderlist_json(result);
+					items = JsonHelper.jsonTolistmap(
+							(String) result, "orderlist");
 
 					// Log.i("bbbb","------上拉如果没有数据的时候-----"+items.toString());
 					if (items.toString().equals("[]")) {

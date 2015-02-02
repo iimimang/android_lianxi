@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,7 +42,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-
 import com.wyj.adapter.ListTempleAdapter;
 import com.wyj.adapter.ShowTempleImageAdapter;
 import com.wyj.dataprocessing.AccessNetwork;
@@ -51,6 +51,8 @@ import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.MyApplication;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
+import com.wyj.pipe.Utils;
 import com.wyj.utils.Tools;
 
 public class ShowTemple extends Activity implements OnClickListener,
@@ -71,12 +73,15 @@ public class ShowTemple extends Activity implements OnClickListener,
 	private ImageView attacheinfo_avatar;
 	private TextView attacheinfo_name, attacheinfo_conversion,
 			attacheinfo_description;
-	
+
 	private GridView mGridView;
 	private int[] imgIds;
-	private  String[] thumb_small = { };
-	private  String[] thumb_big = { };
-	
+	private String[] thumb_small = {};
+	private String[] thumb_big = {};
+
+	private int wishtype;
+	private String intent_info;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +96,9 @@ public class ShowTemple extends Activity implements OnClickListener,
 
 		tid = budle.getInt("tid");
 		aid = budle.getInt("aid");
+		wishtype = budle.getInt("wishtype");
+		intent_info = budle.getString("info");
+
 		Log.i(TAG, "------法师ID" + budle.getInt("aid"));
 		loadTemplate();
 		loadAttache();
@@ -118,12 +126,12 @@ public class ShowTemple extends Activity implements OnClickListener,
 		attacheinfo_name = (TextView) findViewById(R.id.attacheinfo_name);
 		attacheinfo_conversion = (TextView) findViewById(R.id.attacheinfo_conversion);
 		attacheinfo_description = (TextView) findViewById(R.id.attacheinfo_description);
-		
-		imgIds = new int[]{R.drawable.temp1,R.drawable.temp2,R.drawable.temp3};
-		
+
+		imgIds = new int[] { R.drawable.temp1, R.drawable.temp2,
+				R.drawable.temp3 };
+
 		mGridView = (GridView) findViewById(R.id.gridView1);
-		
-		
+
 	}
 
 	private void loadTemplate() {
@@ -149,21 +157,22 @@ public class ShowTemple extends Activity implements OnClickListener,
 						jsontosingle = JsonHelper.jsonStringToList(data,
 								WebApiUrl.simiaoimages, "templepic");
 						Log.i(TAG, "------返回信息44444444444");
-						
+
 						thumb_small = new String[jsontosingle.size()];
 						thumb_big = new String[jsontosingle.size()];
-						
-						 for(int i = 0;i < jsontosingle.size(); i ++){
-							 Map<String, Object> mapssub=jsontosingle.get(i);
-							 
-							  thumb_small[i]=(String) mapssub.get("pic_tmb_path");
-							  thumb_big[i]=(String) mapssub.get("pic_path");
-						
-					       }
-						 
-						 Log.i(TAG, "------遍历-"+thumb_small.toString());
+
+						for (int i = 0; i < jsontosingle.size(); i++) {
+							Map<String, Object> mapssub = jsontosingle.get(i);
+
+							thumb_small[i] = (String) mapssub
+									.get("pic_tmb_path");
+							thumb_big[i] = (String) mapssub.get("pic_path");
+
+						}
+
+						Log.i(TAG, "------遍历-" + thumb_small.toString());
 						if (code.equals("succeed")) { // 更新UI
-							 
+
 							show_temple_hall_content_text
 									.setText((String) allresultdata
 											.get("description"));
@@ -179,8 +188,9 @@ public class ShowTemple extends Activity implements OnClickListener,
 									+ ",建于公元" + buildtime + "年)");
 							show_temple_hall_wish_people.setText("已经有"
 									+ co_order + "人在此求愿");
-							
-							mGridView.setAdapter(new ShowTempleImageAdapter(ShowTemple.this,thumb_small,thumb_big));
+
+							mGridView.setAdapter(new ShowTempleImageAdapter(
+									ShowTemple.this, thumb_small, thumb_big));
 
 						} else {
 
@@ -210,14 +220,14 @@ public class ShowTemple extends Activity implements OnClickListener,
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.what == 0x123) {
-					//pDialog.dismiss();
+					// pDialog.dismiss();
 					String backmsg = msg.obj.toString();
 					JSONObject allresults;
 
 					try {
 						allresults = new JSONObject(backmsg);
 						String code = allresults.getString("code");
-						
+
 						JSONObject allresultdata = allresults
 								.getJSONObject("attacheinfo");
 						if (code.equals("succeed")) { // 更新UI
@@ -263,9 +273,9 @@ public class ShowTemple extends Activity implements OnClickListener,
 			}
 		};
 		String parms = "aid=" + aid;
-//		pDialog = new ProgressDialog(this.getParent());
-//		pDialog.setMessage("请求中。。。");
-//		pDialog.show();
+		// pDialog = new ProgressDialog(this.getParent());
+		// pDialog.setMessage("请求中。。。");
+		// pDialog.show();
 		new Thread(new AccessNetwork("GET", WebApiUrl.Getattacheinfo, parms,
 				Discover2)).start();
 	}
@@ -282,9 +292,22 @@ public class ShowTemple extends Activity implements OnClickListener,
 			break;
 		case R.id.show_temple_create_order_button:
 			// 要跳转的Activity
-			Intent intent2 = new Intent(ShowTemple.this, OrderForm.class);
-			WishGroupTab.getInstance().switchActivity("OrderForm", intent2, -1,
-					-1);
+
+			if (TextUtils.isEmpty(Cms.APP.getMemberId())) {
+
+				Utils.Dialog(ShowTemple.this.getParent(), "提示", "请登录后操作！");
+
+			} else {
+				Intent intent2 = new Intent(ShowTemple.this, OrderForm.class);
+				Bundle bu = new Bundle();
+				bu.putInt("tid", tid);
+				bu.putInt("aid", aid);
+				bu.putInt("wishtype", wishtype);
+				bu.putString("info", intent_info);
+				intent2.putExtras(bu);
+				WishGroupTab.getInstance().switchActivity("OrderForm", intent2,
+						-1, -1);
+			}
 			break;
 		}
 
@@ -313,19 +336,15 @@ public class ShowTemple extends Activity implements OnClickListener,
 
 		}
 	}
-	
-	
-	
 
-//	@Override
-//	public void onItemClick(AdapterView<?> parent, View view, int position,
-//			long id) {
-//		Intent intent = new Intent();
-//		intent.putExtra("position", position);
-//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		intent.setClass(getApplication(), ShowPhotoActivity.class);
-//		startActivity(intent);
-//	}
-	
+	// @Override
+	// public void onItemClick(AdapterView<?> parent, View view, int position,
+	// long id) {
+	// Intent intent = new Intent();
+	// intent.putExtra("position", position);
+	// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	// intent.setClass(getApplication(), ShowPhotoActivity.class);
+	// startActivity(intent);
+	// }
 
 }

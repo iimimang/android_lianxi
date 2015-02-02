@@ -131,6 +131,9 @@ public class TabMenu extends TabActivity {
 		case 1:
 			onCheckedChanged(radioGroup, R.id.radio_button0);
 			break;
+		case 2:
+			onCheckedChanged(radioGroup, R.id.radio_button1);
+			break;	
 
 		}
 	}
@@ -145,6 +148,13 @@ public class TabMenu extends TabActivity {
 			button2.setChecked(false);
 			button3.setChecked(false);
 			break;
+		case R.id.radio_button1:
+			this.mth.setCurrentTabByTag(TAB_HOME);
+			button0.setChecked(false);
+			button1.setChecked(true);
+			button2.setChecked(false);
+			button3.setChecked(false);
+			break;	
 		default:
 			break;
 		}

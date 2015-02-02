@@ -52,6 +52,7 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/orderinfo_ordernumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -59,6 +60,7 @@
             android:textSize="14.0sp" />
 
         <TextView
+            android:id="@+id/orderinfo_orderpeople"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

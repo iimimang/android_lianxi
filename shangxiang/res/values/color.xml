@@ -5,8 +5,10 @@
     <color name="color_text_selected">#E38A08</color>  
     <color name="color_text_normal">#ffffff</color>  
     <color name="white">#ffffff</color>   
-    <color name="spinner_style">#F2EDCD</color>   
+    <color name="spinner_style">#F2EDCD</color>  
     
+    <color name="button_greg_hover">#D1D1D3</color>   
+    <color name="button_greg">#efefef</color>  
     
     
     

@@ -154,7 +154,7 @@ public class User extends Activity implements OnClickListener {
 		}
 	}
 
-	private void upload_image_file(String image_file, String username) {
+	private void upload_image_file(String image_file) {
 		// TODO Auto-generated method stub
 
 		// 利用Handler更新UI
@@ -176,7 +176,7 @@ public class User extends Activity implements OnClickListener {
 		pDialog.show();
 
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("username", username);
+		params.put("mid", Cms.APP.getMemberId());
 		params.put("uploadimage", "1");
 
 		Map<String, File> files = new HashMap<String, File>();
@@ -254,8 +254,7 @@ public class User extends Activity implements OnClickListener {
 			Bitmap photo = extras.getParcelable("data");
 			Drawable drawable = new BitmapDrawable(photo);
 			faceImage.setImageDrawable(drawable);
-			upload_image_file(FilePath.ROOT_DIRECTORY + IMAGE_FILE_NAME,
-					Cms.APP.getMobile());
+			upload_image_file(FilePath.ROOT_DIRECTORY + IMAGE_FILE_NAME);
 		}
 	}
 

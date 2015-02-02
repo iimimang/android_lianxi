@@ -3,6 +3,7 @@ package com.wyj.Activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import com.wyj.dataprocessing.BitmapManager;
 
@@ -38,6 +39,7 @@ public class My extends Activity implements OnClickListener {
 	private RelativeLayout memberlogout;
 	private LinearLayout my_bless_order,formy_bless_order;
 	private RelativeLayout myorder_in;
+	private TextView my_bless_nums_my,formy_bless_nums_my;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,7 @@ public class My extends Activity implements OnClickListener {
 		findViewById();
 		setListener();
 		
-		if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
-			IMAGE_FILE_NAME= Cms.APP.getMemberId() + "_faceImage.jpg";	
-		}else{
-			IMAGE_FILE_NAME= "_faceImage.jpg";
-		}
+		
 	   member_is_login();
 		
 	}
@@ -65,6 +63,9 @@ public class My extends Activity implements OnClickListener {
 		my_bless_order=(LinearLayout) findViewById(R.id.my_bless_order);
 		formy_bless_order =(LinearLayout) findViewById(R.id.formy_bless_order);
 		myorder_in=(RelativeLayout) findViewById(R.id.myorder_in);
+		
+		my_bless_nums_my=(TextView) findViewById(R.id.my_bless_nums_my);
+		formy_bless_nums_my=(TextView) findViewById(R.id.formy_bless_nums_my);
 	}
 
 	private void setListener() {
@@ -89,6 +90,7 @@ public class My extends Activity implements OnClickListener {
 		
 		try {
 			Cms.memberInfo = new JSONObject(Cms.APP.getConfig());
+			
 			member_is_login();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -96,6 +98,16 @@ public class My extends Activity implements OnClickListener {
 	}
 
 	private void member_is_login() {
+		
+		if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+			IMAGE_FILE_NAME= Cms.APP.getMemberId() + "_faceImage.jpg";	
+		
+		}else{
+			IMAGE_FILE_NAME= "_faceImage.jpg";
+		}
+		
+		my_bless_nums_my.setText((!TextUtils.isEmpty(Cms.memberInfo.optString("do_blessings", "")))?Cms.memberInfo.optString("do_blessings", ""):"");
+		formy_bless_nums_my.setText((!TextUtils.isEmpty(Cms.memberInfo.optString("received_blessings", "")))?Cms.memberInfo.optString("received_blessings", ""):"");
 		
 		String username = (!TextUtils.isEmpty(Cms.memberInfo.optString("membername", "")))?Cms.memberInfo.optString("membername", ""):"";
 		String avatar =  (!TextUtils.isEmpty(Cms.memberInfo.optString("headface", "")))?Cms.memberInfo.optString("headface", ""):"";

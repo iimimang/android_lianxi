@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="36"
+                android:text=""
                 android:textColor="#EDA556"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="36"
+                android:text=""
                 android:textColor="#EDA556"
                 android:textSize="16dp" />
         </LinearLayout>

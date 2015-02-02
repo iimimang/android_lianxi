@@ -1,7 +1,6 @@
 package com.wyj.Activity;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +25,7 @@ import android.widget.TextView;
 
 import com.wyj.adapter.ListTempleAdapter;
 import com.wyj.dataprocessing.AccessNetwork;
-import com.wyj.dataprocessing.JsonToListHelper;
-import com.wyj.dataprocessing.MyApplication;
+
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
 
@@ -40,6 +38,7 @@ public class ListTemple extends Activity implements OnClickListener {
 	private Button buttonBack;
 	private boolean showLoading = false;
 	private ProgressDialog pDialog = null;
+	private int wishtype;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,10 @@ public class ListTemple extends Activity implements OnClickListener {
 		back_button.setOnClickListener(this);
 
 		viewList = (ListView) findViewById(R.id.list_temple_container);
-
+		
+		Intent intent = this.getIntent();
+		Bundle budle=intent.getExtras();
+		wishtype=budle.getInt("wishtype");
 		loadDiscover();
 	}
 
@@ -73,7 +75,7 @@ public class ListTemple extends Activity implements OnClickListener {
 						if (code.equals("succeed")) {
 							Log.i(TAG, "------返回信息" + data);
 							adapterListTemple = new ListTempleAdapter(
-									ListTemple.this, new JSONArray(data));
+									ListTemple.this, new JSONArray(data),wishtype,getParent().getParent());
 							viewList.setAdapter(adapterListTemple);
 						} else {
 

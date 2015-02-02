@@ -2,6 +2,10 @@ package com.wyj.popupwindow;
 
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.wyj.Activity.R;
 
 import com.wyj.select.AbstractWheel;
@@ -34,9 +38,22 @@ public class MyPopupWindowsIncense extends PopupWindow {
 	
 	private PopupWindow popupwindow;
 	private Button orderform_incense_confirm;
-	public MyPopupWindowsIncense(Context mContext, final View parent, final Activity activity, final String[] data) {
+	public MyPopupWindowsIncense(Context mContext, final View parent,final View price, final Activity activity, final JSONArray jsonArray) {
 		
 		final Activity pactivity=activity;
+		
+		final String[] data = new String[jsonArray.length()];
+		
+		for (int i = 0; i < jsonArray.length(); i++) {
+			try {
+				JSONObject	jsonboject2 = jsonArray.getJSONObject(i);
+				data[i] = jsonboject2.optString("name") + "  ￥"
+						+ jsonboject2.optString("price");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		View customView = View.inflate(mContext, R.layout.order_form_popwindow_incense,
 				null);
@@ -90,10 +107,22 @@ public class MyPopupWindowsIncense extends PopupWindow {
 				// TODO Auto-generated method stub
 				;
 				
-				String aaa=data[JSCSelect.getCurrentItem()];
-				Log.i("aaaa", "-----轮转值"+JSCSelect.getCurrentItem());
-				TextView list_find_zany=(TextView) parent;
-				list_find_zany.setText(aaa);
+				//String aaa=data[JSCSelect.getCurrentItem()];
+				int select=JSCSelect.getCurrentItem();
+				Log.i("aaaa", "-----轮转值"+select);
+				try {
+					JSONObject	jsonboject2 = jsonArray.getJSONObject(select);
+					
+					TextView list_find_zany=(TextView) parent;
+					TextView list_find_price=(TextView) price;
+					list_find_zany.setText(jsonboject2.optString("name"));
+					list_find_price.setText("￥"+jsonboject2.optString("price"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				popupwindow.dismiss();
 			}
 		});

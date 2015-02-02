@@ -78,7 +78,7 @@ public class RegularUtil {
 		toast.show();
 	}
 
-	private static boolean phoneFormat(String phone) {
+	public static boolean phoneFormat(String phone) {
 		Pattern pattern = Pattern.compile("^(1)[0-9]{10}$");
 		Matcher mc = pattern.matcher(phone);
 		return mc.matches();

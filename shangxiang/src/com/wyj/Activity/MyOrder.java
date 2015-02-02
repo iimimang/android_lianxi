@@ -27,8 +27,11 @@ import android.app.ProgressDialog;
 
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 
 import android.text.TextUtils;
@@ -58,12 +61,16 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 	private  MyOrderAdapter OrderlistAdapter,alsowishlistAdapter;
 	private String mid;
 	private int page = 1;
-	private int pagesize = 3;
+	private int alsopage = 1;
+	private int pagesize = 10;
 	private boolean isBottom = false;// 判断是否滚动到数据最后一条
+	private boolean is_alsowish_Bottom = false;// 判断是否滚动到数据最后一条
 	private int also=0;
 	private SinhaPipeClient httpClient;
 	private SinhaPipeMethod httpMethod;
 	private ProgressDialog pDialog = null;
+	private Handler mHandler;
+	private boolean left =true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,7 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 			
 			mid=Cms.APP.getMemberId();
 		}
+		mHandler = new Handler();
 		
 	}
 
@@ -99,6 +107,7 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 		my_order_wish_list.setOnClickListener(this);
 		my_order_alsowish_list.setOnClickListener(this);
 		
+		
 		OrderlistAdapter = new MyOrderAdapter(MyOrder.this, order_data);
 		wishorder.setAdapter(OrderlistAdapter);
 		wishorder.setPullLoadEnable(true);
@@ -106,7 +115,7 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 		wishorder.setXListViewListener(this);
 		
 		alsowishlistAdapter = new MyOrderAdapter(MyOrder.this, alsowish_order_data);
-		alsowishorder.setAdapter(OrderlistAdapter);
+		alsowishorder.setAdapter(alsowishlistAdapter);
 		alsowishorder.setPullLoadEnable(true);
 		alsowishorder.setPullRefreshEnable(false);
 		alsowishorder.setXListViewListener(this);
@@ -132,27 +141,52 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 	public void onLoadMore() {
 		// TODO Auto-generated method stub
 	
-		if (isBottom) {
-			
-			Utils.ShowToast(MyOrder.this, "没有更多了");
-			wishorder.setPullLoadEnable(false);
-		}else{
-			page++;
-			listAdapter( WebApiUrl.Getgetmemberorderlist + "?p=" + page + "&&pz="
-					+ pagesize + "&&mid=" + mid+ "&&also=" + also,0); // 加载
-			onLoad();
-		}
-		
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				
+				if(also>0){
+				
+					if (is_alsowish_Bottom) {
+						
+						Utils.ShowToast(MyOrder.this, "没有更多了");
+						
+					}else{
+						alsopage++;
+						listAdapter( WebApiUrl.Getgetmemberorderlist + "?p=" + alsopage + "&&pz="
+								+ pagesize + "&&mid=" + mid+ "&&also=" + also,0); // 加载
+						onLoad();
+					}
+				}else{
+					
+					if (isBottom) {
+						
+						Utils.ShowToast(MyOrder.this, "没有更多了");
+						
+					}else{
+						page++;
+						listAdapter( WebApiUrl.Getgetmemberorderlist + "?p=" + page + "&&pz="
+								+ pagesize + "&&mid=" + mid+ "&&also=" + also,0); // 加载
+						onLoad();
+					}
+				}
+				
+			}
+		}, 2000);		
 	}
 	
 	private void default_order_list() { // 默认加载 和更换求愿 还愿
 
-		if (isBottom) {
-			isBottom = false;
+		int pages =0;
+		if(also>0){
+			 pages = alsopage;
+		}else{
+			 pages = page;
 		}
-		page = 1;
-		order_data.clear();
-		listAdapter( WebApiUrl.Getgetmemberorderlist + "?p=" + page + "&&pz="
+		
+		//order_data.clear();
+		//alsowish_order_data.clear();
+		listAdapter( WebApiUrl.Getgetmemberorderlist + "?p=" + pages + "&&pz="
 				+ pagesize + "&&mid=" + mid+ "&&also=" + also,1); // 默认加载第一页
 	}
 	
@@ -174,10 +208,16 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 							
 							List<Map<String, Object>> items;
 							items = JsonHelper.jsonTolistmap((String)result,"myorderlist");
-							Log.i("bbbb", "-----请求回来----"+items.toString() );
+							Log.i("bbbb", "-----请求回来-23344---"+items.toString() );
 							if (items.toString().equals("[]")) {
-								isBottom = true;
 								
+								if(also>0){
+									is_alsowish_Bottom=true;
+									alsowishorder.setPullLoadEnable(false);	
+								}else{
+									isBottom = true;
+									wishorder.setPullLoadEnable(false);	
+								}
 							}else{
 								if(also>0){
 									alsowish_order_data.addAll(items);
@@ -233,12 +273,53 @@ private void showLoading() {
 
 			break;
 
-		case R.id.my_order_wish_list:
-
+		case R.id.my_order_wish_list:  
+			
+			if(!left){
+				
+				Resources resource = (Resources) getBaseContext().getResources();
+                ColorStateList csl = (ColorStateList) resource
+                        .getColorStateList(R.color.color_text_normal);
+                ColorStateList cs2 = (ColorStateList) resource
+                        .getColorStateList(R.color.text_normal);
+                
+                my_order_wish_list.setBackgroundColor(getResources().getColor(R.color.button_greg_hover));
+                my_order_wish_list_text.setTextColor(csl);
+                
+                my_order_alsowish_list.setBackgroundColor(getResources().getColor(R.color.button_greg));
+                my_order_alsowish_list_text.setTextColor(cs2);
+                
+                wishorder.setVisibility(View.VISIBLE);
+                alsowishorder.setVisibility(View.GONE);
+                left=true;
+                also=0;
+			}
+			//Log.i("bbbb", "-----请求回来----"+my_order_wish_list.getBackground().toString() );
 			break;
 
 		case R.id.my_order_alsowish_list:
-
+			
+			if(left){
+				
+				Resources resource = (Resources) getBaseContext().getResources();
+                ColorStateList csl = (ColorStateList) resource
+                        .getColorStateList(R.color.color_text_normal);
+                ColorStateList cs2 = (ColorStateList) resource
+                        .getColorStateList(R.color.text_normal);
+                
+                my_order_alsowish_list.setBackgroundColor(getResources().getColor(R.color.button_greg_hover));
+                my_order_alsowish_list_text.setTextColor(csl);
+                
+                my_order_wish_list.setBackgroundColor(getResources().getColor(R.color.button_greg));
+                my_order_wish_list_text.setTextColor(cs2);   
+                
+                alsowishorder.setVisibility(View.VISIBLE);
+                wishorder.setVisibility(View.GONE);
+                left=false;
+                
+                also=1;
+                default_order_list();
+			}
 			break;
 		}
 	}

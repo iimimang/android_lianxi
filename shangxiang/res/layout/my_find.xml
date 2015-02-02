@@ -52,15 +52,16 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="#efefef"
+            android:background="#D1D1D3"
             android:gravity="center" >
 
             <TextView
+                android:id="@+id/my_bless_order_list_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="我的加持"
-                android:textColor="#373737"
+                android:textColor="#ffffff"
                 android:textSize="16dp" />
 
             <TextView
@@ -68,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="36"
+                android:text=""
                 android:textColor="#EDA556"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -88,11 +89,12 @@
             android:gravity="center" >
 
             <TextView
+                android:id="@+id/formy_bless_order_list_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="为我加持"
-                android:textColor="#373737"
+                android:textColor="@color/text_normal"
                 android:textSize="16dp" />
 
             <TextView
@@ -100,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="36"
+                android:text=""
                 android:textColor="#EDA556"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -111,8 +113,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:orientation="vertical" >
-
-        <ListView
+   
+        <com.wyj.xlistview.XListView
             android:id="@+id/my_find_bless_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
