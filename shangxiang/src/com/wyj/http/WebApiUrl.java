@@ -46,6 +46,14 @@ public class WebApiUrl {
 	public static final String LOGIN = IP + PORT + "/api/app/logindo.php"; // 登录接口
 	public static final String THREE_LOGIN = IP + PORT
 			+ "/api/app/ologindo.php"; // 第三方登录接口
+	
+	public static final String Sendsmsdo = IP + PORT
+			+ "/api/app/sendsmsdo.php"; // 密码重置发送验证吗
+	
+	public static final String Modifypassdo = IP + PORT
+			+ "/api/app/modifypassdo.php"; // 密码重置修改密码
+	
+	
 	public static final String GET_USERINFO = IP + PORT
 			+ "/api/app/getmemberinfo.php"; // 读取用户信息接口
 	public static final String MEMBERINFO = IP + PORT

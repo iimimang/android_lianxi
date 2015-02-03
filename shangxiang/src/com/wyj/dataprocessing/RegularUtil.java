@@ -64,7 +64,7 @@ public class RegularUtil {
 	public static boolean checkPassword(Activity context, String password) {
 		if (!passwordFormat(password)) {
 
-			alert_msg(context, "密码格式是6-9位英文字符、数字");
+			alert_msg(context, "密码格式是8-20位英文字符、数字");
 
 			return false;
 		}
@@ -99,7 +99,7 @@ public class RegularUtil {
 	 */
 	private static boolean passwordFormat(String password) {
 		Pattern pattern = Pattern
-				.compile("^[\\@A-Za-z0-9\\!\\#\\$\\%\\^\\&\\*\\.\\~]{6,9}$");
+				.compile("^[\\@A-Za-z0-9\\!\\#\\$\\%\\^\\&\\*\\.\\~]{8,20}$");
 		Matcher mc = pattern.matcher(password);
 		return mc.matches();
 	}

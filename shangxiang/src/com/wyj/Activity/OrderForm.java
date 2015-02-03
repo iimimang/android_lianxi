@@ -535,6 +535,7 @@ public class OrderForm extends Activity implements OnClickListener {
 
 		if (pDialog != null) {
 			pDialog.dismiss();
+			pDialog=null;
 		} else {
 
 			pDialog = new ProgressDialog(getParent().getParent());

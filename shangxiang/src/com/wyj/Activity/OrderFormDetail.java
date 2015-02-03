@@ -1,6 +1,19 @@
 package com.wyj.Activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.wyj.Activity.R;
+import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.SinhaPipeClient;
+import com.wyj.pipe.SinhaPipeMethod;
+import com.wyj.pipe.Utils;
+import com.wyj.utils.StingUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,6 +32,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class OrderFormDetail extends Activity implements OnClickListener {
@@ -28,6 +42,15 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 	private ImageView order_form_detail_back;
 	private ProgressDialog pDialog = null;
 	private Button detail_button;
+	private SinhaPipeClient httpClient;
+	private SinhaPipeMethod httpMethod;
+	private TextView order_detail_wishcontent, order_detail_date_input,
+			order_detail_fashi_input, order_detail_xiangtype_input,
+			order_detail_simiao_input, order_detail_people,
+			order_detail_number;
+	private  LinearLayout order_form_detail_layout_image,order_form_detail_layout_dai;
+	private Button order_form_detail_submit;
+	private String orderid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +59,32 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 
 		findViewById();
 		setListener();
-
+		this.httpClient = new SinhaPipeClient();
+		Intent intens = this.getIntent();
+		Bundle bu = intens.getExtras();
+		 orderid = bu.getString("orderid");
+		loadOrderInfo(orderid);
 	}
 
 	private void findViewById() {
 
 		order_form_detail_back = (ImageView) findViewById(R.id.order_form_detail_back);
-		detail_button =(Button) findViewById(R.id.order_form_detail_submit);
+		detail_button = (Button) findViewById(R.id.order_form_detail_submit);
+		
+		order_form_detail_submit = (Button) findViewById(R.id.order_form_detail_submit);
+		order_form_detail_layout_image=(LinearLayout) findViewById(R.id.order_form_detail_layout_image);
+		order_form_detail_layout_dai=(LinearLayout) findViewById(R.id.order_form_detail_layout_dai);
+		
+		
+		order_detail_number=(TextView) findViewById(R.id.order_detail_number);
+		order_detail_people=(TextView) findViewById(R.id.order_detail_people);
+		order_detail_simiao_input=(TextView) findViewById(R.id.order_detail_simiao_input);
+		order_detail_fashi_input=(TextView) findViewById(R.id.order_detail_fashi_input);
+		order_detail_xiangtype_input=(TextView) findViewById(R.id.order_detail_xiangtype_input);
+		order_detail_wishcontent=(TextView) findViewById(R.id.order_detail_wishcontent);
+		order_detail_date_input=(TextView) findViewById(R.id.order_detail_date_input);
+		
+		
 	}
 
 	private void setListener() {
@@ -51,19 +93,115 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 		detail_button.setOnClickListener(this);
 	}
 
+	private void loadOrderInfo(String orderid) {
+		if (Utils.CheckNetwork()) {
+			showLoading();
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("oid", orderid));
+			this.httpClient.Config("get", WebApiUrl.Getgetorderinfo, params,
+					true);
+			this.httpMethod = new SinhaPipeMethod(this.httpClient,
+					new SinhaPipeMethod.MethodCallback() {
+						public void CallFinished(String error, Object result) {
+							showLoading();
+							if (null == error) {
+								loadOrderInfo_ui((String) result);
+							} else {
+								int err = R.string.dialog_system_error_content;
+								if (error == httpClient.ERR_TIME_OUT) {
+									err = R.string.dialog_network_error_timeout;
+								}
+								if (error == httpClient.ERR_GET_ERR) {
+									err = R.string.dialog_network_error_getdata;
+								}
+								Utils.ShowToast(OrderFormDetail.this, err);
+							}
+						}
+					});
+			this.httpMethod.start();
+		} else {
+			Utils.ShowToast(OrderFormDetail.this,
+					R.string.dialog_network_check_content);
+		}
+	}
+
+	private void loadOrderInfo_ui(String s) {
+		if (null != s) {
+			try {
+				JSONObject result = new JSONObject(s);
+
+				if (result.optString("code", "").equals("succeed")) {
+
+					JSONObject Object = result.getJSONObject("orderinfo");
+
+					String retime = StingUtil.get_date(Object.optString(
+							"retime", ""));
+
+					// System.out.println(date);
+					
+					order_detail_number.setText("订单号："
+							+ Object.optString("orderid", ""));
+					order_detail_people.setText(Object.optString("wishname",
+							"") + "祈求" + Object.optString("wishtype", ""));
+					order_detail_simiao_input.setText(Object.optString(
+							"templename", ""));
+					order_detail_xiangtype_input.setText(Object.optString(
+							"wishgrade", ""));
+					order_detail_fashi_input.setText(Object.optString(
+							"buddhistname", ""));
+					order_detail_date_input.setText(retime);
+					order_detail_wishcontent.setText(Object.optString(
+							"wishtext", ""));
+					if(Object.optString(
+							"en_status", "").equals("0")){	//未支付
+						
+						order_form_detail_layout_image.setVisibility(View.GONE);
+						order_form_detail_layout_dai.setVisibility(View.GONE);
+					}
+
+				} else {
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void showLoading() {
+
+		if (pDialog != null) {
+			pDialog.dismiss();
+			pDialog = null;
+		} else {
+
+			pDialog = new ProgressDialog(getParent().getParent());
+			pDialog.setMessage("数据加载中。。。");
+			pDialog.show();
+		}
+
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 
 		case R.id.order_form_detail_back:
-			Intent bak_My_intent = new Intent(OrderFormDetail.this, ListTemple.class);
-			WishGroupTab.getInstance().switchActivity("ListTemple", bak_My_intent,
-					-1, -1);
+			Intent bak_My_intent = new Intent(OrderFormDetail.this,
+					Wish.class);
+			WishGroupTab.getInstance().switchActivity("Wish",
+					bak_My_intent, -1, -1);
 			break;
 		case R.id.order_form_detail_submit:
-			Intent intent2 = new Intent(OrderFormDetail.this, OrderFormPay.class);
-			WishGroupTab.getInstance().switchActivity("OrderFormPay", intent2,
-					-1, -1);
+			Intent intent1 = new Intent(
+					OrderFormDetail.this,
+					OrderFormPay.class);
+			 Bundle bu=new Bundle();
+			 bu.putString("orderid", orderid);
+			 intent1.putExtras(bu);
+			 WishGroupTab.getInstance()
+					.switchActivity("OrderFormPay",
+							intent1, -1, -1);// 接口请求
 			break;
 
 		}

@@ -70,8 +70,7 @@ public class Login extends Activity implements OnClickListener,
 	TextView username;
 	TextView passwd;
 	private ProgressDialog pDialog = null;
-	private String login_username = "";
-	private String login_password = "";
+
 	private static final String TAG = "weibosdk";
 
 	/** 显示认证后的信息，如 AccessToken */
@@ -89,6 +88,8 @@ public class Login extends Activity implements OnClickListener,
 
 	// IWXAPI 是第三方app和微信通信的openapi接口
 	private IWXAPI api;
+	
+	private TextView forget_passwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +142,8 @@ public class Login extends Activity implements OnClickListener,
 		passwd = (TextView) findViewById(R.id.login_passwd);
 		weixin_logo = (ImageView) findViewById(R.id.weixin_logo);
 		mTokenText = (TextView) findViewById(R.id.token_text_view);
-
+		
+		forget_passwd =(TextView) findViewById(R.id.forget_passwd);
 	}
 
 	private void setListener() {
@@ -150,6 +152,8 @@ public class Login extends Activity implements OnClickListener,
 		reg.setOnClickListener(this);
 		login_submit.setOnClickListener(this);
 		weixin_logo.setOnClickListener(this);
+		forget_passwd.setOnClickListener(this);
+		
 	}
 
 	@Override
@@ -171,6 +175,12 @@ public class Login extends Activity implements OnClickListener,
 			break;
 		case R.id.weixin_logo:
 			weixin_login_submit();
+			break;
+		case R.id.forget_passwd:
+			Intent intent2 = new Intent();
+			intent2.setClass(Login.this, Forget_Passwd.class);
+			startActivity(intent2);
+			finish();
 			break;
 
 		}

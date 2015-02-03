@@ -52,6 +52,7 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/order_detail_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -59,6 +60,7 @@
             android:textSize="14.0sp" />
 
         <TextView
+             android:id="@+id/order_detail_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -107,7 +109,7 @@
                     android:textSize="14.0sp" />
 
                 <TextView
-                    android:id="@+id/order_baseinfo_simiao_input"
+                    android:id="@+id/order_detail_simiao_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -131,7 +133,7 @@
                     android:textSize="14.0sp" />
 
                 <TextView
-                    android:id="@+id/order_baseinfo_xiangtype_input"
+                    android:id="@+id/order_detail_xiangtype_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -162,7 +164,7 @@
                     android:textSize="14.0sp" />
 
                 <TextView
-                    android:id="@+id/order_baseinfo_fashi_input"
+                    android:id="@+id/order_detail_fashi_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -185,7 +187,7 @@
                     android:textSize="14.0sp" />
 
                 <TextView
-                    android:id="@+id/order_baseinfo_date_input"
+                    android:id="@+id/order_detail_date_input"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -221,7 +223,7 @@
             android:textSize="14.0sp" />
 
         <TextView
-            android:id="@+id/order_wishcontent_input"
+            android:id="@+id/order_detail_wishcontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/order_wishcontent_text"
@@ -293,7 +295,7 @@
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
         android:background="@drawable/button_normal"
-        android:text="提交"
+        android:text="去支付"
         android:textColor="#ffffff" />
 
 </RelativeLayout>

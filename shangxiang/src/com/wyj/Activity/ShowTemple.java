@@ -286,8 +286,8 @@ public class ShowTemple extends Activity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.show_temple_layout_back:
 			// 要跳转的Activity
-			Intent intent = new Intent(ShowTemple.this, ListTemple.class);
-			WishGroupTab.getInstance().switchActivity("ListTemple", intent, -1,
+			Intent intent = new Intent(ShowTemple.this, Wish.class);
+			WishGroupTab.getInstance().switchActivity("Wish", intent, -1,
 					-1);
 			break;
 		case R.id.show_temple_create_order_button:
@@ -337,14 +337,5 @@ public class ShowTemple extends Activity implements OnClickListener,
 		}
 	}
 
-	// @Override
-	// public void onItemClick(AdapterView<?> parent, View view, int position,
-	// long id) {
-	// Intent intent = new Intent();
-	// intent.putExtra("position", position);
-	// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	// intent.setClass(getApplication(), ShowPhotoActivity.class);
-	// startActivity(intent);
-	// }
 
 }

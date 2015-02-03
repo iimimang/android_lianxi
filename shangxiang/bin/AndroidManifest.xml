@@ -64,6 +64,15 @@
          <activity android:name="com.wyj.Activity.Login" >
              
         </activity>
+         <activity android:name="com.wyj.Activity.Forget_Passwd" >
+             
+        </activity>
+         <activity android:name="com.wyj.Activity.Forget_Passwd_two" >
+             
+        </activity>
+         <activity android:name="com.wyj.Activity.Forget_Passwd_three" >
+             
+        </activity>
          <activity android:name="com.wyj.Activity.Reg" >
         </activity>
         <activity android:name="com.wyj.Activity.Find_item" >

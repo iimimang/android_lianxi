@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Text;
-
 
 import com.wyj.Activity.R;
 
@@ -42,7 +40,7 @@ import android.view.View.OnClickListener;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.TextView;
 
 
@@ -108,13 +106,13 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 		my_order_alsowish_list.setOnClickListener(this);
 		
 		
-		OrderlistAdapter = new MyOrderAdapter(MyOrder.this, order_data);
+		OrderlistAdapter = new MyOrderAdapter(MyOrder.this, order_data,getParent().getParent());
 		wishorder.setAdapter(OrderlistAdapter);
 		wishorder.setPullLoadEnable(true);
 		wishorder.setPullRefreshEnable(false);
 		wishorder.setXListViewListener(this);
 		
-		alsowishlistAdapter = new MyOrderAdapter(MyOrder.this, alsowish_order_data);
+		alsowishlistAdapter = new MyOrderAdapter(MyOrder.this, alsowish_order_data,getParent().getParent());
 		alsowishorder.setAdapter(alsowishlistAdapter);
 		alsowishorder.setPullLoadEnable(true);
 		alsowishorder.setPullRefreshEnable(false);

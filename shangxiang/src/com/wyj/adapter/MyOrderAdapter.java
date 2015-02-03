@@ -3,9 +3,15 @@ package com.wyj.adapter;
 import java.util.List;
 import java.util.Map;
 
+import com.wyj.Activity.OrderForm;
+import com.wyj.Activity.OrderFormDetail;
+import com.wyj.Activity.OrderFormPay;
 import com.wyj.Activity.R;
+import com.wyj.Activity.TabMenu;
+import com.wyj.Activity.WishGroupTab;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +30,7 @@ import android.widget.TextView;
 public class MyOrderAdapter extends BaseAdapter implements OnClickListener {
 	private Context context;
 	private List<Map<String, Object>> mData;
+	private  Activity parents;
 
 	public static class ListItem {
 
@@ -33,9 +40,10 @@ public class MyOrderAdapter extends BaseAdapter implements OnClickListener {
 		public TextView myorder_info_status;
 	}
 
-	public MyOrderAdapter(Context context, List<Map<String, Object>> data) {
+	public MyOrderAdapter(Context context, List<Map<String, Object>> data, Activity activity) {
 		this.context = context;
 		this.mData = data;
+		this.parents=activity;
 	}
 
 	@Override
@@ -55,7 +63,7 @@ public class MyOrderAdapter extends BaseAdapter implements OnClickListener {
 
 	@SuppressLint("InflateParams")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ListItem listItem;
 
 		if (null == convertView) {
@@ -76,15 +84,20 @@ public class MyOrderAdapter extends BaseAdapter implements OnClickListener {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					// Intent intent = new Intent(context, ShowTemple.class);
-					// Bundle bu=new Bundle();
-					// bu.putInt("tid", item.optInt("templeid"));
-					// bu.putInt("aid", item.optInt("attacheid"));
-					// intent.putExtras(bu);
-					// WishGroupTab.getInstance().switchActivity("ShowTemple",
-					// intent, -1,
-					// -1);
+					 
+					TabMenu mainactivity = (TabMenu) parents; // 查找父级的父级
+					mainactivity.setCurrentActivity(1);
+					Intent intent1 = new Intent(
+							context,
+							OrderFormDetail.class);
+					 Bundle bu=new Bundle();
+					 bu.putString("orderid",(String) mData.get(position)
+								.get("orderid"));
+					 intent1.putExtras(bu);
+					// context.startActivity(intent1);
+					 WishGroupTab.getInstance()
+							.switchActivity("OrderFormDetail",
+									intent1, -1, -1);// 接口请求
 				}
 			});
 
