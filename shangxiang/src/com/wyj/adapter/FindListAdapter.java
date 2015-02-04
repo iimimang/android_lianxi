@@ -108,12 +108,12 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 			listItem.list_find_zan = (TextView) convertView
 					.findViewById(R.id.list_find_zan);
 
-			btnMap.add(listItem.list_find_zan);
 			
 			convertView.setTag(listItem);
 			
 		} else {
 			listItem = (ListItem) convertView.getTag();
+			
 		}
 
 		// viewHolder.img.setBackgroundResource(R.drawable.foot_07);
@@ -147,11 +147,17 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		listItem.list_find_content.setTag(this.mData.get(position).get("orderid"));
 		listItem.list_find_content.setOnClickListener(this);
 		
-		if(!this.mData.get(position).get("bleuser").equals("0")){
+		String bleuser=(String)this.mData.get(position).get("bleuser");
+		
+		if(!bleuser.equals("0")){
 			
-			Log.i("cccc", "------等不等空----" + this.mData.get(position).get("orderid")+"----------"+position);
+			Log.i("dddd", "------等不等空----" + this.mData.get(position).get("orderid")+"----------"+position);
 			 setcolorstatus(listItem.list_find_zan);
+			
+		}else{
+			setcolor(listItem.list_find_zan);
 		}
+		// listItem.list_find_zan.setText(bb);
 		listItem.list_find_zan.setTag(position);
 		listItem.list_find_zan.setOnClickListener(this);
 		return convertView;
@@ -179,13 +185,20 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		}
 		//Log.i("bbbb", "-----位置1111----" + Id);
 		if (R.id.list_find_zan == Id) {
+			
+			
 			int position = (Integer) v.getTag();
 			
-			
-			addblessingsdo((String) String.valueOf(mData.get(position).get("orderid")));//加持操作
-	        //遍历并更改按钮状态
-			   TextView list_find_zany=(TextView) v;
-			   setcolorstatus(list_find_zany);
+			Map<String, Object> Object =(Map<String, Object>)  this.mData.get(position);
+			String bleuser= (String) Object.get("bleuser");
+			String orderid= (String) Object.get("orderid");
+			if(bleuser.equals("0")){
+				
+				 addblessingsdo(orderid,v,position);//加持操作
+			}else{
+				Utils.ShowToast(context,"不能重复加持！");
+			}
+			  
 			  
 		}
 		
@@ -194,6 +207,9 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 	
 	private void setcolorstatus(TextView list_find_zany) {
 		// TODO Auto-generated method stub
+		
+		
+		list_find_zany.setText("已加持");
 		 Resources resource = (Resources) this.context.getResources();
          ColorStateList csl = (ColorStateList) resource
                  .getColorStateList(R.color.color_text_selected);
@@ -203,8 +219,23 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
          drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
          list_find_zany.setCompoundDrawables(drawable, null, null, null);
 	}
+	
+	private void setcolor(TextView list_find_zany) {
+		// TODO Auto-generated method stub
+		
+		
+		list_find_zany.setText("加持");
+		 Resources resource = (Resources) this.context.getResources();
+         ColorStateList csl = (ColorStateList) resource
+                 .getColorStateList(R.color.text_normal);
+         list_find_zany.setTextColor(csl);
+         Drawable drawable= this.context.getResources().getDrawable(R.drawable.load);
+         /// 这一步必须要做,否则不会显示.
+         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+         list_find_zany.setCompoundDrawables(drawable, null, null, null);
+	}
 
-	private void addblessingsdo(String oid) {
+	private void addblessingsdo(String oid, final View vv, final int positions) {
 		
 		this.httpClient = new SinhaPipeClient();
 		if (Utils.CheckNetwork()) {
@@ -223,6 +254,9 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 								JSONObject jsonobject=new JSONObject((String) result);
 								if(jsonobject.optString("code", "").equals("succeed")){
 									
+									TextView list_find_zany=(TextView) vv;
+									setcolorstatus(list_find_zany);
+									mData.get(positions).put("bleuser", Cms.APP.getMemberId());//更新数据
 									Utils.ShowToast(context, jsonobject.optString("msg", ""));
 								}else{
 									Utils.ShowToast(context, jsonobject.optString("msg", ""));

@@ -1,8 +1,12 @@
 package com.wyj.Activity;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,13 +20,21 @@ import com.wyj.dataprocessing.AsynTaskHelper.OnDataDownloadListener;
 
 import com.wyj.http.WebApiUrl;
 import com.wyj.Activity.R;
+import com.wyj.pipe.Cms;
+import com.wyj.pipe.SinhaPipeClient;
+import com.wyj.pipe.SinhaPipeMethod;
+import com.wyj.pipe.Utils;
 import com.wyj.utils.Tools;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -40,13 +52,20 @@ public class Find_item extends Activity implements OnClickListener {
 
 	private ListView mListView;
 	private int tid;
+	private TextView finditem_jiachi;
+	private SinhaPipeClient httpClient;
+	private SinhaPipeMethod httpMethod;
+	private int orderid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.find_item);
-
+		
+		finditem_jiachi =(TextView) findViewById(R.id.finditem_jiachi);
+		
+		finditem_jiachi.setOnClickListener(this);
 		ImageView back = (ImageView) findViewById(R.id.order_back);
 		back.setOnClickListener(this);
 		Button tongyuanqifu = (Button) findViewById(R.id.tongyuan);
@@ -56,7 +75,7 @@ public class Find_item extends Activity implements OnClickListener {
 
 		Intent intent = this.getIntent(); // 接受的数据
 		Bundle budle = intent.getExtras();
-		int orderid = budle.getInt("orderid");
+		 orderid = budle.getInt("orderid");
 		tid = budle.getInt("tid"); // 寺庙的传值
 
 		Log.i("aaaa", "------orderid-----"+orderid);
@@ -163,8 +182,82 @@ public class Find_item extends Activity implements OnClickListener {
 			}
 
 			break;
+		case R.id.finditem_jiachi:
+			// 要跳转的Activity
+			addblessingsdo( String.valueOf(orderid), finditem_jiachi);
+			break;
 		}
 
+	}
+	
+	private void addblessingsdo(String oid, final View vv) {
+		
+		this.httpClient = new SinhaPipeClient();
+		if (Utils.CheckNetwork()) {
+			
+			if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("mid", Cms.APP.getMemberId()));
+				params.add(new BasicNameValuePair("oid", oid));
+				Log.i("bbbb", "-----请求----"+params.toString() );
+				this.httpClient.Config("get", WebApiUrl.GET_addblessingsdo, params, true);
+				this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+					public void CallFinished(String error, Object result) {
+						Log.i("bbbb", "-----请求回来----"+result );
+						if (null == error) {
+							try {
+								JSONObject jsonobject=new JSONObject((String) result);
+								if(jsonobject.optString("code", "").equals("succeed")){
+									
+									TextView list_find_zany=(TextView) vv;
+									setcolorstatus(list_find_zany);
+	
+									Utils.ShowToast(Find_item.this, jsonobject.optString("msg", ""));
+								}else{
+									Utils.ShowToast(Find_item.this, jsonobject.optString("msg", ""));
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							int err = R.string.dialog_system_error_content;
+							if (error == httpClient.ERR_TIME_OUT) {
+								err = R.string.dialog_network_error_timeout;
+							}
+							if (error == httpClient.ERR_GET_ERR) {
+								err = R.string.dialog_network_error_getdata;
+							}
+							Utils.ShowToast(Find_item.this, err);
+						}
+					}
+				});
+				this.httpMethod.start();
+			
+			}else{
+				
+			//	Utils.Dialog(context, "提示","请先登录账户！");
+				Utils.ShowToast(Find_item.this, "请先登录账户！");
+			}
+			
+		} else {
+			Utils.ShowToast(Find_item.this, R.string.dialog_network_check_content);
+		}
+	}
+	
+	private void setcolorstatus(TextView list_find_zany) {
+		// TODO Auto-generated method stub
+		
+		
+		list_find_zany.setText("已加持");
+		 Resources resource = (Resources) this.getResources();
+         ColorStateList csl = (ColorStateList) resource
+                 .getColorStateList(R.color.color_text_selected);
+         list_find_zany.setTextColor(csl);
+         Drawable drawable= this.getResources().getDrawable(R.drawable.load_hover);
+         /// 这一步必须要做,否则不会显示.
+         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+         list_find_zany.setCompoundDrawables(drawable, null, null, null);
 	}
 
 	@Override

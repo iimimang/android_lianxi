@@ -64,6 +64,9 @@
          <activity android:name="com.wyj.Activity.Login" >
              
         </activity>
+         <activity android:name="com.wyj.Activity.About" >
+             
+        </activity>
          <activity android:name="com.wyj.Activity.Forget_Passwd" >
              
         </activity>

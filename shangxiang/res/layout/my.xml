@@ -248,7 +248,71 @@
                 android:src="@drawable/me_2" />
         </RelativeLayout>
     </LinearLayout>
+	
+    
+       <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/boder_bottom"
+        android:gravity="center"
+        android:orientation="vertical" >
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:text="意见反馈"
+                android:textColor="#373737"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/me_2" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="#dfe1e0" >
+        </View>
+
+        <RelativeLayout
+            android:id="@+id/about_we"
+            android:layout_width="fill_parent"
+            android:layout_height="44dp" >
+
+            <TextView
+                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:text="关于我们"
+                android:textColor="#373737"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/me_2" />
+        </RelativeLayout>
+    </LinearLayout>
+    
+       
     <RelativeLayout
         android:id="@+id/memberlogout"
         android:layout_width="fill_parent"

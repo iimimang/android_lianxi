@@ -36,7 +36,7 @@ public class My extends Activity implements OnClickListener {
 	ImageView my_avatar_face;
 	/* 头像名称 */
 	private static String IMAGE_FILE_NAME="";
-	private RelativeLayout memberlogout;
+	private RelativeLayout memberlogout,about_we;
 	private LinearLayout my_bless_order,formy_bless_order;
 	private RelativeLayout myorder_in;
 	private TextView my_bless_nums_my,formy_bless_nums_my;
@@ -59,6 +59,7 @@ public class My extends Activity implements OnClickListener {
 		action_login = (RelativeLayout) findViewById(R.id.login_action);
 		user = (TextView) findViewById(R.id.member_center_username);
 		memberlogout =(RelativeLayout) findViewById(R.id.memberlogout);
+		about_we =(RelativeLayout) findViewById(R.id.about_we);
 		
 		my_bless_order=(LinearLayout) findViewById(R.id.my_bless_order);
 		formy_bless_order =(LinearLayout) findViewById(R.id.formy_bless_order);
@@ -74,6 +75,7 @@ public class My extends Activity implements OnClickListener {
 		my_bless_order.setOnClickListener(this);
 		formy_bless_order.setOnClickListener(this);
 		myorder_in.setOnClickListener(this);
+		about_we.setOnClickListener(this);
 	}
 
 
@@ -184,6 +186,13 @@ public class My extends Activity implements OnClickListener {
 			} else {
 				Utils.ShowToast(My.this, "请先登录");
 			}
+			break;
+		case R.id.about_we:
+			
+				Intent intent = new Intent(My.this, About.class);
+				UserGroupTab.getInstance().switchActivity("About", intent, -1,
+						-1);
+			
 			break;
 		}
 	}

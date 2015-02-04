@@ -151,29 +151,23 @@
                 android:layout_weight="4"
                 android:textColor="#989a99"
                 android:textSize="12dp" />
-			<ImageView
-	        android:id="@+id/jiachi_status"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right|center_vertical"
-	        android:layout_weight="1"
-	      	android:src="@drawable/load" 
-	        />
+			
 			<TextView
-                android:id="@+id/jiachi2"
+                android:id="@+id/finditem_jiachi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="加持"
-                android:layout_gravity="right|center_vertical"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:textColor="#989a99"
+                android:drawableLeft="@drawable/load"
                 android:textSize="12dp" />
         </LinearLayout>
     </LinearLayout>
 
 </LinearLayout> 
 
-<View android:layout_height="1px" android:background="#dfe1e0" android:layout_width="fill_parent"></View>
+<View android:layout_height="0.5dp" android:background="#dfe1e0" android:layout_width="fill_parent"></View>
 
 
      <LinearLayout
