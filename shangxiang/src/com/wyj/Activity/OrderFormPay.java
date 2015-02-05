@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import com.wyj.Activity.R;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
 import com.wyj.pipe.SinhaPipeClient;
 import com.wyj.pipe.SinhaPipeMethod;
 import com.wyj.pipe.Utils;
@@ -29,6 +30,8 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,6 +56,8 @@ public class OrderFormPay extends Activity implements OnClickListener {
 	private TextView orderinfo_ordernumber, orderinfo_orderpeople,
 			order_baseinfo_simiao_input, order_baseinfo_xiangtype_input,
 			order_baseinfo_fashi_input, order_baseinfo_date_input,order_wishcontent_input;
+	
+	private String orderid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class OrderFormPay extends Activity implements OnClickListener {
 		this.httpClient = new SinhaPipeClient();
 		Intent intens = this.getIntent();
 		Bundle bu = intens.getExtras();
-		String orderid = bu.getString("orderid");
+		orderid = bu.getString("orderid");
 		loadOrderInfo(orderid);
 		
 
@@ -184,9 +189,8 @@ public class OrderFormPay extends Activity implements OnClickListener {
 					bak_My_intent, -1, -1);
 			break;
 		case R.id.order_form_pay_alipay_submit:
-			Intent intent2 = new Intent(OrderFormPay.this, OrderPaySucc.class);
-			WishGroupTab.getInstance().switchActivity("OrderPaySucc", intent2,
-					-1, -1);
+			
+			pay_alipay_submit();
 			break;
 		case R.id.order_form_pay_weixin_submit:
 			Intent intent3 = new Intent(OrderFormPay.this, OrderPaySucc.class);
@@ -200,6 +204,79 @@ public class OrderFormPay extends Activity implements OnClickListener {
 			break;
 
 		}
+	}
+
+	private void pay_alipay_submit() {
+		// TODO Auto-generated method stub
+		
+		pay_submit_server(WebApiUrl.GetOrderPay,"7","1");
+		
+		
+	}
+	
+	
+	private void pay_submit_server( String url,String type,String result ) {
+		this.httpClient = new SinhaPipeClient();
+		
+		if (Utils.CheckNetwork()) {
+			if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+				showLoading();
+				List<NameValuePair> parm=new ArrayList<NameValuePair>();
+				parm.add(new BasicNameValuePair("oid",orderid));
+				parm.add(new BasicNameValuePair("type",type));
+				parm.add(new BasicNameValuePair("result",result));
+				String nowTime=Long.toString(System.currentTimeMillis());  //当前时间戳
+				parm.add(new BasicNameValuePair("paytime",nowTime));
+				this.httpClient.Config("post", url, parm, true);
+				this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
+					public void CallFinished(String error, Object result) {
+					
+							showLoading();
+					
+						if (null == error) {
+							
+							try {
+								JSONObject object =new JSONObject((String) result);
+								if(object.optString("code").equals("succeed")){
+									
+									Utils.ShowToast(OrderFormPay.this,object.optString("msg"));
+									Intent intent2 = new Intent(OrderFormPay.this, OrderPaySucc.class);
+									WishGroupTab.getInstance().switchActivity("OrderPaySucc", intent2,
+											-1, -1);
+									
+								}else{
+									Utils.ShowToast(OrderFormPay.this,object.optString("msg"));
+								}
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							Log.i("bbbb", "-----请求回来-23344---" );
+							
+							
+						} else {
+							int err = R.string.dialog_system_error_content;
+							if (error == httpClient.ERR_TIME_OUT) {
+								err = R.string.dialog_network_error_timeout;
+							}
+							if (error == httpClient.ERR_GET_ERR) {
+								err = R.string.dialog_network_error_getdata;
+							}
+							Utils.ShowToast(OrderFormPay.this, err);
+						}
+					}
+				});
+				this.httpMethod.start();
+			}else{
+				
+				Utils.ShowToast(OrderFormPay.this, "请登录后操作！");
+			}
+			
+		} else {
+			Utils.ShowToast(OrderFormPay.this, R.string.dialog_network_check_content);
+		}
+		
+	
 	}
 
 	@Override

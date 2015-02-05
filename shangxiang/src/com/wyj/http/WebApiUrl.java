@@ -34,6 +34,10 @@ public class WebApiUrl {
 	
 	public static final String Getaddorderdo = IP + PORT
 			+ "/api/app/addorderdo.php"; //  订单提交
+	
+	public static final String GetOrderPay = IP + PORT
+			+ "/api/app/confirmationpaysuccessdo.php"; //  订单支付接口
+	
 	public static final String Getgetorderinfo = IP + PORT
 			+ "/api/app/getorderinfo.php"; //  订单详情
 	
@@ -61,6 +65,8 @@ public class WebApiUrl {
 	public static final String CESHIURL = IP + PORT + "/api/app/hfupload.php"; // 用户头像上传
 	// public static final String CESHIURL =
 	// "http://192.168.1.30/sms/module.php?m=sms&c=index&a=ceshi";
+	public static final String GETaddfeedbackdo= IP + PORT
+			+ "/api/app/addfeedbackdo.php"; // 意见反馈
 
 	public static String[] wishtypes = {  "财富", "健康",
 		"求子", "平安", "学业", "姻缘", "事业" };// 

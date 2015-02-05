@@ -38,7 +38,7 @@ public class My extends Activity implements OnClickListener {
 	private static String IMAGE_FILE_NAME="";
 	private RelativeLayout memberlogout,about_we;
 	private LinearLayout my_bless_order,formy_bless_order;
-	private RelativeLayout myorder_in;
+	private RelativeLayout myorder_in,remind_action,suggest_action;
 	private TextView my_bless_nums_my,formy_bless_nums_my;
 
 	@Override
@@ -67,6 +67,10 @@ public class My extends Activity implements OnClickListener {
 		
 		my_bless_nums_my=(TextView) findViewById(R.id.my_bless_nums_my);
 		formy_bless_nums_my=(TextView) findViewById(R.id.formy_bless_nums_my);
+		
+		remind_action=(RelativeLayout)findViewById(R.id.remind_action);
+		suggest_action=(RelativeLayout)findViewById(R.id.suggest_action);
+		
 	}
 
 	private void setListener() {
@@ -76,6 +80,8 @@ public class My extends Activity implements OnClickListener {
 		formy_bless_order.setOnClickListener(this);
 		myorder_in.setOnClickListener(this);
 		about_we.setOnClickListener(this);
+		remind_action.setOnClickListener(this);
+		suggest_action.setOnClickListener(this);
 	}
 
 
@@ -194,6 +200,20 @@ public class My extends Activity implements OnClickListener {
 						-1);
 			
 			break;
+		case R.id.suggest_action:
+			
+			Intent intent22 = new Intent(My.this, Suggestion.class);
+			UserGroupTab.getInstance().switchActivity("Suggestion", intent22, -1,
+					-1);
+		
+		break;
+		case R.id.remind_action:
+			
+			Intent intent33 = new Intent(My.this, Remind.class);
+			UserGroupTab.getInstance().switchActivity("Remind", intent33, -1,
+					-1);
+		
+		break;
 		}
 	}
 	@Override

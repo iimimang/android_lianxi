@@ -109,15 +109,35 @@ public class MyFind extends Activity implements OnClickListener,
 
 	private void default_order_list() { // 默认加载 和更换求愿 还愿
 		
-//		if (isBottom) {
-//			isBottom=false;
-//		}
+		Log.i("bbbb",
+				"-----请求回来数目--" + formy_list_data.size());
+		
 		my_find_bless_list.setPullLoadEnable(true);
 		int pages = 1;
+		switch (bless) {
+		case 1:
+			Log.i("bbbb",
+					"----执行111-" );
+			listAdapter(WebApiUrl.GET_ORDERLIST + "?p=" + pages + "&&pz=" + pagesize
+					+ "&&mid=" + mid + "&&bless=" + bless, 1); // 默认加载第一页
+			break;
+		case 2:
+			
+			if (formy_list_data.size()==0) {
+				Log.i("bbbb",
+						"----执行2222-" );
+				listAdapter(WebApiUrl.GET_ORDERLIST + "?p=" + pages + "&&pz=" + pagesize
+						+ "&&mid=" + mid + "&&bless=" + bless, 1); // 默认加载第一页
+			}
+			break;	
+
+		default:
+			break;
+		}
+		
 		//my_list_data.clear();
 		// my_list_data = new ArrayList<Map<String, Object>>();
-		listAdapter(WebApiUrl.GET_ORDERLIST + "?p=" + pages + "&&pz=" + pagesize
-				+ "&&mid=" + mid + "&&bless=" + bless, 1); // 默认加载第一页
+		
 	}
 
 	private void onLoad() {
@@ -177,8 +197,7 @@ public class MyFind extends Activity implements OnClickListener,
 
 	private void listAdapter(String url, final int first) {
 		
-		Log.i("bbbb",
-				"-----请求回来-23344---" + url);
+	
 		this.httpClient = new SinhaPipeClient();
 
 		if (Utils.CheckNetwork()) {
@@ -270,7 +289,8 @@ public class MyFind extends Activity implements OnClickListener,
 
 		case R.id.my_bless_order_list:
 			if (!left) {
-
+				
+				my_find_bless_list.setAdapter(myFindListAdapter);
 				Resources resource = (Resources) getBaseContext()
 						.getResources();
 				ColorStateList csl = (ColorStateList) resource
@@ -299,7 +319,7 @@ public class MyFind extends Activity implements OnClickListener,
 
 		case R.id.formy_bless_order_list:
 			if (left) {
-
+				my_find_bless_list.setAdapter(formyFindListAdapter);
 				Resources resource = (Resources) getBaseContext()
 						.getResources();
 				ColorStateList csl = (ColorStateList) resource

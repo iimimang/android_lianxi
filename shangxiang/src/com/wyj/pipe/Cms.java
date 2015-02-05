@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -29,6 +31,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class Cms extends Application {
 	public static Cms APP;
@@ -107,8 +111,10 @@ public class Cms extends Application {
 		.build();
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(config);
-
-	
+		
+		//推送
+		 JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+         JPushInterface.init(this);     		// 初始化 JPush
 	}
 	
 	public static Cms getInstances() {
