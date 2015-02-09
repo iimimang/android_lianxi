@@ -147,13 +147,18 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		listItem.list_find_content.setTag(this.mData.get(position).get("orderid"));
 		listItem.list_find_content.setOnClickListener(this);
 		
-		String bleuser=(String)this.mData.get(position).get("bleuser");
 		
-		if(!bleuser.equals("0")){
-			
-			Log.i("dddd", "------等不等空----" + this.mData.get(position).get("orderid")+"----------"+position);
-			 setcolorstatus(listItem.list_find_zan);
-			
+		
+		if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+			String bleuser=(String)this.mData.get(position).get("bleuser");
+			if(!bleuser.equals("0")){
+				
+				
+				 setcolorstatus(listItem.list_find_zan);
+				
+			}else{
+				setcolor(listItem.list_find_zan);
+			}
 		}else{
 			setcolor(listItem.list_find_zan);
 		}
@@ -186,17 +191,19 @@ public class FindListAdapter extends BaseAdapter implements OnClickListener{
 		//Log.i("bbbb", "-----位置1111----" + Id);
 		if (R.id.list_find_zan == Id) {
 			
-			
-			int position = (Integer) v.getTag();
-			
-			Map<String, Object> Object =(Map<String, Object>)  this.mData.get(position);
-			String bleuser= (String) Object.get("bleuser");
-			String orderid= (String) Object.get("orderid");
-			if(bleuser.equals("0")){
-				
-				 addblessingsdo(orderid,v,position);//加持操作
+				if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
+				int position = (Integer) v.getTag();
+				Map<String, Object> Object =(Map<String, Object>)  this.mData.get(position);
+				String bleuser= (String) Object.get("bleuser");
+				String orderid= (String) Object.get("orderid");
+				if(bleuser.equals("0")){
+					
+					 addblessingsdo(orderid,v,position);//加持操作
+				}else{
+					Utils.ShowToast(context,"不能重复加持！");
+				}
 			}else{
-				Utils.ShowToast(context,"不能重复加持！");
+				Utils.ShowToast(context,"请先登录！");
 			}
 			  
 			  

@@ -113,7 +113,7 @@ public class TabMenu extends TabActivity {
 		mth.addTab(ts2);
 
 		TabSpec ts3 = mth.newTabSpec(TAB_ABOUT).setIndicator(TAB_ABOUT);
-		ts3.setContent(new Intent(TabMenu.this, Foli.class));
+		ts3.setContent(new Intent(TabMenu.this, FoLiGroupTab.class));
 		mth.addTab(ts3);
 
 		TabSpec ts4 = mth.newTabSpec(TAB_SEARCH).setIndicator(TAB_SEARCH);

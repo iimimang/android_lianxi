@@ -366,8 +366,8 @@ public class ChinaDate {
 			// sToday.append('(');
 			// sToday.append(AnimalsYear(year));
 			// sToday.append(")年");
-			sToday.append(nStr1[(int) l[1]]);
-			sToday.append("月");
+			//sToday.append(nStr1[(int) l[1]]);
+			//sToday.append("月");
 			sToday.append(getChinaDate((int) (l[2])));
 			return sToday.toString();
 		} finally {

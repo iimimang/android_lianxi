@@ -1,7 +1,5 @@
 package com.wyj.Activity;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.wyj.calendar.KCalendar;
 
@@ -35,7 +33,7 @@ public class Foli extends MainActivity {
 		LinearLayout ll_popup = (LinearLayout) findViewById(R.id.ll_popup);
 		final TextView popupwindow_calendar_month = (TextView) findViewById(R.id.popupwindow_calendar_month);
 		final KCalendar calendar = (KCalendar) findViewById(R.id.popupwindow_calendar);
-		Button popupwindow_calendar_bt_enter = (Button) findViewById(R.id.popupwindow_calendar_bt_enter);
+		
 
 		popupwindow_calendar_month.setText(calendar.getCalendarYear() + "年"
 				+ calendar.getCalendarMonth() + "月");
@@ -52,10 +50,10 @@ public class Foli extends MainActivity {
 					R.drawable.calendar_date_focused);
 		}
 
-		List<String> list = new ArrayList<String>(); // 设置标记列表
-		list.add("2014-04-01");
-		list.add("2014-04-02");
-		calendar.addMarks(list, 0);
+//		List<String> list = new ArrayList<String>(); // 设置标记列表
+//		list.add("2014-04-01");
+//		list.add("2014-04-02");
+//		calendar.addMarks(list, 0);
 
 		// 监听所选中的日期
 		calendar.setOnCalendarClickListener(new OnCalendarClickListener() {

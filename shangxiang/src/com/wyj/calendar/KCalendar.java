@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import com.wyj.Activity.R;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -40,7 +42,7 @@ public class KCalendar extends ViewFlipper implements
 	public static final int COLOR_TX_OTHER_MONTH_DAY = Color
 			.parseColor("#ffcccccc"); // 其他月日历数字颜色
 	public static final int COLOR_TX_THIS_DAY = Color.parseColor("#FD3316"); // 当天日历数字颜色
-	public static final int COLOR_BG_THIS_DAY = Color.parseColor("#F6F8F7"); // 当天日历背景颜色
+	public static final int COLOR_BG_THIS_DAY = Color.parseColor("#FCF3D6"); // 当天日历背景颜色
 	public static final int COLOR_BG_CALENDAR = Color.parseColor("#F6F8F7"); // 日历背景色
 
 	private GestureDetector gd; // 手势监听器
@@ -67,6 +69,7 @@ public class KCalendar extends ViewFlipper implements
 	private LinearLayout firstCalendar; // 第一个日历
 	private LinearLayout secondCalendar; // 第二个日历
 	private LinearLayout currentCalendar; // 当前显示的日历
+	ChinaDate china = new ChinaDate();
 
 	private Map<String, Integer> marksMap = new HashMap<String, Integer>(); // 储存某个日子被标注(Integer
 																			// 为bitmap
@@ -241,20 +244,43 @@ public class KCalendar extends ViewFlipper implements
 					for (int k = 0; k < weekday; k++) {
 						lastMonthDay = firstShowDay + k;
 						RelativeLayout group = getDateView(0, k);
-						group.setGravity(Gravity.CENTER);
+						RelativeLayout rl = new RelativeLayout(getContext()); 
+						RelativeLayout.LayoutParams params11 = new RelativeLayout.LayoutParams(
+								ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+						rl.setGravity(Gravity.CENTER);
+						
+						//group.setGravity(Gravity.CENTER);
 						TextView view = null;
+						TextView view_2 = null; //阴历
 						if (group.getChildCount() > 0) {
-							view = (TextView) group.getChildAt(0);
+							
+							RelativeLayout old = (RelativeLayout) group.getChildAt(0);
+							view = (TextView) old.getChildAt(0);
+							//阴历-----------------------------------
+							view_2 = (TextView) old.getChildAt(1);
 						} else {
-							LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-									-1, -1);
-							view = new TextView(getContext());
-							view.setLayoutParams(params);
-							view.setGravity(Gravity.CENTER);
-							group.addView(view);
+							RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+									ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+								params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+								params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+								view = new TextView(getContext());
+								view.setId(1);
+								rl.addView(view,params);
+									//阴历-----------------------------------
+								RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+										ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+								params2.addRule(RelativeLayout.BELOW,1); 
+								params2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+								view_2 = new TextView(getContext());
+								rl.addView(view_2,params2);
+								group.addView(rl,params11);
 						}
 						view.setText(Integer.toString(lastMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
+						//阴历-----------------------------------
+						String yinli=format_china(new Date(year, month, lastMonthDay));
+						view_2.setText(yinli);
+						
 						dates[0][k] = format(new Date(year, month, lastMonthDay));
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[0][k]) != null) {
@@ -268,36 +294,73 @@ public class KCalendar extends ViewFlipper implements
 					}
 					j = weekday - 1;
 					// 这个月第一天是礼拜天，不用绘制上个月的日期，直接绘制这个月的日期
+					
 				} else {
+					
 					RelativeLayout group = getDateView(i, j);
-					group.setGravity(Gravity.CENTER);
+					RelativeLayout rl = new RelativeLayout(getContext()); 
+					RelativeLayout.LayoutParams params11 = new RelativeLayout.LayoutParams(
+							ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+					rl.setGravity(Gravity.CENTER);
+				
+					
 					TextView view = null;
+					TextView view_2 = null; //阴历
 					if (group.getChildCount() > 0) {
-						view = (TextView) group.getChildAt(0);
+						RelativeLayout old = (RelativeLayout) group.getChildAt(0);
+						view = (TextView) old.getChildAt(0);
+						//阴历-----------------------------------
+						view_2 = (TextView) old.getChildAt(1);
+						
 					} else {
-						LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-								-1, -1);
+						RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+							ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+						params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+						params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
 						view = new TextView(getContext());
-						view.setLayoutParams(params);
-						view.setGravity(Gravity.CENTER);
-						group.addView(view);
+						view.setId(1);
+						//view.setLayoutParams(params);
+						//view.setGravity(Gravity.CENTER);
+						rl.addView(view,params);
+							//阴历-----------------------------------
+						RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+								ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+						params2.addRule(RelativeLayout.BELOW,1); 
+						params2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+						view_2 = new TextView(getContext());
+						//view_2.setLayoutParams(params2);
+						//view_2.setGravity(Gravity.CENTER);
+						
+						
+						
+						rl.addView(view_2,params2);
+						
+						group.addView(rl,params11);
 					}
-
+					
+					//view_2.setTextColor(COLOR_TX_THIS_MONTH_DAY);
+					
+					
 					// 本月
 					if (day <= lastDay) {
 						dates[i][j] = format(new Date(calendarday.getYear(),
 								calendarday.getMonth(), day));
+						
 						view.setText(Integer.toString(day));
+						
 						// 当天
 						if (thisday.getDate() == day
 								&& thisday.getMonth() == calendarday.getMonth()
 								&& thisday.getYear() == calendarday.getYear()) {
-							view.setText("今天");
+							//view.setText("今天");
+							group.setBackgroundColor(COLOR_BG_THIS_DAY);
 							view.setTextColor(COLOR_TX_WEEK_TITLE);
-							view.setBackgroundColor(Color.TRANSPARENT);
+							
+						//	view.setBackgroundColor(Color.TRANSPARENT);
+							
 						} else {
 							view.setTextColor(COLOR_TX_THIS_MONTH_DAY);
-							view.setBackgroundColor(Color.TRANSPARENT);
+						//	view.setBackgroundColor(Color.TRANSPARENT);
 						}
 						// 上面首先设置了一下默认的"当天"背景色，当有特殊需求时，才给当日填充背景色
 						// 设置日期背景色
@@ -306,28 +369,53 @@ public class KCalendar extends ViewFlipper implements
 							view.setBackgroundResource(dayBgColorMap
 									.get(dates[i][j]));
 						}
+						
+						//阴历-----------------------------------
+						String yinli=format_china(new Date(calendarday.getYear(),
+								calendarday.getMonth(), day));
+						view_2.setText(yinli);
+						//Log.i("aaaa", "------阴历3333-----"+calendarYear+"--------"+calendarMonth);
+						
 						// 设置标记
 						setMarker(group, i, j);
 						day++;
 						// 下个月
 					} else {
+						
+						String yinli = "";
 						if (calendarday.getMonth() == Calendar.DECEMBER) {
 							dates[i][j] = format(new Date(
 									calendarday.getYear() + 1,
 									Calendar.JANUARY, nextMonthDay));
+							
+							//阴历-----------------------------------
+							 yinli=format_china(new Date(
+										calendarday.getYear() + 1,
+										Calendar.JANUARY, nextMonthDay));
+							
+							
 						} else {
 							dates[i][j] = format(new Date(
 									calendarday.getYear(),
 									calendarday.getMonth() + 1, nextMonthDay));
+							
+							//阴历-----------------------------------
+							 yinli=format_china(new Date(
+										calendarday.getYear(),
+										calendarday.getMonth() + 1, nextMonthDay));
 						}
+						//Log.i("aaaa", "------阴历4444-----"+(dates[i][j])+"--------"+(nextMonthDay));
 						view.setText(Integer.toString(nextMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
+						
+						view_2.setText(yinli);
+						
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[i][j]) != null) {
 							// view.setBackgroundResource(dayBgColorMap
 							// .get(dates[i][j]));
 						} else {
-							view.setBackgroundColor(Color.TRANSPARENT);
+							//view.setBackgroundColor(Color.TRANSPARENT);
 						}
 						// 设置标记
 						setMarker(group, i, j);
@@ -700,6 +788,15 @@ public class KCalendar extends ViewFlipper implements
 	private String format(Date d) {
 		return addZero(d.getYear() + 1900, 4) + "-"
 				+ addZero(d.getMonth() + 1, 2) + "-" + addZero(d.getDate(), 2);
+	}
+	
+	/**
+	 * 将Date转化阴历
+	 */
+	private String format_china(Date d) {
+		
+		String yinli=china.oneDay(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
+		return yinli;
 	}
 
 	// 2或4
