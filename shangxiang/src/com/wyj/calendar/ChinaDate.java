@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import com.wyj.utils.StingUtil;
+
+import android.util.Log;
+
 public class ChinaDate {
 	final private static long[] lunarInfo = new long[] { 0x04bd8, 0x04ae0,
 			0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0,
@@ -60,6 +64,16 @@ public class ChinaDate {
 	private final static String[] lFtv = new String[] { "0101*农历春节",
 			"0115 元宵节", "0505 端午节", "0707 七夕情人节", "0815 中秋节", "0909 重阳节",
 			"1208 腊八节", "1224 小年", "0100*除夕" };
+
+	private final static String[] amituofo = new String[] { "1005*达摩祖师圣诞",
+			"1117*阿弥陀佛圣诞", "1208*释迦如来成道日", "1229*华严菩萨圣诞", "0101*弥勒菩萨圣诞",
+			"0106*定光佛圣诞", "0208*释迦牟尼佛出家", "0215*释迦牟尼佛涅盘", "0219*观世音菩萨圣诞",
+			"0221*普贤菩萨圣诞", "0316*准提菩萨圣诞", "0404*文殊菩萨圣诞", "0408*释迦牟尼佛圣诞",
+			"0415*佛吉祥日——释迦牟尼佛诞生、成道、涅盘三期同一庆(即南传佛教国家的卫塞节)", "0513*伽蓝菩萨圣诞",
+			"0603*护法韦驮尊天菩萨圣诞", "0619*观世音菩萨成道——此日放生、念佛，功德殊胜", "0713*大势至菩萨圣诞", "0724*龙树菩萨圣诞",
+			"0730*地藏菩萨圣诞","0822*燃灯佛圣诞","0919*观世音菩萨出家纪念日","0930*药师琉璃光如来圣诞" };
+	
+	
 
 	/**
 	 * 传回农历 y年的总天数
@@ -331,6 +345,52 @@ public class ChinaDate {
 		}
 		return a;
 	}
+	
+	public final static String getChinaDate_month(int month) {
+		String a = "";
+		
+		switch (month) {
+		case 1:
+			a += "一";
+			break;
+		case 2:
+			a += "二";
+			break;
+		case 3:
+			a += "三";
+			break;
+		case 4:
+			a += "四";
+			break;
+		case 5:
+			a += "五";
+			break;
+		case 6:
+			a += "六";
+			break;
+		case 7:
+			a += "七";
+			break;
+		case 8:
+			a += "八";
+			break;
+		case 9:
+			a += "九";
+			break;
+		case 10:
+			a += "十";
+			break;
+		case 11:
+			a += "十一";
+			break;
+		case 12:
+			a += "十二";
+			break;
+		}
+		
+		a +="月";
+		return a;
+	}
 
 	public static String today() {
 		Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
@@ -355,10 +415,11 @@ public class ChinaDate {
 		}
 	}
 
-	public String oneDay(int year, int month, int day) {
+	public String[] oneDay(int year, int month, int day) {
 		Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
 		long[] l = calElement(year, month, day);
 		StringBuffer sToday = new StringBuffer();
+		String[] iswhatday=new String[2];
 		try {
 			// sToday.append(sdf.format(today.getTime()));
 			// sToday.append(" 农历");
@@ -366,14 +427,66 @@ public class ChinaDate {
 			// sToday.append('(');
 			// sToday.append(AnimalsYear(year));
 			// sToday.append(")年");
-			//sToday.append(nStr1[(int) l[1]]);
-			//sToday.append("月");
-			sToday.append(getChinaDate((int) (l[2])));
-			return sToday.toString();
+			// sToday.append(nStr1[(int) l[1]]);
+			// sToday.append("月");
+			
+			String what=oneDayiswhat(l);
+			if(!what.equals("")){
+				iswhatday[0]="1";
+				iswhatday[1]=what;
+				
+			}else{
+				iswhatday[0]="2";
+				if((int) l[2]==1){
+					iswhatday[1]=getChinaDate_month((int) l[1]);
+				}else{
+					sToday.append(getChinaDate((int) (l[2])));
+					iswhatday[1]=sToday.toString();
+				}
+			}
+			return iswhatday;
+			
 		} finally {
 			sToday = null;
 		}
 	}
+	
+	// 查出佛教节日
+	public String oneDayiswhat(long[] l) {
+		
+		String iswhat="";
+		
+		String riqi=addZero((int)l[1], 2)+addZero((int)l[2], 2);
+		for(int i = 0;i<amituofo.length;i++){
+			
+			String[] aa=StingUtil.split( amituofo[i],"*");
+			//Log.i("aaaa", "------oneDayiswhat----" + amituofo[i].toString());
+			if(aa[0].equals(riqi)){
+				
+				iswhat=StingUtil.toLength(aa[1], 9);
+			}
+		}
+		
+		return iswhat;
+	}
+	
+	// 2或4
+		private static String addZero(int i, int count) {
+			if (count == 2) {
+				if (i < 10) {
+					return "0" + i;
+				}
+			} else if (count == 4) {
+				if (i < 10) {
+					return "000" + i;
+				} else if (i < 100 && i > 10) {
+					return "00" + i;
+				} else if (i < 1000 && i > 100) {
+					return "0" + i;
+				}
+			}
+			return "" + i;
+		}
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy年M月d日 EEEEE");

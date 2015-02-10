@@ -150,7 +150,8 @@ public class StingUtil {
 	      buff.append(c);  
 	      index++;  
 	    }  
-	    buff.append("...");  
+	   // buff.append("...");  
+	    buff.append(""); 
 	    return buff.toString();  
 	}  
 	  

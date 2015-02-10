@@ -36,12 +36,12 @@ import android.widget.ViewFlipper;
 public class KCalendar extends ViewFlipper implements
 		android.view.GestureDetector.OnGestureListener {
 	public static final int COLOR_BG_WEEK_TITLE = Color.parseColor("#F6F8F7"); // 星期标题背景颜色
-	public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#DC9B7B"); // 星期标题文字颜色
+	public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#DC9B7B"); // 星期标题文字颜色  黄色
 	public static final int COLOR_TX_THIS_MONTH_DAY = Color
 			.parseColor("#aa564b4b"); // 当前月日历数字颜色
 	public static final int COLOR_TX_OTHER_MONTH_DAY = Color
 			.parseColor("#ffcccccc"); // 其他月日历数字颜色
-	public static final int COLOR_TX_THIS_DAY = Color.parseColor("#FD3316"); // 当天日历数字颜色
+	public static final int COLOR_TX_THIS_DAY = Color.parseColor("#FD3316"); // 当天日历数字颜色	红色
 	public static final int COLOR_BG_THIS_DAY = Color.parseColor("#FCF3D6"); // 当天日历背景颜色
 	public static final int COLOR_BG_CALENDAR = Color.parseColor("#F6F8F7"); // 日历背景色
 
@@ -147,7 +147,12 @@ public class KCalendar extends ViewFlipper implements
 			TextView view = new TextView(getContext());
 			view.setGravity(Gravity.CENTER);
 			view.setText(weekday[i]);
-			view.setTextColor(COLOR_TX_WEEK_TITLE);
+			if(weekday[i].equals("日") || weekday[i].equals("六") ){
+				view.setTextColor(COLOR_TX_WEEK_TITLE);	
+			}else{
+				view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);	
+			}
+			
 			view.setLayoutParams(new LinearLayout.LayoutParams(0, -1, 1));
 			title.addView(view);
 		}
@@ -202,6 +207,14 @@ public class KCalendar extends ViewFlipper implements
 				});
 			}
 		}
+		
+		// 添加日期信息显示区域
+//		LinearLayout dateinfo = new LinearLayout(getContext());
+//		dateinfo.setOrientation(LinearLayout.VERTICAL);
+//		dateinfo.setLayoutParams(new LinearLayout.LayoutParams(-1, 0, 7f));
+//		oneCalendar.addView(dateinfo);
+		
+		
 	}
 
 	/**
@@ -278,16 +291,20 @@ public class KCalendar extends ViewFlipper implements
 						view.setText(Integer.toString(lastMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 						//阴历-----------------------------------
-						String yinli=format_china(new Date(year, month, lastMonthDay));
-						view_2.setText(yinli);
-						
+						String[] yinli=format_china(new Date(year, month, lastMonthDay));
+						view_2.setText(yinli[1]);
+						if(yinli[0].equals("1")){
+							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+						}else{
+							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+						}
+							
 						dates[0][k] = format(new Date(year, month, lastMonthDay));
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[0][k]) != null) {
-							// view.setBackgroundResource(dayBgColorMap
-							// .get(dates[i][j]));
+							group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
 						} else {
-							view.setBackgroundColor(Color.TRANSPARENT);
+							group.setBackgroundColor(Color.TRANSPARENT);
 						}
 						// 设置标记
 						setMarker(group, 0, k);
@@ -327,18 +344,13 @@ public class KCalendar extends ViewFlipper implements
 								ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 						params2.addRule(RelativeLayout.BELOW,1); 
 						params2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-						view_2 = new TextView(getContext());
-						//view_2.setLayoutParams(params2);
-						//view_2.setGravity(Gravity.CENTER);
-						
-						
-						
+						view_2 = new TextView(getContext());												
 						rl.addView(view_2,params2);
 						
 						group.addView(rl,params11);
 					}
 					
-					//view_2.setTextColor(COLOR_TX_THIS_MONTH_DAY);
+					
 					
 					
 					// 本月
@@ -348,41 +360,43 @@ public class KCalendar extends ViewFlipper implements
 						
 						view.setText(Integer.toString(day));
 						
-						// 当天
-						if (thisday.getDate() == day
-								&& thisday.getMonth() == calendarday.getMonth()
-								&& thisday.getYear() == calendarday.getYear()) {
-							//view.setText("今天");
-							group.setBackgroundColor(COLOR_BG_THIS_DAY);
-							view.setTextColor(COLOR_TX_WEEK_TITLE);
-							
-						//	view.setBackgroundColor(Color.TRANSPARENT);
-							
-						} else {
-							view.setTextColor(COLOR_TX_THIS_MONTH_DAY);
-						//	view.setBackgroundColor(Color.TRANSPARENT);
+						//阴历-----------------------------------
+						String[] yinli=format_china(new Date(calendarday.getYear(),
+								calendarday.getMonth(), day));
+						view_2.setText(yinli[1]);
+						if(yinli[0].equals("1")){
+							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+						}else{
+							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
 						}
+						
 						// 上面首先设置了一下默认的"当天"背景色，当有特殊需求时，才给当日填充背景色
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[i][j]) != null) {
-							view.setTextColor(Color.WHITE);
-							view.setBackgroundResource(dayBgColorMap
-									.get(dates[i][j]));
+//							view.setTextColor(Color.WHITE);
+							group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
+						}else{
+							// 当天
+							if (thisday.getDate() == day
+									&& thisday.getMonth() == calendarday.getMonth()
+									&& thisday.getYear() == calendarday.getYear()) {
+								//view.setText("今天");
+								group.setBackgroundColor(COLOR_BG_THIS_DAY);
+								view.setTextColor(COLOR_TX_THIS_DAY);
+								view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+							} else {
+								view.setTextColor(COLOR_TX_THIS_MONTH_DAY);
+								group.setBackgroundColor(Color.TRANSPARENT);
+							}
+							
 						}
-						
-						//阴历-----------------------------------
-						String yinli=format_china(new Date(calendarday.getYear(),
-								calendarday.getMonth(), day));
-						view_2.setText(yinli);
-						//Log.i("aaaa", "------阴历3333-----"+calendarYear+"--------"+calendarMonth);
-						
 						// 设置标记
 						setMarker(group, i, j);
 						day++;
 						// 下个月
 					} else {
 						
-						String yinli = "";
+						String[] yinli = new String[2];
 						if (calendarday.getMonth() == Calendar.DECEMBER) {
 							dates[i][j] = format(new Date(
 									calendarday.getYear() + 1,
@@ -408,14 +422,19 @@ public class KCalendar extends ViewFlipper implements
 						view.setText(Integer.toString(nextMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 						
-						view_2.setText(yinli);
-						
+						view_2.setText(yinli[1]);
+						if(yinli[0].equals("1")){
+							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+						}else{
+							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+						}
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[i][j]) != null) {
 							// view.setBackgroundResource(dayBgColorMap
 							// .get(dates[i][j]));
+							group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
 						} else {
-							//view.setBackgroundColor(Color.TRANSPARENT);
+							group.setBackgroundColor(Color.TRANSPARENT);
 						}
 						// 设置标记
 						setMarker(group, i, j);
@@ -488,6 +507,7 @@ public class KCalendar extends ViewFlipper implements
 			calendarMonth++;
 		}
 		calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+		dayBgColorMap.clear();
 		// 填充日历
 		setCalendarDate();
 		// 下翻到下一月
@@ -517,6 +537,8 @@ public class KCalendar extends ViewFlipper implements
 			calendarMonth--;
 		}
 		calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+		
+		dayBgColorMap.clear();
 		setCalendarDate();
 		showPrevious();
 		if (onCalendarDateChangedListener != null) {
@@ -693,6 +715,7 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void removeAllBgColor() {
 		dayBgColorMap.clear();
+		
 		setCalendarDate();
 	}
 
@@ -793,9 +816,9 @@ public class KCalendar extends ViewFlipper implements
 	/**
 	 * 将Date转化阴历
 	 */
-	private String format_china(Date d) {
+	private String[] format_china(Date d) {
 		
-		String yinli=china.oneDay(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
+		String[] yinli=china.oneDay(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
 		return yinli;
 	}
 

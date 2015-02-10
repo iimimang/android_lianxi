@@ -4,6 +4,7 @@ package com.wyj.Activity;
 import com.wyj.calendar.KCalendar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -46,8 +47,7 @@ public class Foli extends MainActivity {
 			popupwindow_calendar_month.setText(years + "年" + month + "月");
 
 			calendar.showCalendar(years, month);
-			calendar.setCalendarDayBgColor(date,
-					R.drawable.calendar_date_focused);
+			calendar.setCalendarDayBgColor(date,R.drawable.calendar_date_focused);
 		}
 
 //		List<String> list = new ArrayList<String>(); // 设置标记列表
@@ -73,9 +73,9 @@ public class Foli extends MainActivity {
 					calendar.nextMonth();
 
 				} else {
+					Log.i("cccc", "------点击日历选中的日期----" + dateFormat.toString());
 					calendar.removeAllBgColor();
-					calendar.setCalendarDayBgColor(dateFormat,
-							R.drawable.calendar_date_focused);
+					calendar.setCalendarDayBgColor(dateFormat,R.drawable.calendar_date_focused);
 					date = dateFormat;// 最后返回给全局 date
 				}
 			}
