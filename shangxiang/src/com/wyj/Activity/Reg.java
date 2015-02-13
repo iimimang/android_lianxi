@@ -7,6 +7,7 @@ import com.wyj.dataprocessing.AccessNetwork;
 import com.wyj.dataprocessing.JsonToListHelper;
 import com.wyj.dataprocessing.RegularUtil;
 import com.wyj.http.WebApiUrl;
+import com.wyj.pipe.Cms;
 import com.wyj.Activity.R;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +36,7 @@ public class Reg extends Activity implements OnClickListener {
 	TextView passwd;
 	private Boolean regflag = false;
 	private ProgressDialog pDialog = null;
+	private String notice_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,16 @@ public class Reg extends Activity implements OnClickListener {
 		reg_submit = (Button) findViewById(R.id.submit_button);
 		username = (TextView) findViewById(R.id.regusername);
 		passwd = (TextView) findViewById(R.id.regpasswd);
-
+		
+		
+		
+		if(!TextUtils.isEmpty(Cms.APP.get_notice_id())){
+			notice_id= Cms.APP.get_notice_id();	
+		}
+		
+		Log.i("aaaa",
+ 				"--通知ID2222-------" + 
+ 						notice_id); 
 	}
 
 	private void setListener() {
@@ -127,15 +139,14 @@ public class Reg extends Activity implements OnClickListener {
 						finish();
 					} else {
 
-						RegularUtil.alert_msg(Reg.this,
-								"注册失败，" + resmsg.get("msg"));
+						RegularUtil.alert_msg(Reg.this,"注册失败，" + resmsg.get("msg"));
 					}
 
 					Log.i("aaaa", "------线程返回注册验证信息" + backmsg);
 				}
 			}
 		};
-		String params = "mobile=" + reg_username + "&password=" + reg_passwd;
+		String params = "mobile=" + reg_username + "&password=" + reg_passwd+"&jregid="+notice_id;
 		pDialog = new ProgressDialog(Reg.this);
 		pDialog.setMessage("请求中。。。");
 		pDialog.show();

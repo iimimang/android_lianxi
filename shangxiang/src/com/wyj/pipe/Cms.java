@@ -1,12 +1,14 @@
 package com.wyj.pipe;
 
 import java.io.File;
+import java.util.Set;
 
 import org.json.JSONObject;
 
 
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -67,6 +69,8 @@ public class Cms extends Application {
 	private String cfgSavearea = "save_area";
 	
 	private String cfgConfig = "cms_config";
+	
+	private String reg_notice_id="save_reg_notice_id";
 
 	@SuppressLint("SdCardPath")
 	@Override
@@ -115,6 +119,13 @@ public class Cms extends Application {
 		//推送
 		 JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
          JPushInterface.init(this);     		// 初始化 JPush
+         
+         reg_notice_id= JPushInterface.getRegistrationID(getApplicationContext());
+ 		
+ 		Log.i("aaaa",
+ 				"--通知ID-------" + 
+ 						reg_notice_id);
+ 		set_notice_id(reg_notice_id);
 	}
 	
 	public static Cms getInstances() {
@@ -128,6 +139,17 @@ public class Cms extends Application {
 	public boolean getLogin() {
 		return this.logined;
 	}
+	public void set_notice_id( String noticeId) {
+
+		Editor editor = getSharedPreferences(cfgName, Context.MODE_PRIVATE).edit();
+		editor.putString(reg_notice_id, noticeId);
+		editor.commit();
+	}
+	
+	public String get_notice_id() {
+		SharedPreferences sp = getSharedPreferences(cfgName, Context.MODE_PRIVATE);
+		return sp.getString(reg_notice_id, null);
+	}
 
 	public void setLogin(boolean isLogin, String memberId, String mobile, String password) {
 		this.logined = isLogin;
@@ -135,8 +157,17 @@ public class Cms extends Application {
 		editor.putString(cfgSaveMemberId, memberId);
 		editor.putString(cfgSaveMobile, mobile);
 		editor.putString(cfgSavePassword, password);
-		Log.i("aaaa", "------用户信息密码保存"+password);
 		editor.commit();
+		if(memberId!=null){
+		JPushInterface.setAlias(APP, memberId, new TagAliasCallback() {
+			
+			@Override
+			public void gotResult(int arg0, String arg1, Set<String> arg2) {
+				// TODO Auto-generated method stub
+				Log.i("aaaa", "------别名"+arg0+"-----"+arg1+"-------"+arg2.toString());
+			}
+		});
+		}
 	}
 
 	

@@ -45,6 +45,12 @@ public class WebApiUrl {
 	public static final String Getgetmemberorderlist = IP + PORT
 			+ "/api/app/getmemberorderlist.php"; //  用户订单列表
 	
+	public static final String Addcalendarreminddo = IP + PORT
+			+ "/api/app/addcalendarreminddo.php"; // 添加生日
+	public static final String Modifycalendarreminddo = IP + PORT
+			+ "/api/app/modifycalendarreminddo.php"; // 修改生日
+	public static final String Getcalendarremindinfo = IP + PORT
+			+ "/api/app/getcalendarremindinfo.php"; // 读取生日
 
 	public static final String REGSITER = IP + PORT + "/api/app/regdo.php"; // 注册接口
 	public static final String LOGIN = IP + PORT + "/api/app/logindo.php"; // 登录接口

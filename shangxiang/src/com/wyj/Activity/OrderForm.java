@@ -173,8 +173,8 @@ public class OrderForm extends Activity implements OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.order_form_back:
-			Intent bak_My_intent = new Intent(OrderForm.this, ListTemple.class);
-			WishGroupTab.getInstance().switchActivity("ListTemple",
+			Intent bak_My_intent = new Intent(OrderForm.this, Wish.class);
+			WishGroupTab.getInstance().switchActivity("Wish",
 					bak_My_intent, -1, -1);
 			break;
 		case R.id.order_form_submit:

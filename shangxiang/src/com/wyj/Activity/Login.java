@@ -7,6 +7,9 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.InstrumentedActivity;
+import cn.jpush.android.api.JPushInterface;
+
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -59,7 +62,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login extends Activity implements OnClickListener,
+public class Login extends InstrumentedActivity implements OnClickListener,
 		IWXAPIEventHandler {
 
 	ImageView logo;
@@ -90,6 +93,8 @@ public class Login extends Activity implements OnClickListener,
 	private IWXAPI api;
 	
 	private TextView forget_passwd;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +137,8 @@ public class Login extends Activity implements OnClickListener,
 
 		api = WXAPIFactory.createWXAPI(this, WeiXinConstants.APP_ID, true);
 		api.registerApp(WeiXinConstants.APP_ID);
+		
+		
 	}
 
 	private void findViewById() {
@@ -239,8 +246,7 @@ public class Login extends Activity implements OnClickListener,
 									memberobject.optString("membername"),
 									reg_passwd);  //登录
 							
-							Log.i("aaaa",
-									"--用户登录信息" + memberobject.toString());
+							
 							Cms.APP.setConfig(memberobject.toString()); //设置用户信息cookie
 							RegularUtil.alert_msg(Login.this, "登录成功");
 							// 关闭Activity

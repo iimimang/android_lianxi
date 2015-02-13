@@ -79,8 +79,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+           
             android:layout_below="@+id/ll_popup"
             android:background="#F6F8F7"
             android:orientation="vertical" >
@@ -94,6 +93,8 @@
                 android:id="@+id/date_infos"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                 android:layout_marginLeft="10dp"
+           		 android:layout_marginRight="10dp"
                 android:gravity="center_vertical" >
 
                 <TextView
@@ -148,6 +149,7 @@
                         android:background="@color/line_normal" />
 
                     <TextView
+                        android:id="@+id/add_user_birthday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/rili_10"
@@ -173,17 +175,18 @@
                 android:drawableLeft="@drawable/rili_14"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:text="释迦摩尼生日"
+                android:text=""
                 android:textColor="@color/text_normal"
                 android:textSize="16sp" />
-        </LinearLayout>
-
-        <ImageView
+            <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
+            android:layout_height="fill_parent"
+           
             android:scaleType="fitXY"
             android:src="@drawable/rili_07" />
+        </LinearLayout>
+
+        
     </RelativeLayout>
 
 </LinearLayout>

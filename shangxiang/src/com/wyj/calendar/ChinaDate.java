@@ -400,7 +400,7 @@ public class ChinaDate {
 		long[] l = calElement(year, month, date);
 		StringBuffer sToday = new StringBuffer();
 		try {
-			sToday.append(sdf.format(today.getTime()));
+			//sToday.append(sdf.format(today.getTime()));
 			sToday.append(" 农历");
 			sToday.append(cyclical(year));
 			sToday.append('(');
@@ -416,7 +416,7 @@ public class ChinaDate {
 	}
 
 	public String[] oneDay(int year, int month, int day) {
-		Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
+		
 		long[] l = calElement(year, month, day);
 		StringBuffer sToday = new StringBuffer();
 		String[] iswhatday=new String[2];
@@ -451,23 +451,101 @@ public class ChinaDate {
 		}
 	}
 	
+
+	
 	// 查出佛教节日
-	public String oneDayiswhat(long[] l) {
-		
-		String iswhat="";
-		
-		String riqi=addZero((int)l[1], 2)+addZero((int)l[2], 2);
-		for(int i = 0;i<amituofo.length;i++){
+		public String oneDayiswhat(long[] l) {
 			
-			String[] aa=StingUtil.split( amituofo[i],"*");
-			//Log.i("aaaa", "------oneDayiswhat----" + amituofo[i].toString());
-			if(aa[0].equals(riqi)){
+			String iswhat="";
+			
+			String riqi=addZero((int)l[1], 2)+addZero((int)l[2], 2);
+			for(int i = 0;i<amituofo.length;i++){
 				
-				iswhat=StingUtil.toLength(aa[1], 9);
+				String[] aa=StingUtil.split( amituofo[i],"*");
+				//Log.i("aaaa", "------oneDayiswhat----" + amituofo[i].toString());
+				if(aa[0].equals(riqi)){
+					
+					iswhat=StingUtil.toLength(aa[1], 9);
+				}
 			}
+			
+			return iswhat;
 		}
 		
-		return iswhat;
+		
+		// 查出佛教节日
+		public static String oneDayiswhat(int year, int month, int day) {
+			
+			String iswhat="";
+			long[] l = calElement(year, month, day);
+			String riqi=addZero((int)l[1], 2)+addZero((int)l[2], 2);
+			for(int i = 0;i<amituofo.length;i++){
+				
+				String[] aa=StingUtil.split( amituofo[i],"*");
+				//Log.i("aaaa", "------oneDayiswhat----" + amituofo[i].toString());
+				if(aa[0].equals(riqi)){
+					
+					iswhat=aa[1];
+				}
+			}
+			
+			return iswhat;
+		}
+	
+	public static String get_yangli_today(){
+	
+		Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
+		StringBuffer sToday = new StringBuffer();
+		try {
+			 sToday.append(sdf.format(today.getTime()));
+
+			 return sToday.toString();
+		} finally {
+			sToday = null;
+		}
+	}
+	
+	public static String get_yangli(int year, int month, int day,String mWay){
+		
+		 if("1".equals(mWay)){  
+	            mWay ="日";  
+	        }else if("2".equals(mWay)){  
+	            mWay ="一";  
+	        }else if("3".equals(mWay)){  
+	            mWay ="二";  
+	        }else if("4".equals(mWay)){  
+	            mWay ="三";  
+	        }else if("5".equals(mWay)){  
+	            mWay ="四";  
+	        }else if("6".equals(mWay)){  
+	            mWay ="五";  
+	        }else if("7".equals(mWay)){  
+	            mWay ="六";  
+	        }  
+	        return year + "年" + month + "月" + day+"日"+"星期"+mWay; 
+	}
+	
+	
+	public static String get_yinli(int year, int month, int day){
+		
+		//String date="";
+		long[] l = calElement(year, month, day);
+		StringBuffer sToday = new StringBuffer();
+		try {
+			// sToday.append(sdf.format(today.getTime()));
+			 sToday.append("农历");
+//			 sToday.append(cyclical(year));
+//			 sToday.append('(');
+//			 sToday.append(AnimalsYear(year));
+//			 sToday.append(")年");
+			 sToday.append(nStr1[(int) l[1]]);
+			 sToday.append("月");
+			 sToday.append(getChinaDate((int) (l[2])));
+			 return sToday.toString();
+		} finally {
+			sToday = null;
+		}
+		
 	}
 	
 	// 2或4

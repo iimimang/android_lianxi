@@ -53,6 +53,10 @@
         </activity>
         <activity android:name="com.wyj.Activity.Foli" >
         </activity>
+        <activity android:name="com.wyj.Activity.AddBirthday" >
+        </activity>
+        <activity android:name="com.wyj.Activity.Birthday_detail" >
+        </activity>
         <activity android:name="com.wyj.Activity.My" >
         </activity>
         <activity android:name="com.wyj.Activity.MyFind" >
