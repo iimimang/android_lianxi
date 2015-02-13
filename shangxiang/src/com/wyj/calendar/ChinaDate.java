@@ -492,6 +492,39 @@ public class ChinaDate {
 			return iswhat;
 		}
 	
+		public static String get_day_format(String time){
+			
+			//以下为时间戳转化
+			long retime =Integer.valueOf(time).intValue();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+			String date = sdf.format(new Date(retime*1000));
+			return date;
+			
+		}
+		
+		public static String get_day_format2(String time){
+			
+			//以下为时间戳转化
+			long retime =Integer.valueOf(time).intValue();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf.format(new Date(retime*1000));
+			return date;
+			
+		}
+
+		public static String get_today_format(){
+			
+			Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
+			StringBuffer sToday = new StringBuffer();
+			try {
+				 sToday.append(sdf2.format(today.getTime()));
+
+				 return sToday.toString();
+			} finally {
+				sToday = null;
+			}
+		}
+		
 	public static String get_yangli_today(){
 	
 		Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
@@ -568,5 +601,7 @@ public class ChinaDate {
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy年M月d日 EEEEE");
+	private static SimpleDateFormat sdf2 = new SimpleDateFormat(
+			"yyyy-MM-dd");
 
 }

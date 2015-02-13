@@ -51,6 +51,12 @@ public class WebApiUrl {
 			+ "/api/app/modifycalendarreminddo.php"; // 修改生日
 	public static final String Getcalendarremindinfo = IP + PORT
 			+ "/api/app/getcalendarremindinfo.php"; // 读取生日
+	
+	public static final String Getcalendarremindlist = IP + PORT
+			+ "/api/app/getcalendarremindlist.php"; // 生日列表
+	
+	public static final String Deletecalendarreminddo = IP + PORT
+			+ "/api/app/deletecalendarreminddo.php"; // 删除生日
 
 	public static final String REGSITER = IP + PORT + "/api/app/regdo.php"; // 注册接口
 	public static final String LOGIN = IP + PORT + "/api/app/logindo.php"; // 登录接口

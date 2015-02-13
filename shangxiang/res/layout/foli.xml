@@ -166,18 +166,41 @@
                 android:layout_height="0.5dp"
                 android:background="#dfe1e0" >
             </View>
-
+			<LinearLayout 
+			    android:id="@+id/date_add_layout"
+			    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+			    >
+                 
             <TextView
                 android:id="@+id/date_infos_foli_or_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:drawableLeft="@drawable/rili_14"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text=""
                 android:textColor="@color/text_normal"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/date_infos_birthdayshow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                 android:layout_marginBottom="5dp"
+                android:drawableLeft="@drawable/rili_17big"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/text_normal"
+                android:visibility="gone"
+                android:textSize="16sp" />
+            </LinearLayout>
             <ImageView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

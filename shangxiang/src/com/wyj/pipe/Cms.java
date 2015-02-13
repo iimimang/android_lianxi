@@ -164,7 +164,7 @@ public class Cms extends Application {
 			@Override
 			public void gotResult(int arg0, String arg1, Set<String> arg2) {
 				// TODO Auto-generated method stub
-				Log.i("aaaa", "------别名"+arg0+"-----"+arg1+"-------"+arg2.toString());
+				//Log.i("aaaa", "------别名"+arg0+"-----"+arg1+"-------"+arg2.toString());
 			}
 		});
 		}

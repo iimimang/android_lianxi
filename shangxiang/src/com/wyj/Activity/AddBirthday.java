@@ -43,9 +43,10 @@ public class AddBirthday extends Activity implements OnClickListener {
 	EditText add_birthday_title;
 	TextView add_birthday_submit, add_birthday_dates, add_birthday_remind;
 	private ProgressDialog pDialog = null;
-	private String rdate,rtime,birthdaytype;
+	private String rdate, rtime, birthdaytype, relativesname;
 	private SinhaPipeClient httpClient;
 	private SinhaPipeMethod httpMethod;
+	private String detail_id = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,18 @@ public class AddBirthday extends Activity implements OnClickListener {
 
 		findViewById();
 		setListener();
+		Intent intess = this.getIntent();
+		if (intess != null) {
+			detail_id = intess.getStringExtra("bid");
+			
+			rdate = intess.getStringExtra("rdate");
+			rtime = intess.getStringExtra("rtime");
+			relativesname = intess.getStringExtra("relativesname");
+			birthdaytype = "0";
+			
+			Log.i("aaaa", "---------------------" + detail_id+"---"+rdate+"----"+rtime+"----"+relativesname);
+			set_form_edit();
+		}
 	}
 
 	private void findViewById() {
@@ -72,15 +85,25 @@ public class AddBirthday extends Activity implements OnClickListener {
 		add_birthday_remind.setOnClickListener(this);
 	}
 
+	private void set_form_edit() {
+		// TODO Auto-generated method stub
+		
+		add_birthday_title.setText(relativesname);
+		add_birthday_dates.setText(rdate);
+		add_birthday_remind.setText("提前"+rtime+"天");
+		
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.add_birthday_back:
-			FoLiGroupTab.getInstance().startActivityForResult(
-					new Intent(AddBirthday.this, Foli.class), 1);
+
+			Intent intent = new Intent(AddBirthday.this, Foli.class);
+			FoLiGroupTab.getInstance().switchActivity("Foli", intent, -1, -1);
 			break;
 		case R.id.add_birthday_remind:
-			
+
 			Utils.hideKeyboard(AddBirthday.this);
 			try {
 
@@ -88,14 +111,16 @@ public class AddBirthday extends Activity implements OnClickListener {
 
 				JSONArray jsonArray = new JSONArray(jsons);
 				new MyPopupWindowsRemind(getApplicationContext(),
-						add_birthday_remind, getParent().getParent(), jsonArray,new OnSelectRemindListener() {
-							
+						add_birthday_remind, getParent().getParent(),
+						jsonArray, new OnSelectRemindListener() {
+
 							@Override
 							public void OnSelect(String result, int type) {
 								// TODO Auto-generated method stub
-								 Log.i("aaaa", "回调提醒-----------------"+result+"----"+type);
-								 
-								 rtime=result;
+								Log.i("aaaa", "回调提醒-----------------" + result
+										+ "----" + type);
+
+								rtime = result;
 							}
 						});
 
@@ -106,22 +131,24 @@ public class AddBirthday extends Activity implements OnClickListener {
 
 			break;
 		case R.id.add_birthday_dates:
-			
+
 			Utils.hideKeyboard(AddBirthday.this);
 			new MyPopupWindowsBirthDayDate(getApplicationContext(),
-					add_birthday_dates, getParent().getParent(),new OnSelectListener() {
-						
+					add_birthday_dates, getParent().getParent(),
+					new OnSelectListener() {
+
 						@Override
-						public void OnSelect(String result,int type) {
+						public void OnSelect(String result, int type) {
 							// TODO Auto-generated method stub
-							 Log.i("aaaa", "回调日期-----------------"+result+"----"+type);
-							 
-							 rdate=result;
-							 if(type==1){
-								 birthdaytype="1";
-							 }else{
-								 birthdaytype="0"; 
-							 }
+							Log.i("aaaa", "回调日期-----------------" + result
+									+ "----" + type);
+
+							rdate = result;
+							if (type == 1) {
+								birthdaytype = "1";
+							} else {
+								birthdaytype = "0";
+							}
 						}
 					});
 			break;
@@ -157,72 +184,102 @@ public class AddBirthday extends Activity implements OnClickListener {
 
 	private void submit_server_api(String birthday_title) {
 
-			
-			this.httpClient = new SinhaPipeClient();
-			if (Utils.CheckNetwork()) {
-				
-				if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
-					showLoading();
-					List<NameValuePair> params = new ArrayList<NameValuePair>();
-					params.add(new BasicNameValuePair("mid", Cms.APP.getMemberId()));
-					params.add(new BasicNameValuePair("rname", birthday_title));
-					params.add(new BasicNameValuePair("rdate", rdate));
-					params.add(new BasicNameValuePair("rtime", rtime));
-					params.add(new BasicNameValuePair("type", birthdaytype));
-					
-					Log.i("bbbb", "-----请求----"+params.toString() );
-					this.httpClient.Config("post", WebApiUrl.Addcalendarreminddo, params, true);
-					this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
-						public void CallFinished(String error, Object result) {
-							Log.i("bbbb", "-----请求回来----"+result ); 
-							showLoading();
-							if (null == error) {
-								try {
-									JSONObject jsonobject=new JSONObject((String) result);
-									if(jsonobject.optString("code", "").equals("succeed")){
+		this.httpClient = new SinhaPipeClient();
+		if (Utils.CheckNetwork()) {
 
-										Utils.ShowToast(AddBirthday.this, jsonobject.optString("msg", ""));
-									}else{
-										Utils.ShowToast(AddBirthday.this, jsonobject.optString("msg", ""));
-									}
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							} else {
-								int err = R.string.dialog_system_error_content;
-								if (error == httpClient.ERR_TIME_OUT) {
-									err = R.string.dialog_network_error_timeout;
-								}
-								if (error == httpClient.ERR_GET_ERR) {
-									err = R.string.dialog_network_error_getdata;
-								}
-								Utils.ShowToast(AddBirthday.this, err);
-							}
-						}
-					});
-					this.httpMethod.start();
+			if (!TextUtils.isEmpty(Cms.APP.getMemberId())) {
+				showLoading();
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("mid", Cms.APP.getMemberId()));
+				params.add(new BasicNameValuePair("rname", birthday_title));
+				params.add(new BasicNameValuePair("rdate", rdate));
+				params.add(new BasicNameValuePair("rtime", rtime));
+				params.add(new BasicNameValuePair("type", birthdaytype));
+
 				
+				if(!detail_id.equals("")){
+					params.add(new BasicNameValuePair("crid", detail_id));
+					this.httpClient.Config("post", WebApiUrl.Modifycalendarreminddo,
+							params, true);
 				}else{
-					
-				//	Utils.Dialog(context, "提示","请先登录账户！");
-					Utils.ShowToast(AddBirthday.this, "请先登录账户！");
+					this.httpClient.Config("post", WebApiUrl.Addcalendarreminddo,
+							params, true);
 				}
 				
+				Log.i("bbbb", "-----请求----" + params.toString());
+				
+				this.httpMethod = new SinhaPipeMethod(this.httpClient,
+						new SinhaPipeMethod.MethodCallback() {
+							public void CallFinished(String error, Object result) {
+								Log.i("bbbb", "-----请求回来----" + result);
+								showLoading();
+								if (null == error) {
+									try {
+										JSONObject jsonobject = new JSONObject(
+												(String) result);
+										if (jsonobject.optString("code", "")
+												.equals("succeed")) {
+
+											Intent intent = new Intent(AddBirthday.this, Foli.class);
+											FoLiGroupTab.getInstance().switchActivity("Foli", intent, -1,
+													-1);
+											
+											if(!detail_id.equals("")){
+												
+												
+												Utils.ShowToast(AddBirthday.this,
+														"修改成功！");
+											}else{
+												
+												Utils.ShowToast(AddBirthday.this,
+														jsonobject.optString("msg",
+																""));
+											}
+											
+										} else {
+											Utils.ShowToast(AddBirthday.this,
+													jsonobject.optString("msg",
+															""));
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								} else {
+									int err = R.string.dialog_system_error_content;
+									if (error == httpClient.ERR_TIME_OUT) {
+										err = R.string.dialog_network_error_timeout;
+									}
+									if (error == httpClient.ERR_GET_ERR) {
+										err = R.string.dialog_network_error_getdata;
+									}
+									Utils.ShowToast(AddBirthday.this, err);
+								}
+							}
+						});
+				this.httpMethod.start();
+
 			} else {
-				Utils.ShowToast(AddBirthday.this, R.string.dialog_network_check_content);
+
+				// Utils.Dialog(context, "提示","请先登录账户！");
+				Utils.ShowToast(AddBirthday.this, "请先登录账户！");
 			}
-		
+
+		} else {
+			Utils.ShowToast(AddBirthday.this,
+					R.string.dialog_network_check_content);
+		}
+
 	}
 
 	private void showLoading() {
 
 		if (pDialog != null) {
 			pDialog.dismiss();
-			pDialog = null;
+			pDialog=null;
 		} else {
 
-			pDialog = new ProgressDialog(getParent().getParent());
+			pDialog = new ProgressDialog(AddBirthday.this.getParent().getParent());
 			pDialog.setMessage("数据请求中。。。");
 			pDialog.show();
 		}
