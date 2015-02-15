@@ -1,0 +1,27 @@
+package com.wyj.db_memberbirthday;
+
+
+import com.wyj.db.SQLiteDataBaseHelper;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+public class Member_model {
+
+	
+	/** 数据库操作 */
+	SQLiteDataBaseHelper db;
+	public Member_model(Context context) {
+		
+		db = new SQLiteDataBaseHelper(context, "cms");
+	}
+
+	public void insert(String username, String passwd, String regtime) {
+
+		
+	}
+
+	
+
+}

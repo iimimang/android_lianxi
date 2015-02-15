@@ -1,13 +1,20 @@
 package com.sunli.sss;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 
 public class Catch
 {
     public static void main(String[] args)
     {
-        Battery aBattery = new Battery();
-        aBattery.chargeBattery(0.5);
-        aBattery.useBattery(0.5);
+        
+    	String aa="1422865572";
+    	long nowTime=System.currentTimeMillis();
+    	long retime =Integer.valueOf(aa).intValue();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date(retime*1000));
+		System.out.print(date);
     }
 }
 

@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="myorder_in" key="selection"/>
+		<item value="birthday_detail_wish" key="selection"/>
 		<list key="findhistory">
-			<item value="myorder_in"/>
-			<item value="discover_listitem_blessit_layout"/>
-			<item value="discoverHandler"/>
-			<item value="list_find_zan"/>
-			<item value="finditem_wishtext"/>
-			<item value="memberInfo"/>
-			<item value="MyApplication"/>
-			<item value="SinhaCrashUtil"/>
+			<item value="birthday_detail_wish"/>
+			<item value="startActivityForResult"/>
+			<item value="set_action_time"/>
+			<item value="pDialog"/>
+			<item value="marksMap"/>
+			<item value="nStr1"/>
+			<item value="addbirthday_select_yang"/>
+			<item value="registrationID"/>
 		</list>
 		<list key="replacehistory">
 			<item value="example"/>

@@ -1,0 +1,12 @@
+package com.wyj.db_memberbirthday;
+
+public class MemberBirthday {
+
+	private int mid;// ID  //用户ID
+	private String title;  //生日标题 或者姓名
+	private String birthday_time;  // 生日时间
+	private int type;   // 1 阴历  2 阳历
+	private int rtime; //提醒时间
+
+	
+}

@@ -1,0 +1,78 @@
+package com.wyj.Activity;
+
+
+import com.wyj.Activity.R;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+
+
+import android.os.Bundle;
+
+
+import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class Birthday_detail extends Activity implements OnClickListener {
+
+	ImageView birthday_detail_back;
+
+	TextView birthday_detail_title, birthday_detail_date,
+			birthday_detail_delete, birthday_detail_edit, birthday_detail_wish;
+
+	private ProgressDialog pDialog = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.birthdaydetail);
+
+		findViewById();
+		setListener();
+	}
+
+	private void findViewById() {
+		birthday_detail_back = (ImageView) findViewById(R.id.birthday_detail_back);
+
+		birthday_detail_title = (TextView) findViewById(R.id.birthday_detail_title);
+		birthday_detail_date = (TextView) findViewById(R.id.birthday_detail_date);
+		birthday_detail_delete = (TextView) findViewById(R.id.birthday_detail_delete);
+		birthday_detail_edit = (TextView) findViewById(R.id.birthday_detail_edit);
+		birthday_detail_wish = (TextView) findViewById(R.id.birthday_detail_wish);
+
+	}
+
+	private void setListener() {
+		birthday_detail_back.setOnClickListener(this);
+		birthday_detail_delete.setOnClickListener(this);
+		birthday_detail_edit.setOnClickListener(this);
+		birthday_detail_wish.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.birthday_detail_back:
+			FoLiGroupTab.getInstance().startActivityForResult(
+					new Intent(Birthday_detail.this, Foli.class), 1);
+			break;
+		case R.id.birthday_detail_delete:
+
+			break;
+		case R.id.birthday_detail_edit:
+
+			break;
+		case R.id.birthday_detail_wish:
+
+			break;
+		}
+
+	}
+
+}

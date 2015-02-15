@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,6 +39,7 @@ import android.widget.TextView;
 
 import com.wyj.calendar.KCalendar.OnCalendarClickListener;
 import com.wyj.calendar.KCalendar.OnCalendarDateChangedListener;
+import com.wyj.db_memberbirthday.MemberBirthday_model;
 import com.wyj.http.WebApiUrl;
 import com.wyj.pipe.Cms;
 import com.wyj.pipe.SinhaPipeClient;
@@ -224,6 +227,7 @@ public class Foli extends MainActivity implements OnClickListener {
 		}
 
 		get_member_birthday();
+	//	get_member_birthday_sql();
 
 		// 监听所选中的日期
 		calendar.setOnCalendarClickListener(new OnCalendarClickListener() {
@@ -285,6 +289,22 @@ public class Foli extends MainActivity implements OnClickListener {
 					}
 				});
 
+	}
+
+	private void get_member_birthday_sql() {
+		// TODO Auto-generated method stub
+		MemberBirthday_model memberbirdaydb=new MemberBirthday_model(Foli.this);
+		
+		List<Map<String, String>> listmember=memberbirdaydb.select("");
+		
+		for(int i=0;i<listmember.size();i++){
+			Map<String, String> maps=new HashMap<String, String>();
+			
+			maps=listmember.get(i);
+			
+		}
+		
+		
 	}
 
 	private void get_member_birthday() {

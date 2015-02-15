@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;MyPullToRefresh&apos;" deleteContents="false" description="Delete resource &apos;MyPullToRefresh&apos;" element1="/MyPullToRefresh" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1423103016929"/>&#x0A;<refactoring comment="Delete resource &apos;AdapterButtonClick&apos;" deleteContents="false" description="Delete resource &apos;AdapterButtonClick&apos;" element1="/AdapterButtonClick" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1423103031358"/>
+</session>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;StingUtil.java&apos; to &apos;shangxiang/src/com.wyj.utils&apos;&#x0D;&#x0A;- Original project: &apos;android.me.cms&apos;&#x0D;&#x0A;- Destination element: &apos;shangxiang/src/com.wyj.utils&apos;&#x0D;&#x0A;- Original element: &apos;com.example.utils.StingUtil.java&apos;" description="Copy compilation unit" destination="=shangxiang/src&lt;com.wyj.utils" element1="/src&lt;com.example.utils{StingUtil.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1422859930725" units="1" version="1.0"/>
+</session>

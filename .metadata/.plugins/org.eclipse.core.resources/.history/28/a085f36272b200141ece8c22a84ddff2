@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F6F8F7"
+    android:orientation="vertical" >
+	
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#f2ebce"
+		android:gravity="center_horizontal" > 
+          <ImageView
+            android:id="@+id/add_birthday_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/login_03" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="生日"
+            android:textColor="#d0a360"
+            android:textSize="20sp" />
+      	<TextView
+            android:id="@+id/add_birthday_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:layout_weight="1"
+            android:text="保存"
+            android:textColor="@color/text_title"
+            android:textSize="14sp" />
+       </LinearLayout>
+
+   
+<View 
+    android:layout_height="0.5dp" 
+    android:background="#D4D6D5"
+    android:layout_marginTop="30dp" 
+    android:layout_width="fill_parent">
+</View>
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:layout_marginTop="10dp"
+    >
+
+    <TextView
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:textSize="16dp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="标题：" />
+  <EditText
+        android:id="@+id/add_birthday_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:hint="请添加亲友生日"
+		android:background="#F6F8F7"
+		android:textColor="@color/text_normal"
+		android:layout_weight="3"
+        android:ems="10" />
+  </LinearLayout>
+   <View 
+    android:layout_height="0.5dp" 
+    android:background="#D4D6D5" 
+     android:layout_marginTop="10dp"
+    android:layout_width="fill_parent">
+</View>
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:layout_marginTop="10dp">
+  <TextView
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:text="生日：" />
+ 
+    <EditText
+        android:id="@+id/add_birthday_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="请选择亲友生日日期"
+        android:background="#F6F8F7"
+    	android:layout_weight="3"
+        android:ems="10" />
+
+</LinearLayout>
+
+<View 
+    android:layout_height="0.5dp" 
+    android:background="#D4D6D5"
+    android:layout_marginTop="10dp" 
+    android:layout_width="fill_parent">
+</View>
+
+			
+
+
+
+</LinearLayout>

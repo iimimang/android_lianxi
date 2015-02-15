@@ -1,0 +1,144 @@
+package com.wyj.Activity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import com.wyj.Activity.R;
+import com.wyj.pipe.Utils;
+import com.wyj.popupwindow.MyPopupWindowsBirthDayDate;
+import com.wyj.popupwindow.MyPopupWindowsBirthDayDate.OnSelectListener;
+import com.wyj.popupwindow.MyPopupWindowsRemind;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+
+import android.content.Intent;
+
+import android.os.Bundle;
+
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class AddBirthday extends Activity implements OnClickListener {
+
+	ImageView add_birthday_back;
+	EditText add_birthday_title;
+	TextView add_birthday_submit, add_birthday_dates, add_birthday_remind;
+	private ProgressDialog pDialog = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.addbirthday);
+
+		findViewById();
+		setListener();
+	}
+
+	private void findViewById() {
+		add_birthday_back = (ImageView) findViewById(R.id.add_birthday_back);
+		add_birthday_submit = (TextView) findViewById(R.id.add_birthday_submit);
+		add_birthday_title = (EditText) findViewById(R.id.add_birthday_title);
+		add_birthday_dates = (TextView) findViewById(R.id.add_birthday_dates);
+		add_birthday_remind = (TextView) findViewById(R.id.add_birthday_remind);
+	}
+
+	private void setListener() {
+		add_birthday_back.setOnClickListener(this);
+		add_birthday_submit.setOnClickListener(this);
+		add_birthday_dates.setOnClickListener(this);
+		add_birthday_remind.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.add_birthday_back:
+			FoLiGroupTab.getInstance().startActivityForResult(
+					new Intent(AddBirthday.this, Foli.class), 1);
+			break;
+		case R.id.add_birthday_remind:
+
+			try {
+
+				String jsons = "[{\"name\":\"准时提醒\",\"value\":\"0\" } , {\"name\":\"提前一天\",\"value\":\"1\"}, {\"name\":\"提前两天\",\"value\":\"2\"}, {\"name\":\"提前三天\",\"value\":\"3\"}, {\"name\":\"提前四天\",\"value\":\"4\"}, {\"name\":\"提前五天\",\"value\":\"5\"}, {\"name\":\"提前六天\",\"value\":\"6\"}, {\"name\":\"提前七天\",\"value\":\"7\"}]";
+
+				JSONArray jsonArray = new JSONArray(jsons);
+				new MyPopupWindowsRemind(getApplicationContext(),
+						add_birthday_remind, getParent().getParent(), jsonArray);
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
+		case R.id.add_birthday_dates:
+			new MyPopupWindowsBirthDayDate(getApplicationContext(),
+					add_birthday_dates, getParent().getParent(),new OnSelectListener() {
+						
+						@Override
+						public void OnSelect(String result,int type) {
+							// TODO Auto-generated method stub
+							 Log.i("aaaa", "回调日期-----------------"+result+"----"+type);
+						}
+					});
+			break;
+		case R.id.add_birthday_submit:
+			submitData();
+			break;
+		}
+
+	}
+
+	private void submitData() {
+
+		String birthday_title = add_birthday_title.getText().toString();
+		String birthday_dates = add_birthday_dates.getText().toString();
+		String birthday_remind = add_birthday_remind.getText().toString();
+
+		if (TextUtils.isEmpty(birthday_title)) {
+
+			Utils.ShowToast(AddBirthday.this, "请填写标题!");
+		} else if (TextUtils.isEmpty(birthday_dates)) {
+
+			Utils.ShowToast(AddBirthday.this, "请填写生日日期!");
+
+		} else if (TextUtils.isEmpty(birthday_remind)) {
+
+			Utils.ShowToast(AddBirthday.this, "请填写提醒时间！");
+		} else {
+
+			submit_server_api(birthday_title, birthday_dates, birthday_remind); // 接口请求
+		}
+
+	}
+
+	private void submit_server_api(String birthday_title,
+			String birthday_dates, String add_birthday_remind) {
+
+	}
+
+	private void showLoading() {
+
+		if (pDialog != null) {
+			pDialog.dismiss();
+			pDialog = null;
+		} else {
+
+			pDialog = new ProgressDialog(getParent().getParent());
+			pDialog.setMessage("数据加载中。。。");
+			pDialog.show();
+		}
+
+	}
+
+}

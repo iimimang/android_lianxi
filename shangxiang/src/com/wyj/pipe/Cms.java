@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.wyj.Activity.R;
+import com.wyj.db.SQLiteDataBaseHelper;
 import com.wyj.define.memberinfo;
 
 import android.annotation.SuppressLint;
@@ -126,6 +127,8 @@ public class Cms extends Application {
  				"--通知ID-------" + 
  						reg_notice_id);
  		set_notice_id(reg_notice_id);
+ 		
+ 		//SQLiteDataBaseHelper db=new SQLiteDataBaseHelper(this);
 	}
 	
 	public static Cms getInstances() {

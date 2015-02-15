@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 3 elements to &apos;shangxiang/src/com.wyj.db&apos;&#x0D;&#x0A;- Original project: &apos;MyTea&apos;&#x0D;&#x0A;- Destination element: &apos;shangxiang/src/com.wyj.db&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.zhong.helper.DBHelper.java&#x0D;&#x0A;     com.zhong.helper.SQLiteDataBaseHelper.java&#x0D;&#x0A;     com.zhong.helper.SharedPreferencesHelper.java" description="Copy compilation units" destination="=shangxiang/src&lt;com.wyj.db" element1="/src&lt;com.zhong.helper{DBHelper.java" element2="/src&lt;com.zhong.helper{SQLiteDataBaseHelper.java" element3="/src&lt;com.zhong.helper{SharedPreferencesHelper.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1423978216092" units="3" version="1.0"/>
+</session>

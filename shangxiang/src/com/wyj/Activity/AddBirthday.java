@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.wyj.Activity.R;
+import com.wyj.db_memberbirthday.MemberBirthday;
+import com.wyj.db_memberbirthday.MemberBirthday_model;
 import com.wyj.http.WebApiUrl;
 import com.wyj.pipe.Cms;
 import com.wyj.pipe.SinhaPipeClient;
@@ -57,7 +59,7 @@ public class AddBirthday extends Activity implements OnClickListener {
 		findViewById();
 		setListener();
 		Intent intess = this.getIntent();
-		if (intess != null) {
+		if (intess != null ) {
 			detail_id = intess.getStringExtra("bid");
 			
 			rdate = intess.getStringExtra("rdate");
@@ -87,11 +89,11 @@ public class AddBirthday extends Activity implements OnClickListener {
 
 	private void set_form_edit() {
 		// TODO Auto-generated method stub
-		
+		if(rtime!=null){
 		add_birthday_title.setText(relativesname);
 		add_birthday_dates.setText(rdate);
 		add_birthday_remind.setText("提前"+rtime+"天");
-		
+		}
 	}
 
 	@Override
@@ -177,10 +179,39 @@ public class AddBirthday extends Activity implements OnClickListener {
 			Utils.ShowToast(AddBirthday.this, "请填写提醒时间！");
 		} else {
 
-			submit_server_api(birthday_title); // 接口请求
+			submit_sql_api(birthday_title); // 接口请求
 		}
 
 	}
+	
+	private void submit_sql_api(String birthday_title) {
+		
+		
+		MemberBirthday_model memberbirdaydb=new MemberBirthday_model(AddBirthday.this);
+		
+		//添加
+		MemberBirthday memberbirdayinfo=new MemberBirthday(Cms.APP.getMemberId(),birthday_title,rdate,birthdaytype,rtime);
+		boolean flag =memberbirdaydb.insert(memberbirdayinfo);
+		
+		//修改
+//		MemberBirthday memberbirdayinfo=new MemberBirthday(Cms.APP.getMemberId(),birthday_title,rdate,birthdaytype,rtime);
+//		boolean flag =memberbirdaydb.update(memberbirdayinfo,"1");
+		if(flag){
+			Utils.ShowToast(AddBirthday.this,
+					"成功！");
+		}else{
+			Utils.ShowToast(AddBirthday.this,
+					"失败！");
+		} 
+//		Intent intent = new Intent(AddBirthday.this, Foli.class);
+//		FoLiGroupTab.getInstance().switchActivity("Foli", intent, -1,
+//				-1);
+		
+		
+		
+		
+	}
+	
 
 	private void submit_server_api(String birthday_title) {
 
