@@ -13,8 +13,9 @@ import org.json.JSONObject;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+
 import com.wyj.Activity.R;
-import com.wyj.adapter.OrderImageAdapter;
+
 import com.wyj.http.WebApiUrl;
 import com.wyj.pipe.Cms;
 import com.wyj.pipe.SinhaPipeClient;
@@ -22,25 +23,24 @@ import com.wyj.pipe.SinhaPipeMethod;
 import com.wyj.pipe.Utils;
 import com.wyj.utils.StingUtil;
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Gallery;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -63,6 +63,7 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 	private Button order_form_detail_submit;
 	private String orderid;
 	private LinearLayout show_order_gallery_images;
+	private String[] orderthumbs;
 	
 
 	@Override
@@ -77,6 +78,7 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 		Bundle bu = intens.getExtras();
 		 orderid = bu.getString("orderid");
 		loadOrderInfo(orderid);
+		Log.i(TAG, "------订单号"+orderid);
 	}
 
 	private void findViewById() {
@@ -181,9 +183,12 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 						
 						JSONArray jsonThumbs = result.getJSONArray("receipt_pic");
 						if (null != jsonThumbs) {
+							orderthumbs = new String[jsonThumbs.length()];
 							for (int i = 0; i < jsonThumbs.length(); i++) {
 								JSONObject jsonThumb = jsonThumbs.optJSONObject(i);
+							
 								if (null != jsonThumb) {
+									orderthumbs[i]=jsonThumb.optString("pic_path", "");
 									show_order_gallery_images.addView(createThumb(jsonThumb.optString("pic_tmb_path", "")));
 								}
 							}
@@ -202,9 +207,9 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 	
 	private View createThumb(String thumb) {
 		View imageLayout = LayoutInflater.from(OrderFormDetail.this).inflate(R.layout.thumb_item_layout, null);
-		imageLayout.setPadding(0, 0, 30, 0);
+		imageLayout.setPadding(0, 0, 10, 0);
 		final ProgressBar progressBar = (ProgressBar) imageLayout.findViewById(R.id.thumb_item_loading);
-		ImageView imageView = (ImageView) imageLayout.findViewById(R.id.thumb_item_view);
+		final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.thumb_item_view);
 		Cms.imageLoader.displayImage(thumb, imageView, Cms.imageLoaderOptions, new ImageLoadingListener() {
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
@@ -219,6 +224,8 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 			@Override
 			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 				progressBar.setVisibility(View.GONE);
+				imageView.setTag(orderthumbs);
+				imageView.setOnClickListener(OrderFormDetail.this);
 			}
 
 			@Override
@@ -253,16 +260,24 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 			WishGroupTab.getInstance().switchActivity("Wish",
 					bak_My_intent, -1, -1);
 			break;
-		case R.id.order_form_detail_submit:
-			Intent intent1 = new Intent(
+		case R.id.thumb_item_view:
+			
+			String[] thumbs = (String[]) v.getTag();
+			Intent intent2 = new Intent(
 					OrderFormDetail.this,
-					OrderFormPay.class);
-			 Bundle bu=new Bundle();
-			 bu.putString("orderid", orderid);
-			 intent1.putExtras(bu);
-			 WishGroupTab.getInstance()
-					.switchActivity("OrderFormPay",
-							intent1, -1, -1);// 接口请求
+					Imageviewpager.class);
+			Bundle bundle = new Bundle();
+			bundle.putStringArray("thumbs", thumbs);
+			intent2.putExtras(bundle);
+			
+			Log.i("aaaa", "-------viewpager传"+thumbs[0]);
+			WishGroupTab.getInstance().startActivityForResult(intent2, 1);
+
+			 
+			break;
+			
+		case R.id.order_form_detail_submit:
+			
 			break;
 
 		}

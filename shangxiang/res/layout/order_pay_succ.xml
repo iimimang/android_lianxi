@@ -43,15 +43,16 @@
         android:id="@+id/order_form_paysucc_layout_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:paddingBottom="8dip"
         android:layout_below="@+id/order_form_paysucc_layout_head"
-        android:orientation="vertical" >
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:paddingBottom="8dip" >
 
         <ImageView
             android:id="@+id/order_form_paysucc_xiaofo"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dip"
             android:src="@drawable/wish_35" />
 
@@ -65,24 +66,24 @@
 
             <Button
                 android:id="@+id/order_form_paysucc_orderdetail"
-                android:layout_width="120dip"
-                android:layout_height="33dip"
+                android:layout_width="100dip"
+                android:layout_height="30dip"
                 android:layout_alignParentLeft="true"
-                android:text="查看订单"
                 android:background="@drawable/button_normal_gray"
-                android:textSize="18dp" />
+                android:text="查看订单"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/order_form_paysucc_sharebutton"
-                android:layout_width="120dip"
-                android:layout_height="33dip"
+                android:layout_width="100dip"
+                android:layout_height="30dip"
                 android:layout_alignParentRight="true"
-                android:text="分享"
                 android:background="@drawable/button_normal_gray"
-                android:textSize="18dp" />
+                android:text="分享"
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -93,8 +94,127 @@
             android:id="@+id/ordersucc_list_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/white"
-            />
+            android:divider="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/share_order_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#99000000"
+        android:gravity="center"
+        android:visibility="gone"
+        android:clickable="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+             android:clickable="true"
+            android:background="@drawable/share_background"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:drawableLeft="@drawable/shareto_circle"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/me_2"
+                android:gravity="center_vertical"
+                android:text="分享到朋友圈"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_normal" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:drawableLeft="@drawable/shareto_friend"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/me_2"
+                android:gravity="center_vertical"
+                android:text="分享到微信好友"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_normal" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dip" >
+
+                <LinearLayout
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dip"
+                        android:text="分享内容:"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dip"
+                        android:text="普陀山求股票升值，快啊，哈哈快啊"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:layout_weight="1"
+                    android:src="@drawable/logo" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_normal" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:src="@drawable/shareto_tencent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/shareto_weibo" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

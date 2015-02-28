@@ -38,6 +38,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -106,18 +108,68 @@ public class MyOrder extends Activity implements OnClickListener , IXListViewLis
 		my_order_alsowish_list.setOnClickListener(this);
 		
 		
-		OrderlistAdapter = new MyOrderAdapter(MyOrder.this, order_data,getParent().getParent());
+		OrderlistAdapter = new MyOrderAdapter(MyOrder.this, order_data);
 		wishorder.setAdapter(OrderlistAdapter);
 		wishorder.setPullLoadEnable(true);
 		wishorder.setPullRefreshEnable(false);
 		wishorder.setXListViewListener(this);
 		
-		alsowishlistAdapter = new MyOrderAdapter(MyOrder.this, alsowish_order_data,getParent().getParent());
+		wishorder.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				
+				TabMenu mainactivity = (TabMenu) getParent().getParent(); // 查找父级的父级
+				mainactivity.setCurrentActivity(1);
+				Intent intent1 = new Intent(
+						MyOrder.this,
+						OrderFormDetail.class);
+				 Bundle bu=new Bundle();
+				 bu.putString("orderid",(String) order_data.get(arg2-1)
+							.get("orderid"));
+				 
+				 Log.i("bbbb", "------订单号传 位置"+arg2+ order_data.get(arg2-1)
+							.get("orderid").toString());
+				 intent1.putExtras(bu);
+				// context.startActivity(intent1);
+				 WishGroupTab.getInstance()
+						.switchActivity("OrderFormDetail",
+								intent1, -1, -1);// 接口请求
+			}
+		});
+		
+		alsowishlistAdapter = new MyOrderAdapter(MyOrder.this, alsowish_order_data);
 		alsowishorder.setAdapter(alsowishlistAdapter);
 		alsowishorder.setPullLoadEnable(true);
 		alsowishorder.setPullRefreshEnable(false);
 		alsowishorder.setXListViewListener(this);
 		
+		
+		alsowishorder.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				
+				TabMenu mainactivity = (TabMenu) getParent().getParent(); // 查找父级的父级
+				mainactivity.setCurrentActivity(1);
+				Intent intent1 = new Intent(
+						MyOrder.this,
+						OrderFormDetail.class);
+				 Bundle bu=new Bundle();
+				 bu.putString("orderid",(String) alsowish_order_data.get(arg2-1)
+							.get("orderid"));
+				
+				 intent1.putExtras(bu);
+				// context.startActivity(intent1);
+				 WishGroupTab.getInstance()
+						.switchActivity("OrderFormDetail",
+								intent1, -1, -1);// 接口请求
+			}
+		});
 		
 		default_order_list() ;
 	}

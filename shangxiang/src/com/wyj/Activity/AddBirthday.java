@@ -60,6 +60,8 @@ public class AddBirthday extends Activity implements OnClickListener {
 		setListener();
 		Intent intess = this.getIntent();
 		if (intess != null ) {
+			
+			if (intess.getStringExtra("bid") != null ) {
 			detail_id = intess.getStringExtra("bid");
 			
 			rdate = intess.getStringExtra("rdate");
@@ -69,6 +71,7 @@ public class AddBirthday extends Activity implements OnClickListener {
 			
 			Log.i("aaaa", "---------------------" + detail_id+"---"+rdate+"----"+rtime+"----"+relativesname);
 			set_form_edit();
+			}
 		}
 	}
 
@@ -179,7 +182,7 @@ public class AddBirthday extends Activity implements OnClickListener {
 			Utils.ShowToast(AddBirthday.this, "请填写提醒时间！");
 		} else {
 
-			submit_sql_api(birthday_title); // 接口请求
+			submit_server_api(birthday_title); // 接口请求
 		}
 
 	}

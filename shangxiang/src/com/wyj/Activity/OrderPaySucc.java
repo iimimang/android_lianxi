@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class OrderPaySucc extends Activity implements OnClickListener {
 	private Button order_form_paysucc_orderdetail;
 	private Button order_form_paysucc_sharebutton;
 	private ListView viewList;
+	private LinearLayout share_order_layout;
 	
 	private OrderSuccItemAdapter adapterordersucc;
 
@@ -58,6 +60,8 @@ public class OrderPaySucc extends Activity implements OnClickListener {
 		order_form_paysucc_orderdetail =(Button) findViewById(R.id.order_form_paysucc_orderdetail);
 		order_form_paysucc_sharebutton =(Button) findViewById(R.id.order_form_paysucc_sharebutton);
 		viewList = (ListView) findViewById(R.id.ordersucc_list_item);
+		
+		share_order_layout= (LinearLayout) findViewById(R.id.share_order_layout);
 	}
 
 	private void setListener() {
@@ -65,6 +69,7 @@ public class OrderPaySucc extends Activity implements OnClickListener {
 		order_form_paysucc_back.setOnClickListener(this);
 		order_form_paysucc_orderdetail.setOnClickListener(this);
 		order_form_paysucc_sharebutton.setOnClickListener(this);
+		share_order_layout.setOnClickListener(this);
 	}
 	
 	
@@ -90,7 +95,14 @@ public class OrderPaySucc extends Activity implements OnClickListener {
 			WishGroupTab.getInstance().switchActivity("Wish", bak_My_intent,
 					-1, -1);
 			break;
-	
+		case R.id.order_form_paysucc_sharebutton:
+			
+			share_order_layout.setVisibility(View.VISIBLE);
+			
+			break;
+		case R.id.share_order_layout:
+			share_order_layout.setVisibility(View.GONE);
+			break;
 
 		}
 	}

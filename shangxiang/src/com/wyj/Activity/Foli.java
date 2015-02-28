@@ -17,20 +17,17 @@ import org.json.JSONObject;
 import com.wyj.calendar.ChinaDate;
 import com.wyj.calendar.KCalendar;
 
-import android.R.array;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
+
 
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -177,33 +174,7 @@ public class Foli extends MainActivity implements OnClickListener {
 			date_infos_birthdayshow.setVisibility(View.VISIBLE);
 			date_infos_birthdayshow.setTag(id);
 		}
-		
-		
-
-		// TODO Auto-generated method stub
-
-		// TextView view = new TextView(Foli.this);
-		// LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-		// ViewGroup.LayoutParams.WRAP_CONTENT,
-		// ViewGroup.LayoutParams.WRAP_CONTENT);
-		// view.setText(name);
-		//
-		// Resources resource = (Resources) this.getResources();
-		// ColorStateList csl = (ColorStateList) resource
-		// .getColorStateList(R.color.text_normal);
-		// view.setTextColor(csl);
-		// Drawable drawable=
-		// this.getResources().getDrawable(R.drawable.rili_17big);
-		// /// 这一步必须要做,否则不会显示.
-		// drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-		// drawable.getMinimumHeight());
-		// view.setCompoundDrawables(drawable, null, null, null);
-		// view.setCompoundDrawablePadding(5);
-		//
-		// view.setTextSize(16);
-		// params.setMargins(20, 0, 0, 0);
-		// date_add_layout.addView(view,params);
-
+	
 	}
 
 	public void PopupWindows() {

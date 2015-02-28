@@ -2,18 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#F3F1F2"
+    android:background="#fff2f1f1"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="44dp"
         android:background="#f2ebce"
         android:gravity="center_horizontal" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="44dp"
             android:gravity="center_horizontal" >
 
             <ImageView
@@ -33,23 +33,22 @@
                 android:gravity="center_horizontal"
                 android:text="我的"
                 android:textColor="#d0a360"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/login_action"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80.0dip"
         android:background="#ffffff"
         android:paddingBottom="10dp"
         android:paddingTop="10dp" >
@@ -72,7 +71,7 @@
             android:layout_toRightOf="@+id/avatar"
             android:text="立即登录"
             android:textColor="#373737"
-            android:textSize="18dp" />
+            android:textSize="18.0sp" />
 
         <ImageView
             android:id="@+id/userinfo"
@@ -93,7 +92,7 @@
         <LinearLayout
             android:id="@+id/my_bless_order"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="32dp"
             android:layout_weight="1"
             android:background="#efefef"
             android:gravity="center" >
@@ -104,7 +103,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="我的加持"
                 android:textColor="#373737"
-                android:textSize="16dp" />
+                android:textSize="14.0sp" />
 
             <TextView
                  android:id="@+id/my_bless_nums_my"
@@ -113,19 +112,19 @@
                 android:layout_gravity="center_vertical"
                 android:text=""
                 android:textColor="#EDA556"
-                android:textSize="16dp" />
+                android:textSize="14.0sp" />
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
-            android:layout_height="50dp"
+            android:layout_height="32dp"
             android:background="#ffffff" >
         </View>
 
         <LinearLayout
             android:id="@+id/formy_bless_order"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="32dp"
             android:layout_weight="1"
             android:background="#efefef"
             android:gravity="center" >
@@ -136,7 +135,7 @@
                 android:gravity="center_horizontal"
                 android:text="为我加持"
                 android:textColor="#373737"
-                android:textSize="16dp" />
+                android:textSize="14.0sp" />
 
             <TextView
                  android:id="@+id/formy_bless_nums_my"
@@ -145,16 +144,11 @@
                 android:gravity="center_horizontal"
                 android:text=""
                 android:textColor="#EDA556"
-                android:textSize="16dp" />
+                android:textSize="14.0sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:background="#ffffff"
-        android:gravity="center" >
-    </LinearLayout>
+    
 
     <View
         android:layout_width="fill_parent"
@@ -177,7 +171,7 @@
             android:layout_marginLeft="30dp"
             android:text="订单查询"
             android:textColor="#373737"
-            android:textSize="18dp" />
+            android:textSize="14.0sp" />
  
         <ImageView
            
@@ -208,7 +202,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="系统通知"
                 android:textColor="#373737"
-                android:textSize="18dp" />
+                android:textSize="14.0sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -238,7 +232,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="提醒功能"
                 android:textColor="#373737"
-                android:textSize="18dp" />
+                android:textSize="14.0sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -271,7 +265,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="意见反馈"
                 android:textColor="#373737"
-                android:textSize="18dp" />
+                android:textSize="14.0sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -302,7 +296,7 @@
                 android:layout_marginLeft="30dp"
                 android:text="关于我们"
                 android:textColor="#373737"
-                android:textSize="18dp" />
+                android:textSize="14.0sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -330,7 +324,7 @@
             android:layout_marginLeft="30dp"
             android:text="退出"
             android:textColor="#373737"
-            android:textSize="18dp" />
+            android:textSize="14.0sp" />
 
         <ImageView
             android:layout_width="wrap_content"

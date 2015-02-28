@@ -1,34 +1,34 @@
 package com.wyj.Activity;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.wyj.Activity.R;
+import com.wyj.alipay.Alipay;
+import com.wyj.alipay.PayResult;
 import com.wyj.http.WebApiUrl;
 import com.wyj.pipe.Cms;
 import com.wyj.pipe.SinhaPipeClient;
 import com.wyj.pipe.SinhaPipeMethod;
 import com.wyj.pipe.Utils;
-import com.wyj.popupwindow.MyPopupWindowsIncense;
+
 import com.wyj.utils.StingUtil;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -37,13 +37,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OrderFormPay extends Activity implements OnClickListener {
 
-	private static String TAG = "OrderFormPay";
+	// private static String TAG = "OrderFormPay";
 
 	private ImageView order_form_pay_back;
 	private ProgressDialog pDialog = null;
@@ -55,9 +56,11 @@ public class OrderFormPay extends Activity implements OnClickListener {
 	private SinhaPipeMethod httpMethod;
 	private TextView orderinfo_ordernumber, orderinfo_orderpeople,
 			order_baseinfo_simiao_input, order_baseinfo_xiangtype_input,
-			order_baseinfo_fashi_input, order_baseinfo_date_input,order_wishcontent_input;
-	
+			order_baseinfo_fashi_input, order_baseinfo_date_input,
+			order_wishcontent_input;
+
 	private String orderid;
+	private String ordernumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,6 @@ public class OrderFormPay extends Activity implements OnClickListener {
 		Bundle bu = intens.getExtras();
 		orderid = bu.getString("orderid");
 		loadOrderInfo(orderid);
-		
 
 	}
 
@@ -81,15 +83,15 @@ public class OrderFormPay extends Activity implements OnClickListener {
 		pay_alipay_button = (Button) findViewById(R.id.order_form_pay_alipay_submit);
 		pay_weixin_button = (Button) findViewById(R.id.order_form_pay_weixin_submit);
 		pay_yinlian_button = (Button) findViewById(R.id.order_form_pay_yinlian_submit);
-		
-		orderinfo_ordernumber =(TextView) findViewById(R.id.orderinfo_ordernumber);
-		orderinfo_orderpeople =(TextView) findViewById(R.id.orderinfo_orderpeople);
-		order_baseinfo_simiao_input =(TextView) findViewById(R.id.order_baseinfo_simiao_input);
-		order_baseinfo_xiangtype_input =(TextView) findViewById(R.id.order_baseinfo_xiangtype_input);
-		order_baseinfo_fashi_input =(TextView) findViewById(R.id.order_baseinfo_fashi_input);
-		order_baseinfo_date_input =(TextView) findViewById(R.id.order_baseinfo_date_input);
-		order_wishcontent_input =(TextView) findViewById(R.id.order_wishcontent_input);
-		
+
+		orderinfo_ordernumber = (TextView) findViewById(R.id.orderinfo_ordernumber);
+		orderinfo_orderpeople = (TextView) findViewById(R.id.orderinfo_orderpeople);
+		order_baseinfo_simiao_input = (TextView) findViewById(R.id.order_baseinfo_simiao_input);
+		order_baseinfo_xiangtype_input = (TextView) findViewById(R.id.order_baseinfo_xiangtype_input);
+		order_baseinfo_fashi_input = (TextView) findViewById(R.id.order_baseinfo_fashi_input);
+		order_baseinfo_date_input = (TextView) findViewById(R.id.order_baseinfo_date_input);
+		order_wishcontent_input = (TextView) findViewById(R.id.order_wishcontent_input);
+
 	}
 
 	private void setListener() {
@@ -141,20 +143,27 @@ public class OrderFormPay extends Activity implements OnClickListener {
 				if (result.optString("code", "").equals("succeed")) {
 
 					JSONObject Object = result.getJSONObject("orderinfo");
-					
-					String retime =StingUtil.get_date(Object.optString("retime", ""));
 
-					//System.out.println(date);
-					
-					orderinfo_ordernumber.setText("订单号："+Object.optString("orderid", ""));
-					orderinfo_orderpeople.setText(Object.optString("wishname", "")+"祈求"+Object.optString("wishtype", ""));
-					order_baseinfo_simiao_input.setText(Object.optString("templename", ""));
-					order_baseinfo_xiangtype_input.setText(Object.optString("wishgrade", ""));
-					order_baseinfo_fashi_input.setText(Object.optString("buddhistname", ""));
+					String retime = StingUtil.get_date(Object.optString(
+							"retime", ""));
+
+					// System.out.println(date);
+
+					ordernumber = Object.optString("ordernumber", "");
+					orderinfo_ordernumber.setText("订单号："
+							+ Object.optString("orderid", ""));
+					orderinfo_orderpeople.setText(Object.optString("wishname",
+							"") + "祈求" + Object.optString("wishtype", ""));
+					order_baseinfo_simiao_input.setText(Object.optString(
+							"templename", ""));
+					order_baseinfo_xiangtype_input.setText(Object.optString(
+							"wishgrade", ""));
+					order_baseinfo_fashi_input.setText(Object.optString(
+							"buddhistname", ""));
 					order_baseinfo_date_input.setText(retime);
-					order_wishcontent_input.setText(Object.optString("wishtext", ""));
-					
-					
+					order_wishcontent_input.setText(Object.optString(
+							"wishtext", ""));
+
 				} else {
 
 				}
@@ -168,7 +177,7 @@ public class OrderFormPay extends Activity implements OnClickListener {
 
 		if (pDialog != null) {
 			pDialog.dismiss();
-			pDialog=null;
+			pDialog = null;
 		} else {
 
 			pDialog = new ProgressDialog(getParent().getParent());
@@ -183,13 +192,12 @@ public class OrderFormPay extends Activity implements OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.order_form_pay_back:
-			Intent bak_My_intent = new Intent(OrderFormPay.this,
-					Wish.class);
-			WishGroupTab.getInstance().switchActivity("Wish",
-					bak_My_intent, -1, -1);
+			Intent bak_My_intent = new Intent(OrderFormPay.this, Wish.class);
+			WishGroupTab.getInstance().switchActivity("Wish", bak_My_intent,
+					-1, -1);
 			break;
 		case R.id.order_form_pay_alipay_submit:
-			
+
 			pay_alipay_submit();
 			break;
 		case R.id.order_form_pay_weixin_submit:
@@ -209,74 +217,132 @@ public class OrderFormPay extends Activity implements OnClickListener {
 	private void pay_alipay_submit() {
 		// TODO Auto-generated method stub
 		
-		pay_submit_server(WebApiUrl.GetOrderPay,"7","1");
-		
-		
-	}
-	
-	
-	private void pay_submit_server( String url,String type,String result ) {
-		this.httpClient = new SinhaPipeClient();
-		
-		if (Utils.CheckNetwork()) {
-			if(!TextUtils.isEmpty(Cms.APP.getMemberId())){
-				showLoading();
-				List<NameValuePair> parm=new ArrayList<NameValuePair>();
-				parm.add(new BasicNameValuePair("oid",orderid));
-				parm.add(new BasicNameValuePair("type",type));
-				parm.add(new BasicNameValuePair("result",result));
-				String nowTime=Long.toString(System.currentTimeMillis());  //当前时间戳
-				parm.add(new BasicNameValuePair("paytime",nowTime));
-				this.httpClient.Config("post", url, parm, true);
-				this.httpMethod = new SinhaPipeMethod(this.httpClient, new SinhaPipeMethod.MethodCallback() {
-					public void CallFinished(String error, Object result) {
+		final Handler mHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case 1: {
+					PayResult payResult = new PayResult((String) msg.obj);
 					
-							showLoading();
-					
-						if (null == error) {
-							
-							try {
-								JSONObject object =new JSONObject((String) result);
-								if(object.optString("code").equals("succeed")){
-									
-									Utils.ShowToast(OrderFormPay.this,object.optString("msg"));
-									Intent intent2 = new Intent(OrderFormPay.this, OrderPaySucc.class);
-									WishGroupTab.getInstance().switchActivity("OrderPaySucc", intent2,
-											-1, -1);
-									
-								}else{
-									Utils.ShowToast(OrderFormPay.this,object.optString("msg"));
-								}
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							Log.i("bbbb", "-----请求回来-23344---" );
-							
-							
+					// 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
+					String resultInfo = payResult.getResult();
+					Log.i("aaaa", "支付状态------------------------------"+ msg.obj.toString());
+					Log.i("aaaa", "支付结果------------------------------"+resultInfo);
+					String resultStatus = payResult.getResultStatus();
+
+					// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+					if (TextUtils.equals(resultStatus, "9000")) {
+						
+						pay_submit_server(WebApiUrl.GetOrderPay,"7","1");
+						
+						Toast.makeText(OrderFormPay.this, "支付成功",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						// 判断resultStatus 为非“9000”则代表可能支付失败
+						// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+						if (TextUtils.equals(resultStatus, "8000")) {
+							Toast.makeText(OrderFormPay.this, "支付结果确认中",
+									Toast.LENGTH_SHORT).show();
+
 						} else {
-							int err = R.string.dialog_system_error_content;
-							if (error == httpClient.ERR_TIME_OUT) {
-								err = R.string.dialog_network_error_timeout;
-							}
-							if (error == httpClient.ERR_GET_ERR) {
-								err = R.string.dialog_network_error_getdata;
-							}
-							Utils.ShowToast(OrderFormPay.this, err);
+							// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+							pay_submit_server(WebApiUrl.GetOrderPay,"7","0");
+							Toast.makeText(OrderFormPay.this, "支付失败",
+									Toast.LENGTH_SHORT).show();
+
 						}
 					}
-				});
+					break;
+				}
+				case 2: {
+//					Toast.makeText(PayDemoActivity.this, "检查结果为：" + msg.obj,
+//							Toast.LENGTH_SHORT).show();
+					break;
+				}
+				default:
+					break;
+				}
+			};
+		};
+		
+		new Alipay(OrderFormPay.this, orderinfo_orderpeople.getText()
+				.toString(), orderinfo_orderpeople.getText().toString(),
+				"0.01", ordernumber,mHandler); 
+
+	
+
+	}
+
+	private void pay_submit_server(String url, String type, String result) {
+		this.httpClient = new SinhaPipeClient();
+
+		if (Utils.CheckNetwork()) {
+			if (!TextUtils.isEmpty(Cms.APP.getMemberId())) {
+				showLoading();
+				List<NameValuePair> parm = new ArrayList<NameValuePair>();
+				parm.add(new BasicNameValuePair("oid", orderid));
+				parm.add(new BasicNameValuePair("type", type));
+				parm.add(new BasicNameValuePair("result", result));
+				String nowTime = Long.toString(System.currentTimeMillis()); // 当前时间戳
+				parm.add(new BasicNameValuePair("paytime", nowTime));
+				this.httpClient.Config("post", url, parm, true);
+				this.httpMethod = new SinhaPipeMethod(this.httpClient,
+						new SinhaPipeMethod.MethodCallback() {
+							public void CallFinished(String error, Object result) {
+
+								showLoading();
+
+								if (null == error) {
+
+									try {
+										JSONObject object = new JSONObject(
+												(String) result);
+										if (object.optString("code").equals(
+												"succeed")) {
+											
+											Log.i("aaaa", "支付成功返回服务器更改状态------------------------------");
+											Utils.ShowToast(OrderFormPay.this,
+													object.optString("msg"));
+											Intent intent2 = new Intent(
+													OrderFormPay.this,
+													OrderPaySucc.class);
+											WishGroupTab.getInstance()
+													.switchActivity(
+															"OrderPaySucc",
+															intent2, -1, -1);
+
+										} else {
+											Utils.ShowToast(OrderFormPay.this,
+													object.optString("msg"));
+										}
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									Log.i("bbbb", "-----请求回来-23344---");
+
+								} else {
+									int err = R.string.dialog_system_error_content;
+									if (error == httpClient.ERR_TIME_OUT) {
+										err = R.string.dialog_network_error_timeout;
+									}
+									if (error == httpClient.ERR_GET_ERR) {
+										err = R.string.dialog_network_error_getdata;
+									}
+									Utils.ShowToast(OrderFormPay.this, err);
+								}
+							}
+						});
 				this.httpMethod.start();
-			}else{
-				
+			} else {
+
 				Utils.ShowToast(OrderFormPay.this, "请登录后操作！");
 			}
-			
+
 		} else {
-			Utils.ShowToast(OrderFormPay.this, R.string.dialog_network_check_content);
+			Utils.ShowToast(OrderFormPay.this,
+					R.string.dialog_network_check_content);
 		}
-		
-	
+
 	}
 
 	@Override

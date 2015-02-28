@@ -70,6 +70,7 @@ public class KCalendar extends ViewFlipper implements
 	private LinearLayout secondCalendar; // 第二个日历
 	private LinearLayout currentCalendar; // 当前显示的日历
 	ChinaDate china = new ChinaDate();
+	private Resources resources;
 
 	private Map<String, Integer> marksMap = new HashMap<String, Integer>(); // 储存某个日子被标注(Integer
 																			// 为bitmap
@@ -79,11 +80,14 @@ public class KCalendar extends ViewFlipper implements
 
 	public KCalendar(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		
+		resources=context.getResources();
 		init();
 	}
 
 	public KCalendar(Context context) {
 		super(context);
+		resources=context.getResources();
 		init();
 	}
 
@@ -374,14 +378,16 @@ public class KCalendar extends ViewFlipper implements
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[i][j]) != null) {
 //							view.setTextColor(Color.WHITE);
-							group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
+						//	group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
+							group.setBackgroundDrawable(resources.getDrawable(R.drawable.calendar_background_selected));
 						}else{
 							// 当天
 							if (thisday.getDate() == day
 									&& thisday.getMonth() == calendarday.getMonth()
 									&& thisday.getYear() == calendarday.getYear()) {
 								//view.setText("今天");
-								group.setBackgroundColor(COLOR_BG_THIS_DAY);
+								//group.setBackgroundColor(COLOR_BG_THIS_DAY);
+								group.setBackgroundDrawable(resources.getDrawable(R.drawable.calendar_background_today));
 								view.setTextColor(COLOR_TX_THIS_DAY);
 								view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
 							} else {
@@ -754,22 +760,30 @@ public class KCalendar extends ViewFlipper implements
 	 * private methods
 	 * 
 	 **********************************************/
-	// 设置标记
+	// 设置标记(生日)
 	private void setMarker(RelativeLayout group, int i, int j) {
 		int childCount = group.getChildCount();
+		
+		if (childCount < 2) {
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+					(int) (tb * 0.7), (int) (tb * 0.7));
+			params.addRule(RelativeLayout.CENTER_IN_PARENT);
+			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			//params.setMargins(0, 8, 1, 1);
+			ImageView markView = new ImageView(getContext());
+			//markView.setImageResource(marksMap.get(dates[i][j]));
+			markView.setLayoutParams(params);
+			//markView.setBackgroundResource(R.drawable.calendar_birthday_background);
+			//markView.setPadding(0, 80, 0, 0);
+			RelativeLayout old = (RelativeLayout) group.getChildAt(0);
+			old.setPadding(0, 0, 0, 18);
+			group.addView(markView);
+		}
+		
 		if (marksMap.get(dates[i][j]) != null) {
-			if (childCount < 2) {
-				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-						(int) (tb * 0.7), (int) (tb * 0.7));
-				params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-				params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-				params.setMargins(0, 0, 1, 1);
-				ImageView markView = new ImageView(getContext());
-				markView.setImageResource(marksMap.get(dates[i][j]));
-				markView.setLayoutParams(params);
-				markView.setBackgroundResource(R.drawable.calendar_bg_tag);
-				group.addView(markView);
-			}
+			ImageView markViews =(ImageView) group.getChildAt(1);
+			markViews.setImageResource(marksMap.get(dates[i][j]));
+			markViews.setBackgroundResource(R.drawable.calendar_birthday_background);
 		} else {
 			if (childCount > 1) {
 				group.removeView(group.getChildAt(1));
