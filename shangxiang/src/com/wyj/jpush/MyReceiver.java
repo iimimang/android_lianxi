@@ -3,8 +3,6 @@ package com.wyj.jpush;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.wyj.Activity.UserGroupTab;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

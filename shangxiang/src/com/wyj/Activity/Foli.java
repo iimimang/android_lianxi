@@ -197,7 +197,7 @@ public class Foli extends MainActivity implements OnClickListener {
 					R.drawable.calendar_date_focused);
 		}
 
-		get_member_birthday();
+	//	get_member_birthday();
 	//	get_member_birthday_sql();
 
 		// 监听所选中的日期
@@ -211,11 +211,11 @@ public class Foli extends MainActivity implements OnClickListener {
 
 				if (calendar.getCalendarMonth() - month == 1// 跨年跳转
 						|| calendar.getCalendarMonth() - month == -11) {
-					calendar.lastMonth();
+					//calendar.lastMonth(); //因为周历先放弃
 
 				} else if (month - calendar.getCalendarMonth() == 1 // 跨年跳转
 						|| month - calendar.getCalendarMonth() == -11) {
-					calendar.nextMonth();
+					//calendar.nextMonth(); //因为周历先放弃
 
 				} else {
 
@@ -262,21 +262,19 @@ public class Foli extends MainActivity implements OnClickListener {
 
 	}
 
-	private void get_member_birthday_sql() {
-		// TODO Auto-generated method stub
-		MemberBirthday_model memberbirdaydb=new MemberBirthday_model(Foli.this);
-		
-		List<Map<String, String>> listmember=memberbirdaydb.select("");
-		
-		for(int i=0;i<listmember.size();i++){
-			Map<String, String> maps=new HashMap<String, String>();
-			
-			maps=listmember.get(i);
-			
-		}
-		
-		
-	}
+//	private void get_member_birthday_sql() {
+//		// TODO Auto-generated method stub
+//		MemberBirthday_model memberbirdaydb=new MemberBirthday_model(Foli.this);
+//		
+//		List<Map<String, String>> listmember=memberbirdaydb.select("");
+//		
+//		for(int i=0;i<listmember.size();i++){
+//			Map<String, String> maps=new HashMap<String, String>();
+//			
+//			maps=listmember.get(i);
+//			
+//		}	
+//	}
 
 	private void get_member_birthday() {
 		// TODO Auto-generated method stub

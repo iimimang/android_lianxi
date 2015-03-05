@@ -239,6 +239,10 @@ public class Login extends InstrumentedActivity implements OnClickListener,
 						JSONObject jsonobject = new JSONObject(backmsg);
 						JSONObject memberobject = jsonobject
 								.getJSONObject("memberinfo");
+						
+						Log.i("aaaa",
+				 				"--等等-------" + 
+				 						backmsg);
 						if (jsonobject.optString("code", "").equals("succeed")) {
 										
 							Cms.APP.setLogin(true,
@@ -264,10 +268,13 @@ public class Login extends InstrumentedActivity implements OnClickListener,
 				}
 			}
 		};
-		String params = "mobile=" + reg_username + "&password=" + reg_passwd;
+		String params = "mobile=" + reg_username + "&password=" + reg_passwd+ "&jregid=" + Cms.APP.get_notice_id();
 		pDialog = new ProgressDialog(Login.this);
 		pDialog.setMessage("请求中。。。");
 		pDialog.show();
+		Log.i("aaaa",
+ 				"--参数-------" + 
+ 						params);
 		new Thread(new AccessNetwork("POST", WebApiUrl.LOGIN, params, h))
 				.start();
 

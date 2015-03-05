@@ -22,8 +22,8 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.wyj.Activity.R;
-import com.wyj.db.SQLiteDataBaseHelper;
-import com.wyj.define.memberinfo;
+
+import com.wyj.utils.FilePath;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -35,7 +35,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
 
-import cn.jpush.android.api.JPushInterface;
+
 
 public class Cms extends Application {
 	public static Cms APP;
@@ -94,7 +94,9 @@ public class Cms extends Application {
 		if (!file.exists()) {
 			file.mkdirs();
 		}
-
+		Log.i("aaaa",
+ 				"--image路劲-------" + 
+ 						FilePath.Cmsimage);
 		File cache = StorageUtils.getOwnCacheDirectory(APP, "/mnt/sdcard/Cms/Cache");
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(APP)
 		.threadPriority(Thread.NORM_PRIORITY - 2)
@@ -113,6 +115,8 @@ public class Cms extends Application {
 		.bitmapConfig(Bitmap.Config.RGB_565)
 		.displayer(new RoundedBitmapDisplayer(20))
 		.displayer(new FadeInBitmapDisplayer(100))
+		 .cacheInMemory(true)//设置下载的图片是否缓存在内存中  
+		 .cacheOnDisc(true)//设置下载的图片是否缓存在SD卡中  
 		.build();
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(config);
@@ -126,6 +130,8 @@ public class Cms extends Application {
  		Log.i("aaaa",
  				"--通知ID-------" + 
  						reg_notice_id);
+ 		
+ 		
  		set_notice_id(reg_notice_id);
  		
  		//SQLiteDataBaseHelper db=new SQLiteDataBaseHelper(this);

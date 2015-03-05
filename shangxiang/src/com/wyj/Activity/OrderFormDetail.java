@@ -189,7 +189,7 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 							
 								if (null != jsonThumb) {
 									orderthumbs[i]=jsonThumb.optString("pic_path", "");
-									show_order_gallery_images.addView(createThumb(jsonThumb.optString("pic_tmb_path", "")));
+									show_order_gallery_images.addView(createThumb(jsonThumb.optString("pic_tmb_path", ""),i));
 								}
 							}
 						}
@@ -205,7 +205,7 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 		}
 	}
 	
-	private View createThumb(String thumb) {
+	private View createThumb(String thumb,final int position) {
 		View imageLayout = LayoutInflater.from(OrderFormDetail.this).inflate(R.layout.thumb_item_layout, null);
 		imageLayout.setPadding(0, 0, 10, 0);
 		final ProgressBar progressBar = (ProgressBar) imageLayout.findViewById(R.id.thumb_item_loading);
@@ -224,7 +224,7 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 			@Override
 			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 				progressBar.setVisibility(View.GONE);
-				imageView.setTag(orderthumbs);
+				imageView.setTag(position);
 				imageView.setOnClickListener(OrderFormDetail.this);
 			}
 
@@ -262,18 +262,18 @@ public class OrderFormDetail extends Activity implements OnClickListener {
 			break;
 		case R.id.thumb_item_view:
 			
-			String[] thumbs = (String[]) v.getTag();
+			int position = (Integer) v.getTag();
 			Intent intent2 = new Intent(
 					OrderFormDetail.this,
 					Imageviewpager.class);
 			Bundle bundle = new Bundle();
-			bundle.putStringArray("thumbs", thumbs);
+			bundle.putStringArray("thumbs", orderthumbs);
+			bundle.putInt("position", position);
 			intent2.putExtras(bundle);
 			
-			Log.i("aaaa", "-------viewpager传"+thumbs[0]);
+			Log.i("aaaa", "-------viewpager传位置"+position);
 			WishGroupTab.getInstance().startActivityForResult(intent2, 1);
 
-			 
 			break;
 			
 		case R.id.order_form_detail_submit:

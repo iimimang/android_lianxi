@@ -18,6 +18,7 @@ public class FilePath {
 	public static final String PORTRAIT = SDCARD + IMAGE_FILE + "/.portrait";
 
 	public static final String TEMP = SDCARD + IMAGE_FILE + "/temp";
+	public static final String Cmsimage = SDCARD + IMAGE_FILE + "/imageloader";
 
 	private static FilePath fp;
 
