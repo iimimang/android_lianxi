@@ -30,6 +30,7 @@ import android.view.View;
 
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class Foli extends MainActivity implements OnClickListener {
 	private ProgressDialog pDialog = null;
 	private JSONArray birthdaylist = new JSONArray();
 	private LinearLayout date_add_layout;
+	private ImageView foli_bottom_image;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,10 @@ public class Foli extends MainActivity implements OnClickListener {
 		add_user_birthday.setOnClickListener(this);
 		
 		date_infos_birthdayshow.setOnClickListener(this);
+		
+		foli_bottom_image = (ImageView) findViewById(R.id.foli_bottom_image);
+		
+		foli_bottom_image.setOnClickListener(this);
 	}
 
 	private void setAction() {
@@ -197,7 +203,7 @@ public class Foli extends MainActivity implements OnClickListener {
 					R.drawable.calendar_date_focused);
 		}
 
-	//	get_member_birthday();
+		get_member_birthday();
 	//	get_member_birthday_sql();
 
 		// 监听所选中的日期
@@ -332,12 +338,13 @@ public class Foli extends MainActivity implements OnClickListener {
 																			"id",
 																			""));
 												}
+												Log.i("cccc", "---------->我的生日"+date);
 												list.add(date);
 											}
 											birthdaylist = jsonarr;
 											// list.add("2015-04-01");
 											// list.add("2015-04-02");
-											calendar.addMarks(list, 0);
+											calendar.addMarks(list, R.drawable.calendar_birthday_background);
 
 										} else {
 											Utils.ShowToast(Foli.this,
@@ -378,7 +385,7 @@ public class Foli extends MainActivity implements OnClickListener {
 			pDialog.dismiss();
 			pDialog = null;
 		} else {
-			Log.i("bbbb", "-----alert----");
+			
 			pDialog = new ProgressDialog(Foli.this.getParent().getParent());
 			pDialog.setMessage("数据请求中。。。");
 			pDialog.show();
@@ -407,7 +414,9 @@ public class Foli extends MainActivity implements OnClickListener {
 			FoLiGroupTab.getInstance().switchActivity("Birthday_detail",
 					inten, -1, -1);
 			break;
-
+		case R.id.foli_bottom_image:
+			Log.i("bbbb", "-----点击了下面的图片---");
+			break;
 		}
 	}
 

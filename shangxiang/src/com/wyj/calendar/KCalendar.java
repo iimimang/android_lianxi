@@ -13,6 +13,7 @@ import com.wyj.Activity.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -89,19 +90,22 @@ public class KCalendar extends ViewFlipper implements
 		
 		resources=context.getResources();
 		Log.i("bbbb", "-------------------->佛里2222");
-		init_week();
+		init();
 	}
 
 	public KCalendar(Context context) {
 		super(context);
 		resources=context.getResources();
 		Log.i("bbbb", "-------------------->佛里11");
-		init_week();
+		init();
 	}
 	
 
 
 	private void init() {
+		
+		Resources res = getResources();
+		tb = res.getDimension(R.dimen.historyscore_tb);
 		setBackgroundColor(COLOR_BG_CALENDAR);
 		// 实例化收拾监听器
 		gd = new GestureDetector(this);
@@ -121,11 +125,11 @@ public class KCalendar extends ViewFlipper implements
 		// 初始化第一个日历
 		firstCalendar = new LinearLayout(getContext());
 		firstCalendar.setOrientation(LinearLayout.VERTICAL);
-		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 26)));
 		// 初始化第二个日历
 		secondCalendar = new LinearLayout(getContext());
 		secondCalendar.setOrientation(LinearLayout.VERTICAL);
-		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 26)));
 		// 设置默认日历为第一个日历
 		currentCalendar = firstCalendar;
 		// 加入ViewFlipper
@@ -143,7 +147,7 @@ public class KCalendar extends ViewFlipper implements
 	}
 
 	private void drawFrame(LinearLayout oneCalendar) {
-
+		
 		// 添加周末线性布局
 		LinearLayout title = new LinearLayout(getContext());
 //		title.setBackgroundColor(COLOR_BG_WEEK_TITLE);
@@ -327,7 +331,8 @@ public class KCalendar extends ViewFlipper implements
 					RelativeLayout.LayoutParams params11 = new RelativeLayout.LayoutParams(
 							ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 					rl.setGravity(Gravity.CENTER);
-				
+					
+					rl.setId(5);
 					
 					TextView view = null;
 					TextView view_2 = null; //阴历
@@ -352,11 +357,11 @@ public class KCalendar extends ViewFlipper implements
 								ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 						params2.addRule(RelativeLayout.BELOW,1); 
 						params2.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-						view_2 = new TextView(getContext());												
+						view_2 = new TextView(getContext());	
 						rl.addView(view_2,params2);
 						
 						group.addView(rl,params11);
-					}
+						}
 					
 					
 					
@@ -458,6 +463,9 @@ public class KCalendar extends ViewFlipper implements
 	
 	
 	private void init_week() {
+		
+		Resources res = getResources();
+		tb = res.getDimension(R.dimen.historyscore_tb);	//衡量大小的值
 		// TODO Auto-generated method stub
 		setBackgroundColor(COLOR_BG_CALENDAR);
 		// 实例化收拾监听器
@@ -478,11 +486,13 @@ public class KCalendar extends ViewFlipper implements
 		// 初始化第一个日历
 		firstCalendar = new LinearLayout(getContext());
 		firstCalendar.setOrientation(LinearLayout.VERTICAL);
-		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 5)));
+		
+	//	Log.i("cccc", "---------------->kuan---");
 		// 初始化第二个日历
 		secondCalendar = new LinearLayout(getContext());
 		secondCalendar.setOrientation(LinearLayout.VERTICAL);
-		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 5)));
 		// 设置默认日历为第一个日历
 		currentCalendar = firstCalendar;
 		// 加入ViewFlipper
@@ -663,7 +673,7 @@ public class KCalendar extends ViewFlipper implements
 			
 			for (int k = 0; k < pre_day_nums; k++) {
 				
-				
+				 
 				lastMonthDay = firstShowDay + k;
 				RelativeLayout group = getDateView(0, k);
 				RelativeLayout rl = new RelativeLayout(getContext()); 
@@ -708,7 +718,17 @@ public class KCalendar extends ViewFlipper implements
 					view_2.setTextColor(COLOR_TX_WEEK_TITLE);
 				}						
 				
+				//数据存储  背景色  和生日标记-------------------
 				week_dates[0][k] = format(new Date(year, month, lastMonthDay)); //加入数据存储
+				// 设置日期背景色
+				if (dayBgColorMap.get(week_dates[0][k]) != null) {
+					group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
+				} else {
+					group.setBackgroundColor(Color.TRANSPARENT);
+				}
+				// 设置标记
+				setMarker(group, 0, k); 
+				
 			}
 			
 		}
@@ -767,7 +787,28 @@ public class KCalendar extends ViewFlipper implements
 						view_2.setTextColor(COLOR_TX_WEEK_TITLE);
 					}						
 					
+					//数据存储  背景色  和生日标记-------------------
 					week_dates[0][b+pre_day_nums] = format(new Date(calendarday.getYear(), calendarday.getMonth(), erevr)); //加入数据存储
+					if (dayBgColorMap.get(week_dates[0][b+pre_day_nums]) != null) {
+
+						group.setBackgroundDrawable(resources.getDrawable(R.drawable.calendar_background_selected));
+					}else{
+						// 当天
+						if (thisday.getDate() == erevr
+								&& thisday.getMonth() == calendarday.getMonth()
+								&& thisday.getYear() == calendarday.getYear()) {
+							//view.setText("今天");
+							group.setBackgroundDrawable(resources.getDrawable(R.drawable.calendar_background_today));
+							view.setTextColor(COLOR_TX_THIS_DAY);
+							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+						} else {
+							view.setTextColor(COLOR_TX_THIS_MONTH_DAY);
+							group.setBackgroundColor(Color.TRANSPARENT);
+						}
+					}
+					// 设置标记
+					setMarker(group, 0, b+pre_day_nums);
+					
 				}
 			 
 		 }
@@ -834,6 +875,15 @@ public class KCalendar extends ViewFlipper implements
 					}						
 					
 					week_dates[0][c+pre_day_nums+numsjizhun] = format(new Date(next_year, next_month, nextMonthDay)); //加入数据存储
+					if (dayBgColorMap.get(week_dates[0][c+pre_day_nums+numsjizhun]) != null) {
+
+						group.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);
+					} else {
+						group.setBackgroundColor(Color.TRANSPARENT);
+					}
+					// 设置标记
+					setMarker(group, 0, c+pre_day_nums+numsjizhun);
+					
 					nextMonthDay++;  //
 					
 					
@@ -1080,7 +1130,11 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	void addMark(String date, int id) {
 		marksMap.put(date, id);
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1095,7 +1149,11 @@ public class KCalendar extends ViewFlipper implements
 		for (int i = 0; i < date.length; i++) {
 			marksMap.put(format(date[i]), id);
 		}
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1110,7 +1168,13 @@ public class KCalendar extends ViewFlipper implements
 		for (int i = 0; i < date.size(); i++) {
 			marksMap.put(date.get(i), id);
 		}
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
+		
+		Log.i("cccc", "---------日历接受过来-----》"+marksMap.toString());
 	}
 
 	/**
@@ -1125,7 +1189,11 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void removeMark(String date) {
 		marksMap.remove(date);
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1133,7 +1201,11 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void removeAllMarks() {
 		marksMap.clear();
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1154,7 +1226,12 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void setCalendarDayBgColor(String date, int color) {
 		dayBgColorMap.put(date, color);
-		setCalendarDate();
+		if(isweek==1){
+		
+		 setCalendarDate_week();
+		}else{
+		 setCalendarDate();
+		}
 	}
 
 	/**
@@ -1167,7 +1244,11 @@ public class KCalendar extends ViewFlipper implements
 		for (int i = 0; i < date.size(); i++) {
 			dayBgColorMap.put(date.get(i), color);
 		}
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1180,7 +1261,11 @@ public class KCalendar extends ViewFlipper implements
 		for (int i = 0; i < date.length; i++) {
 			dayBgColorMap.put(date[i], color);
 		}
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1201,7 +1286,11 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void removeCalendarDayBgColor(String date) {
 		dayBgColorMap.remove(date);
-		setCalendarDate();
+		if(isweek==1){
+			setCalendarDate_week();
+		}else{
+			setCalendarDate();
+		}
 	}
 
 	/**
@@ -1212,8 +1301,11 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void removeAllBgColor() {
 		dayBgColorMap.clear();
-		
+		if(isweek==1){
+		setCalendarDate_week();	
+		}else{
 		setCalendarDate();
+		}
 	}
 
 	/**
@@ -1224,7 +1316,12 @@ public class KCalendar extends ViewFlipper implements
 	 * @return
 	 */
 	public String getDate(int row, int col) {
-		return dates[row][col];
+			if(isweek==1){
+				return week_dates[row][col];
+			}else{
+				return dates[row][col];
+			}
+		
 	}
 
 	/**
@@ -1255,26 +1352,29 @@ public class KCalendar extends ViewFlipper implements
 	private void setMarker(RelativeLayout group, int i, int j) {
 		int childCount = group.getChildCount();
 		
-		if (childCount < 2) {
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					(int) (tb * 0.7), (int) (tb * 0.7));
-			params.addRule(RelativeLayout.CENTER_IN_PARENT);
-			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-			//params.setMargins(0, 8, 1, 1);
-			ImageView markView = new ImageView(getContext());
-			//markView.setImageResource(marksMap.get(dates[i][j]));
-			markView.setLayoutParams(params);
-			//markView.setBackgroundResource(R.drawable.calendar_birthday_background);
-			//markView.setPadding(0, 80, 0, 0);
-			RelativeLayout old = (RelativeLayout) group.getChildAt(0);
-			old.setPadding(0, 0, 0, 18);
-			group.addView(markView);
+		String curday="";
+		if(isweek==1){
+			curday=week_dates[i][j];
+		}else{
+			curday=dates[i][j]; 
 		}
 		
-		if (marksMap.get(dates[i][j]) != null) {
-			ImageView markViews =(ImageView) group.getChildAt(1);
-			markViews.setImageResource(marksMap.get(dates[i][j]));
-			markViews.setBackgroundResource(R.drawable.calendar_birthday_background);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				(int) (tb * 0.7), (int) (tb * 0.7));
+		params.addRule(RelativeLayout.CENTER_IN_PARENT);
+		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		ImageView markView= new ImageView(getContext());
+		markView.setLayoutParams(params);
+		RelativeLayout old = (RelativeLayout) group.getChildAt(0);
+		old.setPadding(0, 0, 0, 10);
+		group.addView(markView);
+
+		if (marksMap.get(curday) != null) {
+			
+		//	Log.i("cccc", "到生日了啊----------"+curday+"----i->"+i+"------j->"+j+"子布局有"+childCount);
+			ImageView birthday= (ImageView) group.getChildAt(1);
+			birthday.setImageResource(marksMap.get(curday));
+		  //birthday.setBackgroundResource(R.drawable.calendar_birthday_background);
 		} else {
 			if (childCount > 1) {
 				group.removeView(group.getChildAt(1));
@@ -1282,6 +1382,7 @@ public class KCalendar extends ViewFlipper implements
 		}
 
 	}
+
 
 	/**
 	 * 计算某年某月有多少天
@@ -1347,7 +1448,7 @@ public class KCalendar extends ViewFlipper implements
 
 	/***********************************************
 	 * 
-	 * Override methods
+	 * Override methods  
 	 * 
 	 **********************************************/
 	@Override

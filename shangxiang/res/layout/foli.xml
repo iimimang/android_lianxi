@@ -136,7 +136,7 @@
             <com.wyj.calendar.KCalendar
                 android:id="@+id/popupwindow_calendar"
                 android:layout_width="match_parent"
-                android:layout_height="260dp" >
+                android:layout_height="wrap_content" >
             </com.wyj.calendar.KCalendar>
         </LinearLayout>
 
@@ -268,9 +268,9 @@
                 android:textSize="16sp" />
             </LinearLayout>
             <ImageView
+            android:id="@+id/foli_bottom_image"    
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-           
             android:scaleType="fitXY"
             android:src="@drawable/rili_07" />
         </LinearLayout>

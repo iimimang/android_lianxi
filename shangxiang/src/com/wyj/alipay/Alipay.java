@@ -162,7 +162,7 @@ public class Alipay  {
 		// 商品金额
 		orderInfo += "&total_fee=" + "\"" + price + "\"";
 
-		// 服务器异步通知页面路径
+		// 服务器异步通知页面路径                                        
 		orderInfo += "&notify_url=" + "\"" + "http://demo123.shangxiang.com/api/app_alipay/notify_url.php"
 				+ "\"";
 
