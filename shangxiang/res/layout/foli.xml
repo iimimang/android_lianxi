@@ -3,8 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#F6F8F7"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.wyj.Activity">
 
+ 
+	    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -134,7 +136,7 @@
             
             
             <com.wyj.calendar.KCalendar
-                android:id="@+id/popupwindow_calendar"
+                android:id="@id/popupwindow_calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </com.wyj.calendar.KCalendar>
@@ -268,7 +270,7 @@
                 android:textSize="16sp" />
             </LinearLayout>
             <ImageView
-            android:id="@+id/foli_bottom_image"    
+            android:id="@id/foli_bottom_image"    
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scaleType="fitXY"
@@ -277,5 +279,7 @@
 
         
     </RelativeLayout>
+    
+    
 
 </LinearLayout>

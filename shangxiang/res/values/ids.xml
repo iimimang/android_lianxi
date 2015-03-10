@@ -370,4 +370,7 @@
 	<item type="id" name="dialog_exit_tip">false</item>
 	<item type="id" name="dialog_exit_content">false</item>
 	<item type="id" name="dialog_exit_stopproc">false</item>
+	
+	<item type="id" name="popupwindow_calendar">false</item>
+	<item type="id" name="foli_bottom_image">false</item>
 </resources>

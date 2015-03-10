@@ -3,12 +3,13 @@ package com.wyj.Activity;
 
 import com.wyj.Activity.R;
 
-import com.wyj.Activity.*;
+
 import com.wyj.pipe.Cms;
 import com.wyj.services.AutoLoginService;
 
 import android.app.AlertDialog;
 import android.app.TabActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +32,6 @@ public class TabMenu extends TabActivity {
 	public static final String TAB_SEARCH = "我的";
 
 	public RadioGroup radioGroup;
-	private Intent intent;
-	private Bundle budle;
 	public RadioButton button0, button1, button2, button3, button4;
 
 	@Override

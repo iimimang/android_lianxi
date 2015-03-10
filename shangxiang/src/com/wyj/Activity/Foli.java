@@ -14,8 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import com.wyj.calendar.ChinaDate;
 import com.wyj.calendar.KCalendar;
+import com.wyj.calendar.Panel;
 
 
 import android.app.ProgressDialog;
@@ -62,6 +64,7 @@ public class Foli extends MainActivity implements OnClickListener {
 	private JSONArray birthdaylist = new JSONArray();
 	private LinearLayout date_add_layout;
 	private ImageView foli_bottom_image;
+	private Panel panel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,8 @@ public class Foli extends MainActivity implements OnClickListener {
 	}
 
 	private void findViewById() {
-
+		
+		
 		date_infos_left = (TextView) findViewById(R.id.date_infos_left);
 		date_infos_yangli = (TextView) findViewById(R.id.date_infos_yangli);
 		date_infos_yinli = (TextView) findViewById(R.id.date_infos_yinli);
@@ -416,6 +420,13 @@ public class Foli extends MainActivity implements OnClickListener {
 			break;
 		case R.id.foli_bottom_image:
 			Log.i("bbbb", "-----点击了下面的图片---");
+			if(calendar.isweek==0){
+				calendar.setWeek(true);
+			}else{
+				calendar.setWeek(false);
+			}
+			
+			
 			break;
 		}
 	}

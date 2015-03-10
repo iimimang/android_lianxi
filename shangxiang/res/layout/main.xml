@@ -51,8 +51,7 @@
                 style="@style/main_tab_one"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="2.0dip"
-      
-                android:tag="radio_button0"
+      			android:tag="radio_button0"
                 android:text="@string/main_wish" />
      
             <RadioButton 
@@ -78,8 +77,7 @@
                 style="@style/main_tab_four"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="2.0dip"
-         
-                android:tag="radio_button3"
+         		android:tag="radio_button3"
                 android:text="@string/main_my" />
 
            

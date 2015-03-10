@@ -1,6 +1,6 @@
 package com.wyj.calendar;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import com.wyj.Activity.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -52,6 +52,8 @@ public class KCalendar extends ViewFlipper implements
 	private Animation push_left_out; // 动画-左出
 	private Animation push_right_in; // 动画-右进
 	private Animation push_right_out; // 动画-右出
+	
+	private Animation fade_in,fade_out; // 动画
 
 	private int ROWS_TOTAL = 5; // 日历的行数
 	private int COLS_TOTAL = 7; // 日历的列数
@@ -81,9 +83,9 @@ public class KCalendar extends ViewFlipper implements
 																			// id)
 	private Map<String, Integer> dayBgColorMap = new HashMap<String, Integer>(); // 储存某个日子的背景色
 	
-	private static int isweek=0; // 0为月历  1 为周历  主要是区别 左右切换
+	public int isweek=0; // 0为月历  1 为周历  主要是区别 左右切换
 	
-	
+	private boolean isweek_bool; // 
 
 	public KCalendar(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -100,6 +102,36 @@ public class KCalendar extends ViewFlipper implements
 		init();
 	}
 	
+	
+	/**
+	 * enable or 周月 历 切换
+	 * 
+	 * @param enable
+	 */
+	public void setWeek(boolean enable) {
+		
+		fade_in = AnimationUtils.loadAnimation(getContext(),
+				R.anim.fade_in);
+		fade_in.setDuration(1000);
+		fade_out = AnimationUtils.loadAnimation(getContext(),
+				R.anim.fade_out);
+		fade_out.setDuration(1000);
+		setInAnimation(fade_in);
+		setOutAnimation(fade_out);
+		
+		if (!enable) { // disable, hide the content
+			removeAllViews();
+			isweek=0;
+			init();
+		} else {
+			
+			Log.i("bbbb", "-----周历来了---");
+			removeAllViews();
+			
+			isweek=1;
+			init_week();
+		}
+	}
 
 
 	private void init() {
@@ -118,10 +150,10 @@ public class KCalendar extends ViewFlipper implements
 				R.anim.push_right_in);
 		push_right_out = AnimationUtils.loadAnimation(getContext(),
 				R.anim.push_right_out);
-		push_left_in.setDuration(400);
-		push_left_out.setDuration(400);
-		push_right_in.setDuration(400);
-		push_right_out.setDuration(400);
+		push_left_in.setDuration(300);
+		push_left_out.setDuration(300);
+		push_right_in.setDuration(300);
+		push_right_out.setDuration(300);
 		// 初始化第一个日历
 		firstCalendar = new LinearLayout(getContext());
 		firstCalendar.setOrientation(LinearLayout.VERTICAL);
@@ -138,10 +170,33 @@ public class KCalendar extends ViewFlipper implements
 		// 绘制线条框架
 		drawFrame(firstCalendar);
 		drawFrame(secondCalendar);
+		if(calendarday==null){
 		// 设置日历上的日子(1号)
 		calendarYear = thisday.getYear() + 1900;
 		calendarMonth = thisday.getMonth();
 		calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+		// 回调
+				if (onCalendarDateChangedListener != null) {
+					onCalendarDateChangedListener.onCalendarDateChanged(calendarYear,
+							calendarMonth + 1);
+				}
+		}else{
+			
+			calendarYear = calendarday.getYear() + 1900;
+			calendarMonth = calendarday.getMonth();
+			calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+			// 回调
+					if (onCalendarDateChangedListener != null) {
+						onCalendarDateChangedListener.onCalendarDateChanged(calendarYear,
+								calendarMonth + 1);
+					}
+			
+			
+		}
+		
+
+		
+		
 		// 填充展示日历
 		setCalendarDate();
 	}
@@ -479,10 +534,10 @@ public class KCalendar extends ViewFlipper implements
 				R.anim.push_right_in);
 		push_right_out = AnimationUtils.loadAnimation(getContext(),
 				R.anim.push_right_out);
-		push_left_in.setDuration(400);
-		push_left_out.setDuration(400);
-		push_right_in.setDuration(400);
-		push_right_out.setDuration(400);
+		push_left_in.setDuration(300);
+		push_left_out.setDuration(300);
+		push_right_in.setDuration(300);
+		push_right_out.setDuration(300);
 		// 初始化第一个日历
 		firstCalendar = new LinearLayout(getContext());
 		firstCalendar.setOrientation(LinearLayout.VERTICAL);
@@ -501,10 +556,19 @@ public class KCalendar extends ViewFlipper implements
 		// 绘制线条框架
 		drawFrame_week(firstCalendar);
 		drawFrame_week(secondCalendar);
-		// 设置日历上的日子(1号)
-		calendarYear = thisday.getYear() + 1900;
-		calendarMonth = thisday.getMonth();
-		calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+		if(calendarday==null){
+			// 设置日历上的日子(1号)
+			calendarYear = thisday.getYear() + 1900;
+			calendarMonth = thisday.getMonth();
+			calendarday = new Date(calendarYear - 1900, calendarMonth, 1);
+			
+			// 回调
+			if (onCalendarDateChangedListener != null) {
+				onCalendarDateChangedListener.onCalendarDateChanged(calendarYear,
+						calendarMonth + 1);
+			}
+		}
+		
 		// 填充展示日历
 		setCalendarDate_week();
 	}
@@ -592,7 +656,7 @@ public class KCalendar extends ViewFlipper implements
 		
 		if(weekday!=0){
 			
-			if(day-weekday<0){
+			if(day-weekday<=0){
 				
 				if(day-1>weekday){
 					numsjizhun=weekday;
