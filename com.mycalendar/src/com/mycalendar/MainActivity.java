@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
 	public MyViewPager viewPager = null;
 	public MyPagerAdapter pagerAdapter = null;
 	private int currPager = 500;
-	private TextView shader;
+
 	
 	/**
 	 * 和日历gridview相关变量
@@ -72,10 +73,9 @@ public class MainActivity extends Activity {
 	 * */
 	private void initView() {
     	viewPager = (MyViewPager) findViewById(R.id.viewpager); 
-    	shader = (TextView) findViewById(R.id.main_frame_shader);
+
     	panel = (Panel) findViewById(R.id.panel);
     	panel.setOpen(true, false);
-    	shader.setVisibility(View.GONE);
     	pagerAdapter = new MyPagerAdapter();
     	viewPager.setAdapter(pagerAdapter);
     	viewPager.setCurrentItem(500);
@@ -86,8 +86,8 @@ public class MainActivity extends Activity {
     	viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			public void onPageScrollStateChanged(int arg0) {
 				if (arg0 == 1) {
-					shader.setText("");
-					shader.setVisibility(View.VISIBLE);
+					//shader.setText("");
+					//shader.setVisibility(View.VISIBLE);
 				}
 				if (arg0 == 0) {
 					currentView = (GridView) viewPager.findViewById(currPager);
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 						adapter.setSelectedPosition(pos);
 						adapter.notifyDataSetInvalidated();
 					}
-					shader.setVisibility(View.GONE);
+					//shader.setVisibility(View.GONE);
 				}
 			}
 
@@ -126,6 +126,7 @@ public class MainActivity extends Activity {
     	try {
     		list = TimeUtils.initCalendar(formatDate, currentMonth);
     	} catch (Exception e) {
+    		Log.i("aaaa", "111111111");
     		finish();
     	}
     }
@@ -138,8 +139,10 @@ public class MainActivity extends Activity {
     	int month = TimeUtils.getTimeByPosition(position, currentYear, currentMonth, "month");
     	String formatDate = TimeUtils.getFormatDate(year, month);
     	try {
+
     		list = TimeUtils.initCalendar(formatDate, month);
     	} catch (Exception e) {
+    		Log.i("aaaa", "错的-----是------------"+formatDate+"--------------"+month);
     		finish();
     	}
 		gridView = new GridView(this);

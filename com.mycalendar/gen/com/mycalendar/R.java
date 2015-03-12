@@ -90,33 +90,44 @@ containing a value of this type.
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int item_bkg=0x7f020002;
-        public static final int sliding_drawer_handle_bottom=0x7f020003;
-        public static final int week=0x7f020004;
-        public static final int week1=0x7f020005;
+        public static final int rili_07=0x7f020003;
+        public static final int rili_22=0x7f020004;
+        public static final int sliding_drawer_handle_bottom=0x7f020005;
+        public static final int week=0x7f020006;
+        public static final int week1=0x7f020007;
     }
     public static final class id {
         public static final int bottom=0x7f040001;
-        public static final int item_date=0x7f04000e;
-        public static final int item_image=0x7f040010;
-        public static final int item_layout=0x7f04000d;
-        public static final int item_nongli_date=0x7f04000f;
+        public static final int bottom_image=0x7f040018;
+        public static final int calendar_main=0x7f040011;
+        public static final int calendar_row_1=0x7f040012;
+        public static final int calendar_row_2=0x7f040013;
+        public static final int calendar_row_3=0x7f040014;
+        public static final int calendar_row_4=0x7f040015;
+        public static final int calendar_row_5=0x7f040016;
+        public static final int item_date=0x7f04000c;
+        public static final int item_image=0x7f04000e;
+        public static final int item_layout=0x7f04000b;
+        public static final int item_nongli_date=0x7f04000d;
         public static final int left=0x7f040002;
-        public static final int main_frame=0x7f04000a;
-        public static final int main_frame_shader=0x7f04000c;
-        public static final int main_year_month=0x7f040008;
-        public static final int menu_settings=0x7f040011;
-        public static final int panel=0x7f040006;
+        public static final int main_year_month=0x7f040007;
+        public static final int menu_settings=0x7f040019;
+        public static final int middle=0x7f040017;
+        public static final int panel=0x7f040009;
         public static final int panelContent=0x7f040005;
         public static final int panelHandle=0x7f040004;
         public static final int right=0x7f040003;
-        public static final int title=0x7f040007;
+        public static final int title=0x7f040006;
         public static final int top=0x7f040000;
-        public static final int viewpager=0x7f04000b;
-        public static final int week=0x7f040009;
+        public static final int tou=0x7f04000f;
+        public static final int viewpager=0x7f04000a;
+        public static final int week=0x7f040008;
+        public static final int zong=0x7f040010;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int gridview_item=0x7f030001;
+        public static final int move=0x7f030002;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

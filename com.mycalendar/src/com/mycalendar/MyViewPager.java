@@ -37,7 +37,7 @@ public class MyViewPager extends ViewPager {
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-            int h = child.getMeasuredHeight() * 6;
+            int h = child.getMeasuredHeight() * 5;
             if(h > height) height = h;
         }
 

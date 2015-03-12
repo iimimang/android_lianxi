@@ -10,6 +10,7 @@ import java.util.List;
 import data.DateInfo;
 
 import android.text.format.Time;
+import android.util.Log;
 
 public class TimeUtils {
 	public static int getCurrentYear() {
@@ -132,20 +133,27 @@ public class TimeUtils {
     	return formatYear + "-" + formatMonth + "-" + formatDay;
 	}
 	
-	public static List<DateInfo> initCalendar(String formatDate, int month) throws Exception {
+	public static List<DateInfo> initCalendar(String formatDate, int month)  {
+		
+		
 		int dates = 1;
 		int year = Integer.parseInt(formatDate.substring(0, 4));
-		int [] allDates = new int[42];
+		int [] allDates = new int[35];
 		for (int i = 0; i < allDates.length; i++) {
 			allDates[i] = -1;
 		}
 		int firstDayOfMonth = TimeUtils.getWeekDay(formatDate);
 		int totalDays = TimeUtils.getDaysOfMonth(year, month);
-		for (int i = firstDayOfMonth; i < totalDays + firstDayOfMonth; i++) {
+		//Log.i("aaaa", "异常是-----是------------"+totalDays +"------------"+ firstDayOfMonth);
+		int curdays=totalDays + firstDayOfMonth;
+		if(curdays>35){
+			curdays=35;
+		}
+		for (int i = firstDayOfMonth; i < curdays; i++) {
     		allDates[i] = dates;
     		dates++;
     	}
-		
+		 
 		List<DateInfo> list = new ArrayList<DateInfo>();
 		DateInfo dateInfo;
 		for (int i = 0; i < allDates.length; i++) {
@@ -159,8 +167,18 @@ public class TimeUtils {
     		else {
     			String date = TimeUtils.getFormatDate(year, month, allDates[i]);
     			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    			long time = sdf.parse(date).getTime();
-    			Lunar lunar = new Lunar(time);
+    			long time = 0;
+				try {
+					time = sdf.parse(date).getTime();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					
+					
+					e.printStackTrace();
+					
+					
+				}
+    			Lunar lunar = new Lunar(time); 
     			if (lunar.isSFestival()) {
 					dateInfo.setNongliDate(lunar.getSFestivalName());
 					dateInfo.setHoliday(true);
@@ -188,19 +206,25 @@ public class TimeUtils {
     		}
     		list.add(dateInfo);
     	}
+		
+	
     	
     	int front = DataUtils.getFirstIndexOf(list);
     	int back = DataUtils.getLastIndexOf(list);
     	int lastMonthDays = getDaysOfMonth(year, month - 1);
+    	//Log.i("aaaa", "上个月最后一天"+lastMonthDays+"本月集合的最后是"+back+"本月集合的第一个是"+front+"集合的大小为"+list.size());
     	int nextMonthDays = 1;
-    	for (int i = front - 1; i >= 0; i--) {
-    		list.get(i).setDate(lastMonthDays);
-    		lastMonthDays--;
-    	}
-    	for (int i = back + 1; i < list.size(); i++) {
-    		list.get(i).setDate(nextMonthDays);
-    		nextMonthDays++;
-    	}
+	    	for (int i = front - 1; i >= 0; i--) {
+	    		list.get(i).setDate(lastMonthDays);
+	    		lastMonthDays--;
+	    	}
+    	
+    	
+	    	for (int i = back + 1; i < list.size(); i++) {
+	    		list.get(i).setDate(nextMonthDays);
+	    		nextMonthDays++;
+	    	}
+    	
     	return list;
 	}
 }
