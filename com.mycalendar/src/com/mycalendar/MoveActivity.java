@@ -1,6 +1,7 @@
 package com.mycalendar;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.GestureDetector;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 
 import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnTouchListener;
@@ -89,8 +91,9 @@ public class MoveActivity extends Activity {
 		zong = (RelativeLayout) findViewById(R.id.zong);
 		
 		middle =(LinearLayout) findViewById(R.id.middle);
+		bottom_image.setOnTouchListener(touchListener);
 		zong.setOnTouchListener(touchListener);
-
+		
 		canlendar_main_height = calendar_main.getHeight();
 		image_height = bottom_image.getHeight();
 
@@ -239,6 +242,8 @@ public class MoveActivity extends Activity {
 	}
 
 	private AnimationListener animationListener = new AnimationListener() {
+	
+		@SuppressLint("NewApi")
 		public void onAnimationEnd(Animation animation) {
 			mState = State.READY;
 			LinearLayout row1 = (LinearLayout) calendar_main.getChildAt(0);
@@ -250,21 +255,33 @@ public class MoveActivity extends Activity {
 			Log.i("aaaa", " -没执行么-----" + mIsShrinking);
 			 if (mIsShrinking) {
 				
-//				row1.setVisibility(View.GONE);
-//				row2.setVisibility(View.GONE);
-//				// row3.setVisibility(View.GONE);
-//				row4.setVisibility(View.GONE);
-//				row5.setVisibility(View.GONE);
-				 Log.i("aaaa", " -控件高度-----" + bottom_image.getHeight()+"-------y--"+ bottom_image.getTop());
-				mIsShrinking =false;
+				row1.setVisibility(View.GONE);
+				row2.setVisibility(View.GONE);
+				// row3.setVisibility(View.GONE);
+				row4.setVisibility(View.GONE);
+				row5.setVisibility(View.GONE);
+				//row3.setPadding(0, -200, 0, 0);
+				Log.i("aaaa", " -控件高度-----" + bottom_image.getHeight()+"-------y--"+ bottom_image.getTop()+"-------y坐标--"+ bottom_image.getY());
+				 
+				
+//				 LayoutParams para;  
+//			     para = bottom_image.getLayoutParams();  
+//			     para.height = 810;  
+//			     
+//			     bottom_image.setLayoutParams(para); 
+//			     bottom_image.setTop(300);
+			     
+			     Log.i("aaaa", " -控件高度2-----" + bottom_image.getHeight()+"-------y--"+ bottom_image.getTop()+"-------y坐标--"+ bottom_image.getY());
+				
+			     mIsShrinking =false;
 			 }else{
 				 
-//				 row1.setVisibility(View.VISIBLE);
-//					row2.setVisibility(View.VISIBLE);
-//					// row3.setVisibility(View.GONE);
-//					row4.setVisibility(View.VISIBLE);
-//					row5.setVisibility(View.VISIBLE);
-					
+				 row1.setVisibility(View.VISIBLE);
+					row2.setVisibility(View.VISIBLE);
+					// row3.setVisibility(View.GONE);
+					row4.setVisibility(View.VISIBLE);
+					row5.setVisibility(View.VISIBLE);
+				//	row3.setPadding(0, 0, 0, 0);
 					mIsShrinking =true;
 			 }
 		
@@ -292,29 +309,42 @@ public class MoveActivity extends Activity {
 			int height = calendar_main.getHeight();
 			int image_height = bottom_image.getHeight();
 			
-			
+	
 			int activityWidth=findViewById(android.R.id.content).getWidth();
 			int activityHeight=findViewById(android.R.id.content).getHeight();
 			//获取图片的真实大小
 			  
 			Log.i("aaaa", " -图片高----" + image_height+"总高"+activityHeight+"总宽"+activityWidth);
-			Log.i("aaaa", " -控件高度-----" + height);
+			Log.i("aaaa", " -控件高度-----" + height+"---精度--->");
+			calculatedDuration = 500;
 			
 			if (mIsShrinking) {
-				 toYDelta=-400;
+				
+//				LinearLayout row1 = (LinearLayout) calendar_main.getChildAt(0);
+//				LinearLayout row2 = (LinearLayout) calendar_main.getChildAt(1);
+//				LinearLayout row3 = (LinearLayout) calendar_main.getChildAt(2);
+//				LinearLayout row4 = (LinearLayout) calendar_main.getChildAt(3);
+//				LinearLayout row5 = (LinearLayout) calendar_main.getChildAt(4);
+//				TranslateAnimation animationnnnnn = new TranslateAnimation(0, 0,
+//						 0, -200);
+//				animationnnnnn.setDuration(calculatedDuration);
+//				row3.startAnimation(animationnnnnn);
+				
+				
+				 toYDelta=-(height/5)*4;
 				 from_y=1f;
-				  to_y=1.97560976f;
+				  to_y=((float)(image_height+(height/5)*4)/image_height)*1f;
 				  relative_y =1f;
 			} else {
 				
-				fromYDelta=-400;
+				fromYDelta=-(height/5)*4;
 				toYDelta=0;
-				  from_y=1.97560976f;
+				  from_y=((float)(image_height+(height/5)*4)/image_height)*1f;  //算出来的比例  应该是  810/410 =1.97560976f  
 				  to_y=1f;
 				  relative_y = 1f;
 			}
 
-			calculatedDuration = 500;
+			
 			
 			Log.i("aaaa", " 日历的高-------" + calculatedDuration + "----"
 					+ fromXDelta + "---" + toXDelta + "------" + fromYDelta
@@ -328,19 +358,21 @@ public class MoveActivity extends Activity {
 			final AlphaAnimation animation2 = new AlphaAnimation(1, 0f);
 			animation.setDuration(calculatedDuration);
 			animation.setAnimationListener(animationListener);
-			//calendar_main.startAnimation(animation2);
+			//calendar_main.startAnimation(animation);
 			animation.setFillAfter(true);
 			middle.startAnimation(animation);
 			
 			 /** 设置缩放动画 */
 			 AnimationSet animationSet = new AnimationSet(true);
 	//		 animationSet.setInterpolator(new AccelerateInterpolator());
+			 TranslateAnimation translateAnimation=new TranslateAnimation(0, 0, 0, 20);
 			 final ScaleAnimation animation3 =new ScaleAnimation(1f, 1f, from_y, to_y,   
 					 Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, relative_y);
 			 animationSet.setDuration(calculatedDuration);//设置动画持续时间
-			 animationSet.addAnimation(animation3);
+			 animationSet.addAnimation(animation3);// 比例
+			// animationSet.addAnimation(translateAnimation);	//移动
 			 animationSet.setFillAfter(true);
-			bottom_image.startAnimation(animationSet);
+			 bottom_image.startAnimation(animationSet);
 
 		}
 	};
