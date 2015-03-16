@@ -110,14 +110,14 @@ public class KCalendar extends ViewFlipper implements
 	 */
 	public void setWeek(boolean enable) {
 		
-		fade_in = AnimationUtils.loadAnimation(getContext(),
-				R.anim.fade_in);
-		fade_in.setDuration(1000);
-		fade_out = AnimationUtils.loadAnimation(getContext(),
-				R.anim.fade_out);
-		fade_out.setDuration(1000);
-		setInAnimation(fade_in);
-		setOutAnimation(fade_out);
+//		fade_in = AnimationUtils.loadAnimation(getContext(),
+//				R.anim.fade_in);
+//		fade_in.setDuration(1000);
+//		fade_out = AnimationUtils.loadAnimation(getContext(),
+//				R.anim.fade_out);
+//		fade_out.setDuration(1000);
+//		setInAnimation(fade_in);
+//		setOutAnimation(fade_out);
 		
 		if (!enable) { // disable, hide the content
 			removeAllViews();

@@ -1,154 +1,160 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#F6F8F7"
-    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.wyj.Activity">
+    >
 
- 
-	    
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F6F8F7" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#F6F8F7"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/ll_popup"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#F6F8F7"
-            android:orientation="vertical" >
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" >
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp" >
-
-                <RelativeLayout
-                    android:id="@+id/popupwindow_calendar_last_month"
-                    android:layout_width="70dp"
-                    android:layout_height="55dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/popupwindow_calendar_month" >
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/bt_calendar_last" />
-                </RelativeLayout>
+                android:id="@+id/popupwindow_calendar_last_month"
+                android:layout_width="70dp"
+                android:layout_height="55dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/popupwindow_calendar_month" >
 
                 <TextView
-                    android:id="@+id/popupwindow_calendar_month"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:textColor="#aa564b4b"
-                    android:textSize="18sp" />
-
-                <RelativeLayout
-                    android:id="@+id/popupwindow_calendar_next_month"
-                    android:layout_width="70dp"
-                    android:layout_height="55dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/popupwindow_calendar_month" >
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/bt_calendar_next" />
-                </RelativeLayout>
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/bt_calendar_last" />
             </RelativeLayout>
-			
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/popupwindow_calendar_month"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="#aa564b4b"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/popupwindow_calendar_next_month"
+                android:layout_width="70dp"
+                android:layout_height="55dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/popupwindow_calendar_month" >
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/bt_calendar_next" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal" >
-                <TextView 
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="日"
-                android:textColor="@color/color_text_selected"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                
-                <TextView 
+                android:textColor="@color/color_text_selected" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="一"
-                android:textColor="#ffcccccc"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                <TextView 
+                android:textColor="#ffcccccc" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="二"
-                android:textColor="#ffcccccc"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                <TextView 
+                android:textColor="#ffcccccc" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="三"
-                android:textColor="#ffcccccc"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                <TextView 
+                android:textColor="#ffcccccc" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="四"
-                android:textColor="#ffcccccc"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                <TextView 
+                android:textColor="#ffcccccc" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="五"
-                android:textColor="#ffcccccc"
-                android:layout_weight="1"
-                android:gravity="center"
-                />
-                <TextView 
+                android:textColor="#ffcccccc" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="六"
-                android:textColor="@color/color_text_selected"
                 android:layout_weight="1"
                 android:gravity="center"
-                />
-                
-            </LinearLayout>
-            
-            
+                android:text="六"
+                android:textColor="@color/color_text_selected" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/Calendar_zong"
+        android:layout_below="@+id/ll_popup"
+       
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#F6F8F7" >
+
+        <LinearLayout
+            android:id="@+id/Calendar_mains"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:gravity="top" >
+
             <com.wyj.calendar.KCalendar
                 android:id="@id/popupwindow_calendar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="match_parent" >
             </com.wyj.calendar.KCalendar>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Calendar_middle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Calendar_mains"
             android:layout_marginTop="20dp"
-           
-            android:layout_below="@+id/ll_popup"
             android:background="#F6F8F7"
             android:orientation="vertical" >
 
@@ -161,8 +167,8 @@
                 android:id="@+id/date_infos"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                 android:layout_marginLeft="10dp"
-           		 android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center_vertical" >
 
                 <TextView
@@ -234,52 +240,53 @@
                 android:layout_height="0.5dp"
                 android:background="#dfe1e0" >
             </View>
-			<LinearLayout 
-			    android:id="@+id/date_add_layout"
-			    android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-			    >
-                 
-            <TextView
-                android:id="@+id/date_infos_foli_or_birthday"
+
+            <LinearLayout
+                android:id="@+id/date_add_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:drawableLeft="@drawable/rili_14"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text=""
-                android:textColor="@color/text_normal"
-                android:textSize="16sp" />
-            <TextView
-                android:id="@+id/date_infos_birthdayshow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                 android:layout_marginBottom="5dp"
-                android:drawableLeft="@drawable/rili_17big"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text=""
-                android:textColor="@color/text_normal"
-                android:visibility="gone"
-                android:textSize="16sp" />
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/date_infos_foli_or_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/rili_14"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/text_normal"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/date_infos_birthdayshow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/rili_17big"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/text_normal"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
-            <ImageView
-            android:id="@id/foli_bottom_image"    
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/rili_07" />
         </LinearLayout>
 
-        
+        <ImageView
+            android:id="@id/foli_bottom_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/Calendar_middle"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/rili_07" />
     </RelativeLayout>
-    
-    
 
-</LinearLayout>
+</RelativeLayout>

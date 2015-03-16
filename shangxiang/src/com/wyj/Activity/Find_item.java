@@ -213,7 +213,7 @@ public class Find_item extends Activity implements OnClickListener {
 			}
 
 			break;
-		case R.id.finditem_jiachi:
+		case R.id.finditem_jiachi: 
 			// 要跳转的Activity
 			if (!isbless.equals("0")) {
 				Utils.ShowToast(Find_item.this,"您已经加持过了");
