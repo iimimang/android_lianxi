@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item type="id" name="logo">false</item>
+	<item type="id" name="background_logo">false</item>
+	<item type="id" name="version_number">false</item>
+	<item type="id" name="loading">false</item>
+	<item type="id" name="progress_bar">false</item>
+	<item type="id" name="user_avatar">false</item>
+	
+	<item type="id" name="splash_screen_button">false</item>
+	
+	<item type="id" name="tab_content">false</item>
+	<item type="id" name="tab_bars">false</item>
+	<item type="id" name="tab_bar_home">false</item>
+	<item type="id" name="tab_bar_discover">false</item>
+	<item type="id" name="tab_bar_calendar">false</item>
+	<item type="id" name="tab_bar_my">false</item>
+	
+
+	<item type="id" name="home_title_layout">false</item>
+	<item type="id" name="home_desire_0_button">false</item>
+	<item type="id" name="home_desire_1_button">false</item>
+	<item type="id" name="home_desire_2_button">false</item>
+	<item type="id" name="home_desire_3_button">false</item>
+	<item type="id" name="home_desire_4_button">false</item>
+	<item type="id" name="home_desire_5_button">false</item>
+	<item type="id" name="home_desire_6_button">false</item>
+	
+	<!-- 登录页面 -->
+	<item type="id" name="login_layout">false</item>
+	<item type="id" name="login_title_layout">false</item>
+	<item type="id" name="login_title_text">false</item>
+	<item type="id" name="login_main_layout">false</item>
+	<item type="id" name="login_form_layout">false</item>
+	<item type="id" name="login_close_button">false</item>
+	<item type="id" name="login_mobile_input">false</item>
+	<item type="id" name="login_password_text">false</item>
+	<item type="id" name="login_password_input">false</item>
+	<item type="id" name="login_forget_password_button">false</item>
+	<item type="id" name="login_register_button">false</item>
+	<item type="id" name="login_submit_button">false</item>
+	<item type="id" name="login_other_login_layout">false</item>
+	<item type="id" name="login_other_login_label">false</item>
+	<item type="id" name="login_wechat_button">false</item>
+	<item type="id" name="login_weibo_button">false</item>
+	
+	
+	
+	<item type="id" name="toast_tip">false</item>
+	<item type="id" name="toast_content">false</item>
+	<item type="id" name="dialog_normal_tip">false</item>
+	<item type="id" name="dialog_normal_content">false</item>
+	<item type="id" name="dialog_button_sure">false</item>
+	<item type="id" name="dialog_button_cancel">false</item>
+	<item type="id" name="dialog_exit_tip">false</item>
+	<item type="id" name="dialog_exit_content">false</item>
+	<item type="id" name="dialog_exit_stopproc">false</item>
+</resources>
