@@ -290,9 +290,10 @@ public class Panel extends LinearLayout {
 						toYDelta = fromYDelta;
 					}
 					fromYDelta = (int) mTrackY;
-				} else
+				} else{
 				if (mState == State.FLYING) {
 					fromYDelta = (int) mTrackY;
+				}
 				}
 				// for FLYING events we calculate animation duration based on flying velocity
 				// also for very high velocity make sure duration >= 20 ms

@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" 
     android:id="@+id/item_layout"
-    android:background="@drawable/item_bkg">
+    android:background="#F6F8F7">
     
 	<TextView 
 	    android:id="@+id/item_date"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_centerHorizontal="true"
-	    android:layout_marginTop="5dp"
-	    android:textColor="#000000"
-	    android:textSize="18dp"/>
+	    android:textColor="#ff888A89"
+	    android:textSize="18sp"/>
 	<TextView 
 	    android:id="@+id/item_nongli_date"
 	    android:layout_width="wrap_content"
@@ -20,8 +19,8 @@
 	    android:gravity="center"
 	    android:layout_below="@id/item_date"
 	    android:layout_centerHorizontal="true"
-	    android:textColor="#000000"
-	    android:textSize="12dp"/>
+	    android:textColor="#ffDDA35B"
+	    android:textSize="12sp"/>
 	<TextView 
 	    android:id="@+id/item_image"
 	    android:layout_width="wrap_content"
@@ -29,5 +28,5 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_alignParentTop="true"
 	    android:textColor="#ffffff"
-	    android:background="#ff0000"/>
+	    android:background="#ff0000"/> 
 </RelativeLayout>

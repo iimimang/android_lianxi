@@ -88,6 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_alignParentTop="true"
+            android:gravity="top"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -447,8 +448,7 @@
                 android:layout_below="@+id/calendar_main"
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"
-            
-                android:background="#ffff00" >
+            	android:background="#ffff00" >
             </LinearLayout>
         <ImageView
             android:id="@+id/bottom_image"

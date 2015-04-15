@@ -6,6 +6,10 @@ public class DateInfo {
 	private boolean isWeekend;
 	private boolean isHoliday;
 	private String NongliDate;
+	private String NongliInfo;
+	private String Holiday;
+	private int Year;
+	private int Month;
 	public int getDate() {
 		return date;
 	}
@@ -17,6 +21,30 @@ public class DateInfo {
 	}
 	public void setNongliDate(String nongliDate) {
 		NongliDate = nongliDate;
+	}
+	public String getNongliInfo() {
+		return NongliInfo;
+	}
+	public void setNongliInfo(String NongliInfos) {
+		NongliInfo = NongliInfos;
+	}
+	public String getHoliday() {
+		return Holiday;
+	}
+	public void setHoliday(String Holidays) {
+		Holiday = Holidays;
+	}
+	public int getYear() {
+		return Year;
+	}
+	public void setYear(int Year) {
+		this.Year = Year;
+	}
+	public int getMonth() {
+		return Month;
+	}
+	public void setMonth(int Month) {
+		this.Month = Month;
 	}
 	public boolean isThisMonth() {
 		return isThisMonth;

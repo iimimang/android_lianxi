@@ -46,11 +46,23 @@ public class DataUtils {
 		}
 		for (i = list.size() - 1; i >= 0; i--) {
 			if (list.get(i).isThisMonth()) {
-				break;
+				break; 
 			}
 		}
 		return i;
 	}
+	
+	public static int getWeekDayFlag(List<DateInfo> list, int day) {	//周算当天的
+		int y=-1;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getDate() == day && list.get(i).isThisMonth()) {
+				y=i;
+			}
+		}
+		
+		return y;
+	}
+	
 	
 	public static int getScreenWidth(Activity activity) {
 		DisplayMetrics mDisplayMetrics = new DisplayMetrics();

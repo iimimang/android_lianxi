@@ -7,6 +7,8 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 /**
  * 提供一些农历相关信息
  * 
@@ -90,6 +92,17 @@ public class Lunar {
 		"1208 腊八节",	"1224 小年",
 		"0100*除夕"
 	};
+	
+	/**
+	 * 农历节日 *佛教节日
+	 */
+	private final static String[] amituofo = new String[] { "1005*达摩祖师圣诞",
+		"1117*阿弥陀佛圣诞", "1208*释迦如来成道日", "1229*华严菩萨圣诞", "0101*弥勒菩萨圣诞",
+		"0106*定光佛圣诞", "0208*释迦牟尼佛出家", "0215*释迦牟尼佛涅盘", "0219*观世音菩萨圣诞",
+		"0221*普贤菩萨圣诞", "0316*准提菩萨圣诞", "0404*文殊菩萨圣诞", "0408*释迦牟尼佛圣诞",
+		"0415*佛吉祥日——释迦牟尼佛诞生、成道、涅盘三期同一庆(即南传佛教国家的卫塞节)", "0513*伽蓝菩萨圣诞",
+		"0603*护法韦驮尊天菩萨圣诞", "0619*观世音菩萨成道——此日放生、念佛，功德殊胜", "0713*大势至菩萨圣诞", "0724*龙树菩萨圣诞",
+		"0730*地藏菩萨圣诞","0822*燃灯佛圣诞","0919*观世音菩萨出家纪念日","0930*药师琉璃光如来圣诞" };
 	/**
 	 * 某月的第几个星期几
 	 */
@@ -105,57 +118,69 @@ public class Lunar {
 	private final static Pattern sFreg = Pattern.compile("^(\\d{2})(\\d{2})([\\s\\*])(.+)$");
 	private final static Pattern wFreg = Pattern.compile("^(\\d{2})(\\d)(\\d)([\\s\\*])(.+)$");
 	private synchronized void findFestival() {
-		int sM = this.getSolarMonth();
-		int sD = this.getSolarDay();
+//		int sM = this.getSolarMonth();
+//		int sD = this.getSolarDay();
 		int lM = this.getLunarMonth();
 		int lD = this.getLunarDay();
-		int sy = this.getSolarYear();
+//		int sy = this.getSolarYear();
 		Matcher m;
-		for (int i=0; i<Lunar.sFtv.length; i++) {
-			m = Lunar.sFreg.matcher(Lunar.sFtv[i]);
-			if (m.find()) {
-				if (sM == Lunar.toInt(m.group(1)) && sD == Lunar.toInt(m.group(2))) {
-					this.isSFestival = true;
-					this.sFestivalName = m.group(4);
-					if ("*".equals(m.group(3))) this.isHoliday = true;
-					break;
-				}
-			}
-		}
-		for (int i=0; i<Lunar.lFtv.length; i++) {
-			m = Lunar.sFreg.matcher(Lunar.lFtv[i]);
+//		for (int i=0; i<Lunar.sFtv.length; i++) {
+//			m = Lunar.sFreg.matcher(Lunar.sFtv[i]);
+//			if (m.find()) {
+//				if (sM == Lunar.toInt(m.group(1)) && sD == Lunar.toInt(m.group(2))) {
+//					this.isSFestival = true;
+//					this.sFestivalName = m.group(4);
+//					if ("*".equals(m.group(3))) this.isHoliday = true;
+//					break;
+//				}
+//			}
+//		}
+//		for (int i=0; i<Lunar.lFtv.length; i++) {
+//			m = Lunar.sFreg.matcher(Lunar.lFtv[i]);
+//			if (m.find()) {
+//				if (lM == Lunar.toInt(m.group(1)) && lD == Lunar.toInt(m.group(2))) {
+//					this.isLFestival = true;
+//					this.lFestivalName = m.group(4);
+//					if ("*".equals(m.group(3))) this.isHoliday = true;
+//					break;
+//				}
+//			}
+//		}
+		
+		for (int i=0; i<Lunar.amituofo.length; i++) {
+			m = Lunar.sFreg.matcher(Lunar.amituofo[i]);
 			if (m.find()) {
 				if (lM == Lunar.toInt(m.group(1)) && lD == Lunar.toInt(m.group(2))) {
 					this.isLFestival = true;
 					this.lFestivalName = m.group(4);
-					if ("*".equals(m.group(3))) this.isHoliday = true;
+					//if ("*".equals(m.group(3))) this.isHoliday = true;
 					break;
 				}
 			}
 		}
-
+		
 		// 月周节日
-		int w, d;
-		for (int i=0; i<Lunar.wFtv.length; i++) {
-			m = Lunar.wFreg.matcher(Lunar.wFtv[i]);
-			if (m.find()) {
-				if (this.getSolarMonth() == Lunar.toInt(m.group(1))) {
-					w = Lunar.toInt(m.group(2));
-					d = Lunar.toInt(m.group(3));
-					if (this.solar.get(Calendar.WEEK_OF_MONTH)==w &&
-							this.solar.get(Calendar.DAY_OF_WEEK)==d) {
-						this.isSFestival = true;
-						this.sFestivalName += "|" + m.group(5);
-						if ("*".equals(m.group(4))) this.isHoliday = true;
-					}
-				}
-			}
-		}
-		if(sy>1874 && sy<1909) this.description = "光绪" + (((sy-1874)==1)?"元":""+(sy-1874));
-		if(sy>1908 && sy<1912) this.description = "宣统" + (((sy-1908)==1)?"元":String.valueOf(sy-1908));
-		if(sy>1911 && sy<1950) this.description = "民国" + (((sy-1911)==1)?"元":String.valueOf(sy-1911));
-		if(sy>1949) this.description = "共和国" + (((sy-1949)==1)?"元":String.valueOf(sy-1949));
-		this.description += "年";
+//		int w, d;
+//		for (int i=0; i<Lunar.wFtv.length; i++) {
+//			m = Lunar.wFreg.matcher(Lunar.wFtv[i]);
+//			if (m.find()) {
+//				if (this.getSolarMonth() == Lunar.toInt(m.group(1))) {
+//					w = Lunar.toInt(m.group(2));
+//					d = Lunar.toInt(m.group(3));
+//					if (this.solar.get(Calendar.WEEK_OF_MONTH)==w &&
+//							this.solar.get(Calendar.DAY_OF_WEEK)==d) {
+//						this.isSFestival = true;
+//						this.sFestivalName += "|" + m.group(5);
+//						if ("*".equals(m.group(4))) this.isHoliday = true;
+//					}
+//				}
+//			}
+//		}
+//		if(sy>1874 && sy<1909) this.description = "光绪" + (((sy-1874)==1)?"元":""+(sy-1874));
+//		if(sy>1908 && sy<1912) this.description = "宣统" + (((sy-1908)==1)?"元":String.valueOf(sy-1908));
+//		if(sy>1911 && sy<1950) this.description = "民国" + (((sy-1911)==1)?"元":String.valueOf(sy-1911));
+//		if(sy>1949) this.description = "共和国" + (((sy-1949)==1)?"元":String.valueOf(sy-1949));
+//		this.description += "年";
 		this.sFestivalName = this.sFestivalName.replaceFirst("^\\|", "");
 		this.isFinded = true;
 	}

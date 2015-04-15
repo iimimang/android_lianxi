@@ -27,7 +27,15 @@ public class CalendarAdapter extends BaseAdapter {
 	private List<DateInfo> list = null;
 	private Context context = null;
 	private int selectedPosition = -1;
+	private int selectedToday=-1;
 	MainActivity activity;
+	
+	
+	public static final int COLOR_TX_OTHER_MONTH_DAY = Color
+			.parseColor("#ffcccccc"); // 灰色
+	public static final int COLOR_TX_WEEK_TITLE = Color.parseColor("#FD3316");	//佛历的颜色
+	
+	
 	public CalendarAdapter(MainActivity activity, List<DateInfo> list) {
 		this.context = activity;
 		this.list = list;
@@ -56,6 +64,14 @@ public class CalendarAdapter extends BaseAdapter {
 	public void setSelectedPosition(int position) {  
         selectedPosition = position;  
     }  
+	
+	
+	/**
+	 * 设置当天
+	 * */
+	public void setTodayPosition(int position) {  
+        selectedToday = position;  
+    } 
 
 	/**
 	 * 产生一个view
@@ -67,6 +83,7 @@ public class CalendarAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			LayoutInflater inflater = LayoutInflater.from(context);
 			convertView = inflater.inflate(R.layout.gridview_item, null);
+			
 			viewHolder.date = (TextView) convertView.findViewById(R.id.item_date);
 			viewHolder.nongliDate = (TextView) convertView.findViewById(R.id.item_nongli_date);
 			convertView.setTag(viewHolder);
@@ -76,21 +93,31 @@ public class CalendarAdapter extends BaseAdapter {
 		//根据数据源设置单元格的字体颜色、背景等
 		viewHolder.date.setText(list.get(position).getDate() + "");
 		viewHolder.nongliDate.setText(list.get(position).getNongliDate());
-		if (selectedPosition == position) {
-			viewHolder.date.setTextColor(Color.WHITE);
-			viewHolder.nongliDate.setTextColor(Color.WHITE);
-			convertView.setBackgroundColor(Color.RED);
+		if (selectedPosition == position) {		//手指选中位置的时候
+//			viewHolder.date.setTextColor(Color.WHITE);
+//			viewHolder.nongliDate.setTextColor(Color.WHITE);
+		//	convertView.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY);  
+			
+			convertView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.calendar_background_selected));
+			
+		}else if(selectedToday == position){
+			
+			//convertView.setBackgroundColor(COLOR_TX_OTHER_MONTH_DAY); 	//今天
+			convertView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.calendar_background_today));
+			
 		} else {
-			convertView.setBackgroundResource(R.drawable.item_bkg);
-			viewHolder.date.setTextColor(Color.BLACK);
-			viewHolder.nongliDate.setTextColor(Color.BLACK);
-			if (list.get(position).isHoliday())
-				viewHolder.nongliDate.setTextColor(Color.BLUE);
-			else if (list.get(position).isThisMonth() == false) {
+			convertView.setBackgroundResource(Color.TRANSPARENT);
+//			viewHolder.date.setTextColor(Color.BLACK);
+//			viewHolder.nongliDate.setTextColor(Color.BLACK);
+			
+			if (list.get(position).isHoliday())		//节日的话
+				viewHolder.nongliDate.setTextColor(COLOR_TX_WEEK_TITLE);
+			else if (list.get(position).isThisMonth() == false) {	//不是本月的
 				viewHolder.date.setTextColor(Color.rgb(210, 210, 210));
+				viewHolder.nongliDate.setTextColor(Color.rgb(210, 210, 210));
 			}
-			else if (list.get(position).isWeekend()) {
-				viewHolder.date.setTextColor(Color.rgb(255, 97, 0));
+			else if (list.get(position).isWeekend()) {		//是周末把
+			//	viewHolder.date.setTextColor(Color.rgb(255, 97, 0));
 			}
 		}
 		if (list.get(position).getNongliDate().length() > 3)
