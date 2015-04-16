@@ -7,6 +7,7 @@ public class DateInfo {
 	private boolean isHoliday;
 	private String NongliDate;
 	private String NongliInfo;
+	private String Nonglinumber;	//农历的数字
 	private String Holiday;
 	private int Year;
 	private int Month;
@@ -27,6 +28,12 @@ public class DateInfo {
 	}
 	public void setNongliInfo(String NongliInfos) {
 		NongliInfo = NongliInfos;
+	}
+	public String getNonglinumber() {
+		return Nonglinumber;
+	}
+	public void setNonglinumber(String Nonglinumbers) {
+		Nonglinumber = Nonglinumbers;
 	}
 	public String getHoliday() {
 		return Holiday;

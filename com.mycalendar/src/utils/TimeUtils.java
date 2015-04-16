@@ -10,6 +10,7 @@ import java.util.List;
 import data.DateInfo;
 
 
+import android.annotation.SuppressLint;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -33,7 +34,25 @@ public class TimeUtils {
 		return t.monthDay;
 	}
 	
-   public static int compare_date(String DATE1, String DATE2) {
+	/**
+     * 将元数据前补零，补后的总长度为指定的长度，以字符串的形式返回
+     * @param sourceDate
+     * @param formatLength
+     * @return 重组后的数据
+     */ 
+    public static  String frontCompWithZore(int sourceDate,int formatLength) 
+    { 
+     /*
+      * 0 指前面补充零
+      * formatLength 字符总长度为 formatLength
+      * d 代表为正数。
+      */ 
+     String newString = String.format("%0"+formatLength+"d", sourceDate); 
+     return  newString; 
+    }
+	
+   @SuppressLint("SimpleDateFormat")
+public static int compare_date(String DATE1, String DATE2) {
        
        
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,7 +74,8 @@ public class TimeUtils {
         return 0;
     }
    
-   public static long getdays(String today,String otherday){
+   @SuppressLint("SimpleDateFormat")
+public static long getdays(String today,String otherday){
 	   
 	   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");   
 		 Date beginDate ,endDate;
@@ -212,45 +232,65 @@ public class TimeUtils {
 	}
 	//算出周历 的 上几天 后几天的 日期
 	public static Date getWeekTimeByPosition(int position ) {
-    	int year = TimeUtils.getCurrentYear(), month = TimeUtils.getCurrentMonth() ,day = TimeUtils.getCurrentDay();
+    	//int year = TimeUtils.getCurrentYear(), month = TimeUtils.getCurrentMonth() ,day = TimeUtils.getCurrentDay();
 	
     	Calendar calTemp = Calendar.getInstance();
     	//Date calendarday = new Date(originYear - 1900, originMonth, originDay);
     	//Log.i("cccc", "--------"+originYear+"-------"+originMonth+"-----------"+originDay);
     	//calTemp.set(originYear, originMonth-1, originDay);		//设置当前天  
-    	calTemp.set(year, month-1, day);		//设置当前天  
+    	//calTemp.set(year, month-1, day);		//设置当前天  
     	
-    	//calTemp.setTime(calTemp.getTime());   	
+    	calTemp.setTime(calTemp.getTime());   	
     	int cha=0;
     	if (position < 500) {
     		
     		cha=(500-position)*7; 
-
-    		return get_weekday_time(calTemp.getTime(), -cha); 
+    		Date jizhun= get_weekday_time(calTemp.getTime(), -cha); 		//这是那天的具体 时间   但是要算出 那一周的 最后一天 也就是 周六那天
+    		@SuppressWarnings("deprecation")
+			String formatDate= TimeUtils.getFormatDate(jizhun.getYear()+1900, jizhun.getMonth()+1,jizhun.getDate());	
+    		int weekday = TimeUtils.getWeekDay(formatDate); // 算出 传过来的天是周几  , 周日是 0
+    		if(weekday!=6){	//不是周六 算出周六
+    			Calendar newcalTemp = Calendar.getInstance();
+    			newcalTemp.setTime(jizhun);
+    			Date jizhunnew= get_weekday_time(newcalTemp.getTime(), 6-weekday); 
+    			return  jizhunnew;
+    		}else{
+    			
+    			return  jizhun;
+    		}
     	}
+    	
     	if (position > 500) {
+    		
     		cha=(position-500)*7;
-
-    		return get_weekday_time(calTemp.getTime(), cha); 
+    		Date jizhun= get_weekday_time(calTemp.getTime(), cha); 
+    		@SuppressWarnings("deprecation")
+			String formatDate= TimeUtils.getFormatDate(jizhun.getYear()+1900, jizhun.getMonth()+1,jizhun.getDate());	
+    		int weekday = TimeUtils.getWeekDay(formatDate); // 算出 传过来的天是周几  , 周日是 0
+    		if(weekday!=6){	//不是周六 算出周六
+    			Calendar newcalTemp = Calendar.getInstance();
+    			newcalTemp.setTime(jizhun);
+    			Date jizhunnew= get_weekday_time(newcalTemp.getTime(), 6-weekday); 
+    			return  jizhunnew;
+    		}else{
+    			
+    			return  jizhun;
+    		}
+    		
     	} 
     	   	
     	return calTemp.getTime(); 
 	}   
     
 	//获得上周下周的 基准天的 时间
+	@SuppressLint("SimpleDateFormat")
 	public static Date  get_weekday_time(Date calendarday ,int days){
 		
 		// 日期处理模块 (将日期加上某些天或减去天数)返回字符串
         Calendar canlendar = Calendar.getInstance(); // java.util包
         canlendar.setTime(calendarday);
         canlendar.add(Calendar.DAY_OF_WEEK, days); // 日期减 如果不够减会将月变动
-        
-     // 日期处理模块 (将日期加上某些天或减去天数)返回字符串
-//        Calendar canlendar1 = Calendar.getInstance(); // java.util包
-//         Calendar canlendar2 = Calendar.getInstance(); // 
-//        canlendar2.set(2015, 4, 3);
-//        canlendar2.add(Calendar.DAY_OF_MONTH , -7 );
-        
+              
         SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd"); 
 //        Date todayDate=new Date();   
 //        long beforeTime=(todayDate.getTime()/1000)-60*60*24*7;   
@@ -266,6 +306,7 @@ public class TimeUtils {
 	
 	
 	
+	@SuppressLint("SimpleDateFormat")
 	public static int getWeekDay(String date) {  
         Calendar calendar = Calendar.getInstance();  
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
@@ -343,6 +384,8 @@ public class TimeUtils {
     	return formatYear + "-" + formatMonth + "-" + formatDay;
 	}
 	
+	//月历数据遍历
+	@SuppressLint("SimpleDateFormat")
 	public static List<DateInfo> initCalendar(String formatDate, int month)  {
 		
 		
@@ -356,9 +399,6 @@ public class TimeUtils {
 		int totalDays = TimeUtils.getDaysOfMonth(year, month);
 		//Log.i("aaaa", "异常是-----是------------"+totalDays +"------------"+ firstDayOfMonth);
 		int curdays=totalDays + firstDayOfMonth;
-//		if(curdays>35){
-//			curdays=35;
-//		}
 		for (int i = firstDayOfMonth; i < curdays; i++) {
     		allDates[i] = dates;
     		dates++;
@@ -408,7 +448,7 @@ public class TimeUtils {
     			
     			dateInfo.setNongliInfo(lunar.getLunarMonthString() + "月"+lunar.getLunarDayString());	//农历日期 info
     			
-    			
+    			dateInfo.setNonglinumber(frontCompWithZore(lunar.getLunarMonth(),2)+frontCompWithZore(lunar.getLunarDay(),2));
     			dateInfo.setThisMonth(true);
     			int t = getWeekDay(getFormatDate(year, month, allDates[i]));
     			if (t == 0 || t == 6) {
@@ -435,6 +475,7 @@ public class TimeUtils {
 	    	for (int i = front - 1; i >= 0; i--) {
 	    		list.get(i).setDate(lastMonthDays);
 	    		list.get(i).setNongliDate(get_nongli(year,month - 1,lastMonthDays));
+	    		
 	    		lastMonthDays--;
 	    	}
 	    	for (int i = back + 1; i < list.size(); i++) {
@@ -446,36 +487,10 @@ public class TimeUtils {
     	return list;
 	}
 	
-	public static String get_nongli(int year,int  month ,int day){
-		
-		String date = TimeUtils.getFormatDate(year, month, day);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		long time = 0;
-		try {
-			time = sdf.parse(date).getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Lunar lunar = new Lunar(time); 
-		if (lunar.isSFestival()) {
-		
-			return 	StingUtil.toLength(lunar.getSFestivalName(), 12);
 	
-		} else {
-			if (lunar.isLFestival() && lunar.getLunarMonthString().substring(0, 1).equals("闰") == false) {
-				return	StingUtil.toLength(lunar.getLFestivalName(), 12);
-			} else {
-				if (lunar.getLunarDayString().equals("初一")) {
-					return	lunar.getLunarMonthString() + "月";
-				} else {
-					return	lunar.getLunarDayString();
-				}
-			}
-			
-		}
-	}
 	
+	//周历数据遍历
+	@SuppressLint("SimpleDateFormat")
 	public static List<DateInfo> initCalendarWeek(int year, int month,int day)  {
 		
 		String formatDate= TimeUtils.getFormatDate(year, month,day);	
@@ -492,7 +507,7 @@ public class TimeUtils {
 		 canlendar.add(Calendar.DAY_OF_MONTH, -weekday);
 		 Date weekfirstday=canlendar.getTime();
 		 SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-		// int nowday = canlendar.get(Calendar.DAY_OF_MONTH); //第一天
+
 		 Log.i("bbbb", "第一天是-----------------老天-"+formatDate+"------------周--"+weekday+"---第一天是---"+sdf2.format(weekfirstday));
 		 List<DateInfo> list = new ArrayList<DateInfo>(); 
 		 DateInfo dateInfo;
@@ -538,6 +553,7 @@ public class TimeUtils {
 			}
 			
 			dateInfo.setNongliInfo(lunar.getLunarMonthString() + "月"+lunar.getLunarDayString());	//农历日期 info
+			dateInfo.setNonglinumber(frontCompWithZore(lunar.getLunarMonth(),2)+frontCompWithZore(lunar.getLunarDay(),2));
 			dateInfo.setThisMonth(true);
 			int t = getWeekDay(getFormatDate(year, month, allDates[i]));
 			if (t == 0 || t == 6) {
@@ -551,6 +567,54 @@ public class TimeUtils {
     	}
 			
     	return list;
+	}
+	
+	
+	@SuppressLint("SimpleDateFormat")
+	public static String get_nongli(int year,int  month ,int day){
+		
+		String date = TimeUtils.getFormatDate(year, month, day);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		long time = 0;
+		try {
+			time = sdf.parse(date).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Lunar lunar = new Lunar(time); 
+		if (lunar.isSFestival()) {
+		
+			return 	StingUtil.toLength(lunar.getSFestivalName(), 12);
+	
+		} else {
+			if (lunar.isLFestival() && lunar.getLunarMonthString().substring(0, 1).equals("闰") == false) {
+				return	StingUtil.toLength(lunar.getLFestivalName(), 12);
+			} else {
+				if (lunar.getLunarDayString().equals("初一")) {
+					return	lunar.getLunarMonthString() + "月";
+				} else {
+					return	lunar.getLunarDayString();
+				}
+			}
+			
+		}
+	}
+	
+	@SuppressLint("SimpleDateFormat")
+	public static <lunar> Lunar get_nongli_info(int year,int  month ,int day){
+		
+		String date = TimeUtils.getFormatDate(year, month, day);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		long time = 0;
+		try {
+			time = sdf.parse(date).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Lunar lunar = new Lunar(time); 
+		return lunar;
 	}
 	
 	

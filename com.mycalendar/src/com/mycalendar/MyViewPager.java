@@ -35,16 +35,16 @@ public class MyViewPager extends ViewPager {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         int height = 0;
-        Log.i("eeee", "元素---"+getChildCount());
+       // Log.i("eeee", "元素---"+getChildCount());
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             int h = child.getMeasuredHeight() * 6;
 	           if(child.getTag().equals("22")){
 	        	   h = child.getMeasuredHeight();
-	        	   Log.i("eeee", "元素--gao-执行了么-"+ h);
+	        	  // Log.i("eeee", "元素--gao-执行了么-"+ h);
 	           }
-            Log.i("eeee", "元素--gao--"+ h);
+         //   Log.i("eeee", "元素--gao--"+ h);
             if(h > height) height = h;
         }
 

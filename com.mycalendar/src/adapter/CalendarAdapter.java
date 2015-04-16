@@ -76,6 +76,7 @@ public class CalendarAdapter extends BaseAdapter {
 	/**
 	 * 产生一个view
 	 * */
+	@SuppressWarnings("deprecation")
 	public View getView(int position, View convertView, ViewGroup group) {
 		//通过viewholder做一些优化
 		ViewHolder viewHolder;
