@@ -6,12 +6,16 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
+
+
 import utils.DataUtils;
 import utils.Lunar;
 import utils.StingUtil;
 import utils.TimeUtils;
+import utils.Utils;
 import data.DateInfo;
 import adapter.CalendarAdapter;
+import adapter.MyViewPager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -24,9 +28,15 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -67,7 +77,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * */
 	private int currentYear;
 	private int currentMonth;
-
+	
+//	private LinearLayout ll_popup;
 	public TextView date_infos_yangli;
 	public TextView date_infos_yinli;
 	public TextView date_infos_foli;
@@ -76,6 +87,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public ImageView foli_bottom_images; // 佛历 图片
 	private int calendar_type = 1; // 周历 和月历 的类别区分
+	
+	private GestureDetector mGestureDetector;
+
+	private MyGestureListener MymGestureListener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +103,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		update_date_view();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void findbyid() {
 		// TODO Auto-generated method stub
-
+		//ll_popup=(LinearLayout) findViewById(R.id.ll_popup);
 		foli_bottom_images = (ImageView) findViewById(R.id.foli_bottom_images);
-		foli_bottom_images.setOnClickListener(this);
+		//foli_bottom_images.setOnClickListener(this);
+		foli_bottom_images.setOnTouchListener(touchListener);
 		date_add_layout = (LinearLayout) findViewById(R.id.date_add_layout);
 		date_infos_yangli = (TextView) findViewById(R.id.date_infos_yangli);
 		date_infos_yinli = (TextView) findViewById(R.id.date_infos_yinli);
@@ -107,6 +124,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		currentYear = TimeUtils.getCurrentYear(); // 初始化 默认年
 		currentMonth = TimeUtils.getCurrentMonth(); // 初始化 默认月
 		lastSelected = TodaySelect = TimeUtils.getCurrentDay(); // 初始化 默认天 当天
+		
+		MymGestureListener = new MyGestureListener();
+		mGestureDetector = new GestureDetector(MymGestureListener); 
+		mGestureDetector.setIsLongpressEnabled(false);
 
 	}
 
@@ -360,6 +381,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 			}
 		});
+		
+
+		 
 	}
 
 	/**
@@ -474,6 +498,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.foli_bottom_images:
 
 			Log.i("cccc", "点击-------------");
+			
+			break;
+		}
+	}
+	
+	OnTouchListener touchListener=new OnTouchListener() {
+		
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			// TODO Auto-generated method stub
+			return mGestureDetector.onTouchEvent(event);
+		}
+	};
+	
+	class MyGestureListener implements OnGestureListener {
+
+		float scrollY;
+		float scrollX;
+
+		public void setScroll(int initScrollX, int initScrollY) {
+			scrollX = initScrollX;
+			scrollY = initScrollY;
+			Log.i("MyGesture", "---------scrollX----->" + scrollX);
+			Log.i("MyGesture", "---------scrollY----->" + scrollY);
+		}
+
+		// 用户轻触触摸屏，由1个MotionEvent ACTION_DOWN触发
+		public boolean onDown(MotionEvent arg0) {
+			Log.i("MyGesture", "onDown");
+			return true;
+		}
+
+		/*
+		 * 用户轻触触摸屏，尚未松开或拖动，由一个1个MotionEvent ACTION_DOWN触发
+		 * 注意和onDown()的区别，强调的是没有松开或者拖动的状态
+		 */
+		public void onShowPress(MotionEvent e) {
+			Log.i("MyGesture", "onShowPress");
+		}
+
+		// 用户（轻触触摸屏后）松开，由一个1个MotionEvent ACTION_UP触发
+		public boolean onSingleTapUp(MotionEvent e) {
+			Log.i("MyGesture", "onSingleTapUp");
 			if (calendar_type == 1) {
 				initWeekData();
 				calendar_type = 2;
@@ -481,9 +548,83 @@ public class MainActivity extends Activity implements OnClickListener {
 			} else {
 				initData();
 				calendar_type = 1;
-				initView();
+				initView(); 
 			}
-			break;
+				//Utils.animView(this.viewPager, false);
+			Utils.animView(viewPager, true);
+			return true;
 		}
+
+		// 用户按下触摸屏、快速移动后松开，由1个MotionEvent ACTION_DOWN, 多个ACTION_MOVE,
+		// 1个ACTION_UP触发
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			Log.i("MyGesture", "onFling" + "e1.getY()-----" + e1.getY()
+					+ "e2.getY()-----" + e2.getY() + "velocityX-----"
+					+ velocityX + "velocityY-----" + velocityY);
+
+			final int FLING_MIN_DISTANCE = 20, FLING_MIN_VELOCITY = 200;
+
+			if (e1.getY() - e2.getY() > FLING_MIN_DISTANCE
+					&& Math.abs(velocityY) > FLING_MIN_VELOCITY) {
+				// Fling left
+				
+		
+				initWeekData();
+				calendar_type = 2;
+				initView();
+				Utils.animView(viewPager, true);
+				Log.i("MyGesture", "------------------>向上滑了");
+			
+				
+			}else if (e2.getY() - e1.getY() > FLING_MIN_DISTANCE
+					) {
+				// Fling left
+			
+				initData();
+				calendar_type = 1;
+				initView();
+				Utils.animView(viewPager, true);
+				Log.i("MyGesture", "------------------>向下滑了");
+				
+			}
+			
+
+			return true;
+		}
+
+		// 用户按下触摸屏，并拖动，由1个MotionEvent ACTION_DOWN, 多个ACTION_MOVE触发
+		public boolean onScroll(MotionEvent e1, MotionEvent e2,
+				float distanceX, float distanceY) {
+			Log.i("MyGesture", "onScroll");
+			
+			
+			// Toast.makeText(MoveActivity.this, "onScroll",
+			// Toast.LENGTH_LONG).show();
+			return true;
+		}
+
+		// 用户长按触摸屏，由多个MotionEvent ACTION_DOWN触发
+		public void onLongPress(MotionEvent e) {
+			Log.i("MyGesture", "onLongPress");
+			
+		}
+
 	}
+	
+	AnimationListener animationListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+		}
+	};
+	
+	
 }

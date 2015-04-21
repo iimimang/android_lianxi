@@ -133,34 +133,34 @@ containing a value of this type.
         public static final int week1=0x7f020013;
     }
     public static final class id {
-        public static final int Calendar_middle=0x7f04000c;
-        public static final int add_user_birthday=0x7f040013;
+        public static final int Calendar_middle=0x7f04000d;
+        public static final int add_user_birthday=0x7f040014;
         public static final int bottom=0x7f040001;
-        public static final int bottom_image=0x7f040024;
-        public static final int calendar_main=0x7f04001d;
-        public static final int calendar_row_1=0x7f04001e;
-        public static final int calendar_row_2=0x7f04001f;
-        public static final int calendar_row_3=0x7f040020;
-        public static final int calendar_row_4=0x7f040021;
-        public static final int calendar_row_5=0x7f040022;
-        public static final int date_add_layout=0x7f040014;
-        public static final int date_infos=0x7f04000d;
-        public static final int date_infos_birthdayshow=0x7f040016;
-        public static final int date_infos_foli=0x7f040015;
-        public static final int date_infos_left=0x7f04000e;
-        public static final int date_infos_middle=0x7f04000f;
-        public static final int date_infos_right=0x7f040012;
-        public static final int date_infos_yangli=0x7f040010;
-        public static final int date_infos_yinli=0x7f040011;
+        public static final int bottom_image=0x7f040025;
+        public static final int calendar_main=0x7f04001e;
+        public static final int calendar_row_1=0x7f04001f;
+        public static final int calendar_row_2=0x7f040020;
+        public static final int calendar_row_3=0x7f040021;
+        public static final int calendar_row_4=0x7f040022;
+        public static final int calendar_row_5=0x7f040023;
+        public static final int date_add_layout=0x7f040015;
+        public static final int date_infos=0x7f04000e;
+        public static final int date_infos_birthdayshow=0x7f040017;
+        public static final int date_infos_foli=0x7f040016;
+        public static final int date_infos_left=0x7f04000f;
+        public static final int date_infos_middle=0x7f040010;
+        public static final int date_infos_right=0x7f040013;
+        public static final int date_infos_yangli=0x7f040011;
+        public static final int date_infos_yinli=0x7f040012;
         public static final int foli_bottom_images=0x7f040006;
-        public static final int item_date=0x7f040018;
-        public static final int item_image=0x7f04001a;
-        public static final int item_layout=0x7f040017;
-        public static final int item_nongli_date=0x7f040019;
+        public static final int item_date=0x7f040019;
+        public static final int item_image=0x7f04001b;
+        public static final int item_layout=0x7f040018;
+        public static final int item_nongli_date=0x7f04001a;
         public static final int left=0x7f040002;
         public static final int ll_popup=0x7f040007;
-        public static final int menu_settings=0x7f040025;
-        public static final int middle=0x7f040023;
+        public static final int menu_settings=0x7f040026;
+        public static final int middle=0x7f040024;
         public static final int panelContent=0x7f040005;
         public static final int panelHandle=0x7f040004;
         public static final int popupwindow_calendar_last_month=0x7f040008;
@@ -168,9 +168,10 @@ containing a value of this type.
         public static final int popupwindow_calendar_next_month=0x7f04000a;
         public static final int right=0x7f040003;
         public static final int top=0x7f040000;
-        public static final int tou=0x7f04001b;
-        public static final int viewpager=0x7f04000b;
-        public static final int zong=0x7f04001c;
+        public static final int tou=0x7f04001c;
+        public static final int viewpager=0x7f04000c;
+        public static final int week_infos=0x7f04000b;
+        public static final int zong=0x7f04001d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -183,15 +184,27 @@ containing a value of this type.
     public static final class string {
         public static final int add=0x7f06000b;
         public static final int app_name=0x7f060000;
+        public static final int back=0x7f060010;
+        public static final int cancel=0x7f06000f;
+        public static final int delete=0x7f060014;
+        public static final int edit=0x7f060015;
         public static final int friday=0x7f060008;
         public static final int hello_world=0x7f060001;
+        public static final int loading=0x7f060017;
         public static final int menu_settings=0x7f060002;
         public static final int monday=0x7f060004;
+        public static final int next=0x7f060011;
+        public static final int ok=0x7f06000c;
+        public static final int refresh=0x7f060012;
         public static final int saturday=0x7f060009;
+        public static final int save=0x7f060016;
+        public static final int settings=0x7f060013;
+        public static final int submit=0x7f06000d;
         public static final int sunday=0x7f06000a;
         public static final int thuesday=0x7f060005;
         public static final int thursday=0x7f060007;
         public static final int title_activity_main=0x7f060003;
+        public static final int truesubmit=0x7f06000e;
         public static final int wednesday=0x7f060006;
     }
     public static final class style {

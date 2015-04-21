@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="#ffffffff" >
 
-     <ImageView
+    <ImageView
         android:id="@+id/foli_bottom_images"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -12,8 +12,7 @@
         android:clickable="true"
         android:scaleType="fitEnd"
         android:src="@drawable/background_calendar" />
-     
-     
+
     <LinearLayout
         android:id="@+id/ll_popup"
         android:layout_width="fill_parent"
@@ -71,6 +70,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/week_infos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -133,22 +133,26 @@
                 android:textColor="@color/color_text_selected" />
         </LinearLayout>
 
-       
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffffff" >
 
-            <com.mycalendar.MyViewPager
+            <adapter.MyViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" >
-            </com.mycalendar.MyViewPager>
-      
+            </adapter.MyViewPager>
+       
 
         <LinearLayout
             android:id="@+id/Calendar_middle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager"
             android:layout_marginTop="10dp"
- 			android:orientation="vertical" >
+            android:orientation="vertical" >
 
             <View
                 android:layout_width="match_parent"
@@ -270,8 +274,8 @@
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
+        
+         </RelativeLayout>
     </LinearLayout>
-
-   
 
 </RelativeLayout>
