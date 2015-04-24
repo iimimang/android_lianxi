@@ -17,10 +17,9 @@ import org.json.JSONObject;
 
 import com.wyj.calendar.ChinaDate;
 import com.wyj.calendar.KCalendar;
-import com.wyj.calendar.Panel;
 
 
-import android.annotation.SuppressLint;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 
@@ -606,15 +605,15 @@ public class Foli extends MainActivity implements OnClickListener {
 			if (mIsShrinking) {
 					
 				
-				 toYDelta=-(height/5)*4;
+				 toYDelta=-(height/6)*5;
 				 from_y=1f;
-				  to_y=((float)(image_height+(height/5)*4)/image_height)*1f;
+				  to_y=((float)(image_height+(height/6)*5)/image_height)*1f;
 				  relative_y =1f;
 			} else {
 				
-				fromYDelta=-(height/5)*4;
+				fromYDelta=-(height/6)*5;
 				toYDelta=0;
-				  from_y=((float)(image_height+(height/5)*4)/image_height)*1f;  //算出来的比例  应该是  810/410 =1.97560976f  
+				  from_y=((float)(image_height+(height/6)*5)/image_height)*1f;  //算出来的比例  应该是  810/410 =1.97560976f  
 				  to_y=1f;
 				  relative_y = 1f;
 			}

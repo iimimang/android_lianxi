@@ -99,7 +99,7 @@ public class RegularUtil {
 	 */
 	private static boolean passwordFormat(String password) {
 		Pattern pattern = Pattern
-				.compile("^[\\@A-Za-z0-9\\!\\#\\$\\%\\^\\&\\*\\.\\~]{8,20}$");
+				.compile("^[\\@A-Za-z0-9\\!\\#\\$\\%\\^\\&\\*\\.\\~]{6,20}$");
 		Matcher mc = pattern.matcher(password);
 		return mc.matches();
 	}

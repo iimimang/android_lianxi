@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 
+
 import com.wyj.Activity.R;
+import com.wyj.utils.StingUtil;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -55,9 +57,9 @@ public class KCalendar extends ViewFlipper implements
 	
 	private Animation fade_in,fade_out; // 动画
 
-	private int ROWS_TOTAL = 5; // 日历的行数
+	private int ROWS_TOTAL = 6; // 日历的行数
 	private int COLS_TOTAL = 7; // 日历的列数
-	private String[][] dates = new String[5][7]; // 当前日历日期 (月)
+	private String[][] dates = new String[ROWS_TOTAL][7]; // 当前日历日期 (月)
 	private String[][] week_dates = new String[1][7]; // 当前日历日期 （周）
 	private float tb;
 
@@ -150,18 +152,18 @@ public class KCalendar extends ViewFlipper implements
 				R.anim.push_right_in);
 		push_right_out = AnimationUtils.loadAnimation(getContext(),
 				R.anim.push_right_out);
-		push_left_in.setDuration(300);
-		push_left_out.setDuration(300);
-		push_right_in.setDuration(300);
-		push_right_out.setDuration(300);
+		push_left_in.setDuration(200);
+		push_left_out.setDuration(200);
+		push_right_in.setDuration(200);
+		push_right_out.setDuration(200);
 		// 初始化第一个日历
 		firstCalendar = new LinearLayout(getContext());
 		firstCalendar.setOrientation(LinearLayout.VERTICAL);
-		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 26)));
+		firstCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
 		// 初始化第二个日历
 		secondCalendar = new LinearLayout(getContext());
 		secondCalendar.setOrientation(LinearLayout.VERTICAL);
-		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, (int) (tb * 26)));
+		secondCalendar.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
 		// 设置默认日历为第一个日历
 		currentCalendar = firstCalendar;
 		// 加入ViewFlipper
@@ -358,13 +360,9 @@ public class KCalendar extends ViewFlipper implements
 						view.setText(Integer.toString(lastMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 						//阴历-----------------------------------
-						String[] yinli=format_china(new Date(year, month, lastMonthDay));
-						view_2.setText(yinli[1]);
-						if(yinli[0].equals("1")){
-							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-						}else{
-							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-						}
+
+						set_china_nongli(view_2,new Date(year, month, lastMonthDay));
+	
 							
 						dates[0][k] = format(new Date(year, month, lastMonthDay));
 						// 设置日期背景色
@@ -428,15 +426,11 @@ public class KCalendar extends ViewFlipper implements
 						
 						view.setText(Integer.toString(day));
 						
-						//阴历-----------------------------------
-						String[] yinli=format_china(new Date(calendarday.getYear(),
+						//阴历----------------------------------------------------------------------------------------------
+						
+						set_china_nongli(view_2,new Date(calendarday.getYear(),
 								calendarday.getMonth(), day));
-						view_2.setText(yinli[1]);
-						if(yinli[0].equals("1")){
-							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-						}else{
-							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-						}
+						//阴历结束----------------------------------------------------------------------------------------------
 						
 						// 上面首先设置了一下默认的"当天"背景色，当有特殊需求时，才给当日填充背景色
 						// 设置日期背景色
@@ -466,17 +460,18 @@ public class KCalendar extends ViewFlipper implements
 						// 下个月
 					} else {
 						
-						String[] yinli = new String[2];
+
+						Lunar lunar =null;
 						if (calendarday.getMonth() == Calendar.DECEMBER) {
 							dates[i][j] = format(new Date(
 									calendarday.getYear() + 1,
 									Calendar.JANUARY, nextMonthDay));
 							
 							//阴历-----------------------------------
-							 yinli=format_china(new Date(
-										calendarday.getYear() + 1,
-										Calendar.JANUARY, nextMonthDay));
-							
+							 
+							set_china_nongli(view_2,new Date(
+											calendarday.getYear() + 1,
+											Calendar.JANUARY, nextMonthDay));
 							
 						} else {
 							dates[i][j] = format(new Date(
@@ -484,20 +479,18 @@ public class KCalendar extends ViewFlipper implements
 									calendarday.getMonth() + 1, nextMonthDay));
 							
 							//阴历-----------------------------------
-							 yinli=format_china(new Date(
+							set_china_nongli(view_2,new Date(
 										calendarday.getYear(),
 										calendarday.getMonth() + 1, nextMonthDay));
+							 
 						}
 						//Log.i("aaaa", "------阴历4444-----"+(dates[i][j])+"--------"+(nextMonthDay));
 						view.setText(Integer.toString(nextMonthDay));
 						view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 						
-						view_2.setText(yinli[1]);
-						if(yinli[0].equals("1")){
-							view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-						}else{
-							view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-						}
+						//阴历----------------------------------------------------------------------------------------------
+
+						//阴历结束----------------------------------------------------------------------------------------------
 						// 设置日期背景色
 						if (dayBgColorMap.get(dates[i][j]) != null) {
 							// view.setBackgroundResource(dayBgColorMap
@@ -516,6 +509,8 @@ public class KCalendar extends ViewFlipper implements
 	}
 	
 	
+	
+	 
 	
 	private void init_week() {
 		
@@ -774,14 +769,15 @@ public class KCalendar extends ViewFlipper implements
 				view.setText(Integer.toString(lastMonthDay));
 				view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 				//阴历-----------------------------------
-				String[] yinli=format_china(new Date(year, month, lastMonthDay));
-				view_2.setText(yinli[1]);
-				if(yinli[0].equals("1")){
-					view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-				}else{
-					view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-				}						
+//				String[] yinli=format_china(new Date(year, month, lastMonthDay));
+//				view_2.setText(yinli[1]);
+//				if(yinli[0].equals("1")){
+//					view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+//				}else{
+//					view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+//				}						
 				
+				set_china_nongli(view_2,new Date(year, month, lastMonthDay));
 				//数据存储  背景色  和生日标记-------------------
 				week_dates[0][k] = format(new Date(year, month, lastMonthDay)); //加入数据存储
 				// 设置日期背景色
@@ -843,14 +839,14 @@ public class KCalendar extends ViewFlipper implements
 					view.setText(Integer.toString(erevr));
 					view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 					//阴历-----------------------------------
-					String[] yinli=format_china(new Date(calendarday.getYear(), calendarday.getMonth(), erevr));
-					view_2.setText(yinli[1]);
-					if(yinli[0].equals("1")){
-						view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-					}else{
-						view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-					}						
-					
+//					String[] yinli=format_china(new Date(calendarday.getYear(), calendarday.getMonth(), erevr));
+//					view_2.setText(yinli[1]);
+//					if(yinli[0].equals("1")){
+//						view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+//					}else{
+//						view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+//					}						
+					set_china_nongli(view_2,new Date(calendarday.getYear(), calendarday.getMonth(), erevr));
 					//数据存储  背景色  和生日标记-------------------
 					week_dates[0][b+pre_day_nums] = format(new Date(calendarday.getYear(), calendarday.getMonth(), erevr)); //加入数据存储
 					if (dayBgColorMap.get(week_dates[0][b+pre_day_nums]) != null) {
@@ -930,14 +926,14 @@ public class KCalendar extends ViewFlipper implements
 					view.setText(Integer.toString(nextMonthDay));
 					view.setTextColor(COLOR_TX_OTHER_MONTH_DAY);
 					//阴历-----------------------------------
-					String[] yinli=format_china(new Date(next_year, next_month, nextMonthDay));
-					view_2.setText(yinli[1]);
-					if(yinli[0].equals("1")){
-						view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
-					}else{
-						view_2.setTextColor(COLOR_TX_WEEK_TITLE);
-					}						
-					
+//					String[] yinli=format_china(new Date(next_year, next_month, nextMonthDay));
+//					view_2.setText(yinli[1]);
+//					if(yinli[0].equals("1")){
+//						view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+//					}else{
+//						view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+//					}						
+					set_china_nongli(view_2,new Date(next_year, next_month, nextMonthDay));
 					week_dates[0][c+pre_day_nums+numsjizhun] = format(new Date(next_year, next_month, nextMonthDay)); //加入数据存储
 					if (dayBgColorMap.get(week_dates[0][c+pre_day_nums+numsjizhun]) != null) {
 
@@ -1148,6 +1144,43 @@ public class KCalendar extends ViewFlipper implements
 			onCalendarDateChangedListener.onCalendarDateChanged(calendarYear,
 					calendarMonth + 1);
 		}
+	}
+	
+	
+	//设置农历节日的 文字和显示的颜色   （新的方法）
+	public  void set_china_nongli(TextView view_2,Date date){
+		//view_2.setSingleLine(true);
+		Lunar lunar = new Lunar(date);
+		if (lunar.isSFestival()) {
+			view_2.setText(StingUtil.toLength(lunar.getSFestivalName(), 9));
+			view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+		} else {
+			if (lunar.isLFestival() && lunar.getLunarMonthString().substring(0, 1).equals("闰") == false) {
+				view_2.setText(StingUtil.toLength(lunar.getLFestivalName(), 9));
+				view_2.setTextColor(COLOR_TX_THIS_DAY);
+			} else {
+				if (lunar.getLunarDayString().equals("初一")) {
+					
+					view_2.setText(lunar.getLunarMonthString() + "月");
+				} else {
+					
+					view_2.setText(lunar.getLunarDayString());
+				}
+				view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+			}
+		}
+	}
+	
+	//设置农历节日的 文字和显示的颜色   （新的方法）
+	public  void set_china_nongli_old(TextView view_2,Date date){
+			//view_2.setSingleLine(true);
+			String[] yinli=format_china(date);
+			view_2.setText(yinli[1]);
+			if(yinli[0].equals("1")){
+				view_2.setTextColor(COLOR_TX_THIS_DAY); //COLOR_TX_WEEK_TITLE
+			}else{
+				view_2.setTextColor(COLOR_TX_WEEK_TITLE);
+			}	
 	}
 	
 	public Date  get_weekday_time(int days){

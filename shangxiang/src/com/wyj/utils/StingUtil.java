@@ -141,7 +141,7 @@ public class StingUtil {
 			return "";
 		}
 		try {
-			if (str.getBytes("GBK").length <= length) {
+			if (str.getBytes("UTF-8").length <= length) {
 				return str;
 			}
 		} catch (Exception ex) {
