@@ -13,6 +13,7 @@ import com.wyj.Activity.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -47,8 +48,11 @@ public class XListView extends ListView implements OnScrollListener {
 	// -- footer view
 	private XListViewFooter mFooterView;
 	private boolean mEnablePullLoad;
+	private boolean mEnablePullLoad_no_view=false;
 	private boolean mPullLoading;
 	private boolean mIsFooterReady = false;
+	
+	//private boolean isScrollBottom;
 
 	// total list items, used to detect is at the bottom of listview.
 	private int mTotalItemCount;
@@ -159,6 +163,29 @@ public class XListView extends ListView implements OnScrollListener {
 			});
 		}
 	}
+	/**
+	 *  无默认 查看底部  直接加载模式
+	 * 
+	 * @param enable
+	 */
+	public void setPullLoadEnable_no_view(boolean enable) {
+		mEnablePullLoad_no_view = enable;
+//		if (!mEnablePullLoad_no_view) {
+//			mFooterView.hide();
+//			mFooterView.setOnClickListener(null);
+//		} else {
+//			mPullLoading = false;
+//			mFooterView.show();
+//			mFooterView.setState(XListViewFooter.STATE_LOADING_READY);	//Loading 准备
+//			// both "pull up" and "click" will invoke load more.
+//			mFooterView.setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View v) {
+//					startLoadMore();
+//				}
+//			});
+//		}
+	}
 
 	/**
 	 * stop refresh, reset header view.
@@ -249,6 +276,8 @@ public class XListView extends ListView implements OnScrollListener {
 
 	private void resetFooterHeight() {
 		int bottomMargin = mFooterView.getBottomMargin();
+		
+		Log.i("ssss", "resetFooterHeight-->"+bottomMargin);
 		if (bottomMargin > 0) {
 			mScrollBack = SCROLLBACK_FOOTER;
 			mScroller.startScroll(0, bottomMargin, 0, -bottomMargin,
@@ -293,6 +322,7 @@ public class XListView extends ListView implements OnScrollListener {
 			break;
 		default:
 			mLastY = -1; // reset
+			Log.i("ssss", "onTouchEvent-->"+getLastVisiblePosition()+"<-------------------->"+mTotalItemCount);
 			if (getFirstVisiblePosition() == 0) {
 				// invoke refresh
 				if (mEnablePullRefresh
@@ -305,14 +335,16 @@ public class XListView extends ListView implements OnScrollListener {
 				}
 				resetHeaderHeight();
 			}
-			if (getLastVisiblePosition() == mTotalItemCount - 1) {
-				// invoke load more.
-				if (mEnablePullLoad
-						&& mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
-					startLoadMore();
+			
+				if (getLastVisiblePosition() == mTotalItemCount - 1) {
+					// invoke load more.
+					if (mEnablePullLoad
+							&& mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
+						startLoadMore();
+					}
+					resetFooterHeight();
 				}
-				resetFooterHeight();
-			}
+			
 			break;
 		}
 		return super.onTouchEvent(ev);
@@ -339,20 +371,38 @@ public class XListView extends ListView implements OnScrollListener {
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		
+		
 		if (mScrollListener != null) {
 			mScrollListener.onScrollStateChanged(view, scrollState);
 		}
+		if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+			Log.i("ssss", "onScrollStateChanged-->"+getLastVisiblePosition()+"<-------------------->"+mTotalItemCount);
+			if(getLastVisiblePosition()==mTotalItemCount-1  && mEnablePullLoad_no_view){
+				startLoadMore();
+			}
+			resetFooterHeight();
+		}
+//		Log.i("ssss", "--onScrollStateChanged-------->"+isScrollBottom+"----"+mEnablePullLoad_no_view);
+//		if(isScrollBottom && mEnablePullLoad_no_view){
+//			startLoadMore();
+//		}
 	}
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
+		//Log.i("ssss", "onScroll-->"+firstVisibleItem+"<-visibleItemCount-->"+visibleItemCount+"<-totalItemCount->"+totalItemCount);
 		// send to user's listener
 		mTotalItemCount = totalItemCount;
 		if (mScrollListener != null) {
 			mScrollListener.onScroll(view, firstVisibleItem, visibleItemCount,
 					totalItemCount);
 		}
+		
+		// 判断是否已经滚动到了最后一条，从而决定是否提示加载新数据
+//		isScrollBottom = (firstVisibleItem + visibleItemCount == totalItemCount);
+//		Log.i("ssss", "--onScroll-------->"+isScrollBottom);
 	}
 
 	public void setXListViewListener(IXListViewListener l) {

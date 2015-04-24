@@ -2,7 +2,7 @@ package com.wyj.dataprocessing;
 
 import java.util.Map;
 
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 import com.wyj.http.HttpClientHelper;
 
 import android.app.ProgressDialog;
@@ -24,12 +24,12 @@ public class AsynTaskHelper {
 		new GetDataTask(downloadListener).execute(url);
 	}
 
-	public void more_dataDownload(String url, Map<String, Object> map,
-			OnDataDownloadListener downloadListener, Context context,
-			String methodString, PullToRefreshListView mPullRefreshListView) {
-		new GetMoreDataTask(downloadListener, mPullRefreshListView)
-				.execute(url);
-	}
+//	public void more_dataDownload(String url, Map<String, Object> map,
+//			OnDataDownloadListener downloadListener, Context context,
+//			String methodString, PullToRefreshListView mPullRefreshListView) {
+//		new GetMoreDataTask(downloadListener, mPullRefreshListView)
+//				.execute(url);
+//	}
 
 	// 默认的加载类-------------------------------------------------------------------------------------------
 	private class MyTask extends AsyncTask<String, Void, String> {
@@ -124,49 +124,49 @@ public class AsynTaskHelper {
 	}
 
 	// 获取更多的加载类-------------------------------------------------------------------------------------------
-	private class GetMoreDataTask extends AsyncTask<String, Void, String> {
-
-		private OnDataDownloadListener downloadListener;
-		private PullToRefreshListView mPullRefreshListView;
-
-		public GetMoreDataTask(OnDataDownloadListener downloadListener3,
-				PullToRefreshListView mPullRefreshListView2) {
-			// TODO Auto-generated constructor stub
-			this.downloadListener = downloadListener3;
-			this.mPullRefreshListView = mPullRefreshListView2;
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			// Simulates a background job.
-			try {
-
-				Thread.sleep(1000);
-
-			} catch (InterruptedException e) {
-
-			}
-			String data = null;
-
-			data = HttpClientHelper.httpUrl(params[0]);
-
-			if (data != null) {
-				return data;
-			} else {
-				System.out.println("没有数据！！");
-				return null;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-
-			// 通过回调接口来传递数据
-			downloadListener.onDataDownload(result);
-			this.mPullRefreshListView.onRefreshComplete();
-			super.onPostExecute(result);
-		}
-	}
+//	private class GetMoreDataTask extends AsyncTask<String, Void, String> {
+//
+//		private OnDataDownloadListener downloadListener;
+//		private PullToRefreshListView mPullRefreshListView;
+//
+//		public GetMoreDataTask(OnDataDownloadListener downloadListener3,
+//				PullToRefreshListView mPullRefreshListView2) {
+//			// TODO Auto-generated constructor stub
+//			this.downloadListener = downloadListener3;
+//			this.mPullRefreshListView = mPullRefreshListView2;
+//		}
+//
+//		@Override
+//		protected String doInBackground(String... params) {
+//			// Simulates a background job.
+//			try {
+//
+//				Thread.sleep(1000);
+//
+//			} catch (InterruptedException e) {
+//
+//			}
+//			String data = null;
+//
+//			data = HttpClientHelper.httpUrl(params[0]);
+//
+//			if (data != null) {
+//				return data;
+//			} else {
+//				System.out.println("没有数据！！");
+//				return null;
+//			}
+//		}
+//
+//		@Override
+//		protected void onPostExecute(String result) {
+//
+//			// 通过回调接口来传递数据
+//			downloadListener.onDataDownload(result);
+//			this.mPullRefreshListView.onRefreshComplete();
+//			super.onPostExecute(result);
+//		}
+//	}
 
 	public interface OnDataDownloadListener {
 		void onDataDownload(String result);

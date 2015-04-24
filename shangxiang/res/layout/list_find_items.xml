@@ -15,9 +15,9 @@
         android:id="@+id/list_find_headface"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="5px"
+        android:layout_margin="5dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_gravity="right"
         android:src="@drawable/foot_07"
         />
@@ -33,9 +33,9 @@
             android:id="@+id/list_find_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-    		android:text="寂静的风"
+    		android:text=""
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,9 +45,9 @@
                 android:id="@+id/list_find_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="刚刚在五台山求愿祈福"
+                android:text=""
                 android:textColor="#989a99"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -62,9 +62,9 @@
             	android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-               	android:text="身体健康，万事如意。心想事成，财源广进。恭喜发财，长寿多福"
+               	android:text=""
       			android:textColor="#000"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
           
         </LinearLayout>
         
@@ -83,9 +83,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="太乙真人，居然三人等2532人加持"
+                android:text=""
 				android:textColor="#989a99"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 			
 			<TextView
                 android:id="@+id/list_find_zan"
@@ -93,13 +93,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dip"
                  android:layout_alignParentRight="true"
-                android:text="加持"
+                android:text=""
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:textColor="#989a99"
                 android:drawableLeft="@drawable/load"
                 android:drawablePadding="5dip"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 			</RelativeLayout>
         </LinearLayout> 
     </LinearLayout>

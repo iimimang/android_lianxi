@@ -2,7 +2,7 @@ package com.wyj.http;
 
 public class WebApiUrl {
 
-	public static final String IP = "http://218.244.131.126:812";
+	public static final String IP = "http://demo123.shangxiang.com";
 	public static final String PORT = "";
 
 	public static final String GET_TEMPLELIST = IP + PORT
