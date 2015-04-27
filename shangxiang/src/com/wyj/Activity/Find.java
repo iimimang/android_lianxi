@@ -129,7 +129,7 @@ public class Find extends Activity implements IXListViewListener{
 		mAdapter = new FindListAdapter(getBaseContext(), Listdata,tid);
 		mListView.setAdapter(mAdapter);
 		mListView.setPullLoadEnable(false);
-		mListView.setPullRefreshEnable(false);
+		mListView.setPullRefreshEnable(true);
 		mListView.setPullLoadEnable_no_view(true);
 		mListView.setXListViewListener(this);
 	
@@ -283,7 +283,9 @@ public class Find extends Activity implements IXListViewListener{
 								if(is_refersh_or_load){
 									
 								//	Listdata.addAll(0, items);	//更新的
-								
+									Listdata.clear();
+									Listdata.addAll(items);	
+									mListView.setAdapter(mAdapter);
 								}else{
 									Listdata.addAll(items);	
 								}

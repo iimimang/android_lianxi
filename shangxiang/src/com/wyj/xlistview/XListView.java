@@ -380,8 +380,8 @@ public class XListView extends ListView implements OnScrollListener {
 			Log.i("ssss", "onScrollStateChanged-->"+getLastVisiblePosition()+"<-------------------->"+mTotalItemCount);
 			if(getLastVisiblePosition()==mTotalItemCount-1  && mEnablePullLoad_no_view){
 				startLoadMore();
+				resetFooterHeight();
 			}
-			resetFooterHeight();
 		}
 //		Log.i("ssss", "--onScrollStateChanged-------->"+isScrollBottom+"----"+mEnablePullLoad_no_view);
 //		if(isScrollBottom && mEnablePullLoad_no_view){
