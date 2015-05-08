@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class BaseFragment extends Fragment implements OnClickListener {
+	
+	private Fragment mContent;
 	@Override
 	public void onActivityCreated(Bundle sinha) {
 		super.onActivityCreated(sinha);
@@ -40,11 +42,23 @@ public class BaseFragment extends Fragment implements OnClickListener {
 	}
 
 	public void goFragment(Fragment fragment) {
-		FragmentTransaction transFrogment = getFragmentManager().beginTransaction();
-		transFrogment.setCustomAnimations(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
-		transFrogment.replace(PanDuoLa.tabContent, fragment);
-		transFrogment.addToBackStack(Consts.TAG);
-		transFrogment.commit();
+		
+		  if (mContent != fragment) {
+              FragmentTransaction transaction = getFragmentManager()
+                              .beginTransaction();
+              if (!fragment.isAdded()) { // 先判断是否被add过
+                      transaction.hide(mContent).add(PanDuoLa.tabContent, fragment).commit(); // 隐藏当前的fragment，add下一个到Activity中
+              } else {
+                      transaction.hide(mContent).show(fragment).commit(); // 隐藏当前的fragment，显示下一个
+              }
+              mContent = fragment;
+      }
+	
+//		FragmentTransaction transFrogment = getFragmentManager().beginTransaction();
+//		transFrogment.setCustomAnimations(R.anim.push_right_in, R.anim.push_left_out, R.anim.push_left_in, R.anim.push_right_out);
+//		transFrogment.replace(PanDuoLa.tabContent, fragment);
+//		transFrogment.addToBackStack(Consts.TAG);
+//		transFrogment.commit();
 	}
 
 	@Override

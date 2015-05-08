@@ -1,6 +1,5 @@
 package com.panduola.android.pipe;
 
-import org.apache.http.HttpResponse;
 
 import android.os.Handler;
 import android.os.Looper;
