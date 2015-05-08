@@ -14,7 +14,7 @@ import com.wyj.utils.FilePath;
 import com.wyj.utils.MD5;
 
 import android.app.Activity;
-import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
